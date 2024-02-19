@@ -103,9 +103,10 @@ model startrings {
 }
 
 model endrings {
-    id        String           @id @default(cuid())
+    id        String @id @default(cuid())
     input     Float
     endringId String
+
     bladedata postningsoppsett @relation(fields: [endringId], references: [id])
 }
 
@@ -114,4 +115,5 @@ model rawinput {
     input      Float
     rawinputId String
     bladedata  postningsoppsett @relation(fields: [rawinputId], references: [id])
+    blade      Float
 }

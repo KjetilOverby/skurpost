@@ -1,36 +1,31 @@
 import React from "react";
+import Ring from "./reusable/rings/Ring";
+import RawRing from "./reusable/rings/RawRing";
+import Blade from "./reusable/rings/Blade";
 
 const PostoppsettComponent = ({ data }) => {
-  console.log(data?.rawinput);
-
   return (
     <div className="grid h-screen place-items-center">
-      <h1>Postoppsett</h1>
       <div>
         {data?.map((item) => {
           return (
-            <div>
-              <div>{item.header}</div>
+            <div className="">
+              <div className="mb-20">{item.header}</div>
               <div className="flex">
                 <div className="flex">
                   {item.startrings.map((item) => (
-                    <div className="m-1 flex h-24 w-12 items-center justify-center rounded-xl bg-blue-200">
-                      {item.input}
-                    </div>
+                    <Ring value={item.input} />
                   ))}
                 </div>
+                <Blade blade={item.blade} />
                 <div className="flex">
                   {item.rawinput.map((item) => (
-                    <div className="m-1 flex h-24 w-12 items-center justify-center rounded-xl bg-green-200">
-                      {item.input + 1.4}
-                    </div>
+                    <RawRing value={item.input} blade={item.blade} />
                   ))}
                 </div>
                 <div className="flex">
-                  {item.startrings.map((item) => (
-                    <div className="m-1 flex h-24 w-12 items-center justify-center rounded-xl bg-blue-200">
-                      {item.input}
-                    </div>
+                  {item.endrings.map((item) => (
+                    <Ring value={item.input} />
                   ))}
                 </div>
               </div>

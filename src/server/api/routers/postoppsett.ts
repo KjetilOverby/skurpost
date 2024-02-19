@@ -20,7 +20,8 @@ export const postoppsettRouter = createTRPCRouter({
               startrings: {
              
               },
-              rawinput: {}
+              rawinput: {},
+              endrings: {}
             },
          })
       }),
