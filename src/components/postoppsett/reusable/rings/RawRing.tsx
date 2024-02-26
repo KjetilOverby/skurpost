@@ -1,7 +1,14 @@
 import React from "react";
 import Blade from "./Blade";
 
-const RawRing = ({ value, blade }) => {
+interface RawRingProps {
+  value: number;
+  blade: string;
+}
+
+const RawRing = ({ value, blade }: RawRingProps) => {
+  console.log(blade);
+
   return (
     <div className=" flex items-center ">
       <div className="relative grid h-20 w-8 place-items-center rounded-md bg-gradient-to-b from-green-900 via-gray-300 to-green-900 sm:h-28 sm:w-12 md:h-40 md:w-20">

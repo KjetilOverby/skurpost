@@ -12,6 +12,8 @@ interface Item {
 }
 
 const PostoppsettComponent = ({ data }: { data: Item[] }) => {
+  console.log(data);
+
   return (
     <div className="grid h-screen place-items-center">
       <div>
