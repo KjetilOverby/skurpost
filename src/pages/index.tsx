@@ -28,9 +28,21 @@ export default function Home() {
           </div>
         </div>
         <div>
-          <Link href="/postoppsett">
-            <button>Post</button>
-          </Link>
+          <div>
+            <Link href="/postoppsett">
+              <button>Post</button>
+            </Link>
+          </div>
+          <div>
+            <Link href="/list">
+              <button>Skurliste</button>
+            </Link>
+          </div>
+          <div>
+            <Link href="create/creator">
+              <button>Ny data</button>
+            </Link>
+          </div>
         </div>
       </main>
     </>

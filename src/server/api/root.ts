@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { postRouter } from "~/server/api/routers/post";
 import { postoppsettRouter } from "~/server/api/routers/postoppsett";
+import { skurlisteRouter } from "~/server/api/routers/skurliste";
 import { createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -9,7 +11,8 @@ import { createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
-  postoppsett: postoppsettRouter
+  postoppsett: postoppsettRouter,
+  skurliste: skurlisteRouter
 });
 
 // export type definition of API

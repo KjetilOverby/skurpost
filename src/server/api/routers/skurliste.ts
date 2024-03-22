@@ -7,21 +7,15 @@ import {
   protectedProcedure,
   publicProcedure
 } from "~/server/api/trpc";
-export const postoppsettRouter = createTRPCRouter({
+export const skurlisteRouter = createTRPCRouter({
  
 
     getAll: publicProcedure
    
         .query(({ ctx }) => {
-         return ctx.db.postningsoppsett.findMany({
+         return ctx.db.skurliste.findMany({
        
        
-            include: {
-            
-              startrings: {},
-              rawinput: {},
-              endrings: {}
-            },
          })
       }),
 

@@ -63,6 +63,7 @@ model User {
     sessions         Session[]
     posts            Post[]
     postningsoppsett postningsoppsett[]
+    skurliste        skurliste[]
 }
 
 model VerificationToken {
@@ -73,8 +74,50 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
+model skurliste {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdById String
+    createdBy   User     @relation(fields: [createdById], references: [id])
+    creator     String
+    creatorImg  String
+    updater     String
+    updaterImg  String
+    treslag     String
+    klasse      String
+    klGrense    String
+    postNr      String
+    antall      Int
+    m3          Int
+    status      String
+    post        String
+    bredde      Int
+    xLog        String
+    prosent     String
+    anm         String
+    anm2        String
+    VS66Blad    Float
+    vs66        String
+    vs66Br      String
+    mkvBord     String
+    mkvBordBr   String
+    blad        Float
+    sortering   String
+    kode        String
+    dimensjon   String
+    torke       String
+    anmerk      String
+    destinasjon String
+    text        String
+}
+
 model postningsoppsett {
-    id          String  @id @default(cuid())
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    updater     String
+    updaterImg  String
     header      String
     blade       Float
     plankeTy    String
@@ -82,7 +125,7 @@ model postningsoppsett {
     spes        String
     xlog        String
     createdById String
-    createdBy   User    @relation(fields: [createdById], references: [id])
+    createdBy   User     @relation(fields: [createdById], references: [id])
     creator     String
     creatorImg  String
     deleted     Boolean
@@ -90,9 +133,11 @@ model postningsoppsett {
     deleter     String
     kunde       String
 
-    startrings startrings[]
-    endrings   endrings[]
-    rawinput   rawinput[]
+    startrings    startrings[]
+    endrings      endrings[]
+    rawinput      rawinput[]
+    startringsAlt startringsAlt[]
+    endringAlt    endringAlt[]
 }
 
 model startrings {
@@ -103,6 +148,21 @@ model startrings {
 }
 
 model endrings {
+    id        String @id @default(cuid())
+    input     Float
+    endringId String
+
+    bladedata postningsoppsett @relation(fields: [endringId], references: [id])
+}
+
+model startringsAlt {
+    id          String           @id @default(cuid())
+    input       Float
+    startringId String
+    bladedata   postningsoppsett @relation(fields: [startringId], references: [id])
+}
+
+model endringAlt {
     id        String @id @default(cuid())
     input     Float
     endringId String
