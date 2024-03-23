@@ -1,6 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import { api } from "~/utils/api";
 
 const InputListComponent = () => {
+  const [listProps, setListProps] = useState({
+    treslag: "",
+    klGrense: "",
+    klType: "",
+    klasse: "",
+    postNr: "",
+    antall: 0,
+    m3: 0,
+    status: "",
+    post: "",
+    bredde: 0,
+    xLog: "",
+    prosent: "",
+    anm: "",
+    anm2: "",
+    VS66Blad: 5,
+    vs66: "",
+    vs66Br: "",
+    mkvBord: "",
+    mkvBordBr: "",
+    dimensjon: "",
+    sortering: "",
+    kode: "",
+    torke: "",
+    anmerk: "",
+    destinasjon: "",
+    text: "",
+    blad: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
   const klassetype = [
     "Spesial",
     "Panel",
@@ -11,7 +43,7 @@ const InputListComponent = () => {
     "Krok",
     "Decker",
   ];
-  const xLog = [
+  const xLogList = [
     "1x",
     "2x",
     "3x",
@@ -82,14 +114,38 @@ const InputListComponent = () => {
     "Kammer 17+-2%, Kanal 12+-2%",
   ];
 
+  console.log(listProps);
+
+  const ctx = api.useContext();
+  const createPost = api.skurliste.create.useMutation({
+    onSuccess: () => {
+      void ctx.skurliste.getAll.invalidate();
+    },
+  });
+
   return (
     <div className="bg-base-100">
-      <form className="flex flex-wrap gap-2">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          createPost.mutate(listProps);
+        }}
+        className="flex flex-wrap gap-2"
+      >
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="Treslag">
             Treslag
           </label>
-          <select id="Treslag" className="text-xs">
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                treslag: e.target.value,
+              }))
+            }
+            id="Treslag"
+            className="text-xs"
+          >
             <option selected>Velg</option>
             <option value="Gran">Gran</option>
             <option value="Furu">Furu</option>
@@ -99,7 +155,17 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="Klasse">
             Klasse
           </label>
-          <select id="Klasse" className="w-20 text-xs">
+          <select
+            id="Klasse"
+            className="w-20 text-xs"
+            value={listProps.klasse}
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                klasse: e.target.value,
+              }))
+            }
+          >
             <option selected disabled hidden value="">
               Velg
             </option>
@@ -114,10 +180,17 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="Treslag">
             Klassetype
           </label>
-          <select>
-            <option value="">Velg</option>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                klType: e.target.value,
+              }))
+            }
+          >
+            <option value={listProps.klType}>Velg</option>
             {klassetype.map((option) => (
-              <option key={option} value={option}>
+              <option key={option} value={listProps.klType}>
                 {option}
               </option>
             ))}
@@ -128,31 +201,81 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="Klasse">
             Klassegrense
           </label>
-          <input className="text-xs" type="text" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                klGrense: e.target.value,
+              }))
+            }
+            className="text-xs"
+            type="text"
+            value={listProps.klGrense}
+          />
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="Klasse">
             PostningsNr
           </label>
-          <input className="text-xs" type="text" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                postNr: e.target.value,
+              }))
+            }
+            className="text-xs"
+            type="text"
+            value={listProps.postNr}
+          />
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
-          <label className="text-xs" htmlFor="Klasse">
+          <label className="text-xs" htmlFor="Antall">
             Antall
           </label>
-          <input className="text-xs" type="number" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                antall: Number(e.target.value),
+              }))
+            }
+            className="text-xs"
+            type="number"
+            value={listProps.antall}
+          />
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="Klasse">
             M3
           </label>
-          <input className="text-xs" type="number" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                m3: Number(e.target.value),
+              }))
+            }
+            className="text-xs"
+            type="number"
+            value={listProps.m3}
+          />
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="Treslag">
             Status
           </label>
-          <select id="Status" className="text-xs">
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                status: e.target.value,
+              }))
+            }
+            id="Status"
+            className="text-xs"
+            value={listProps.status}
+          >
             <option selected>Velg</option>
             <option value="tøm">tøm</option>
             <option value="stopp">stopp</option>
@@ -162,21 +285,53 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="Post">
             Post
           </label>
-          <input className="text-xs" type="text" placeholder="eks: 2x50" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                post: e.target.value,
+              }))
+            }
+            className="text-xs"
+            type="text"
+            placeholder="eks: 2x50"
+            value={listProps.post}
+          />
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="Bredde">
             Bredde
           </label>
-          <input className="text-xs" type="number" placeholder="Skurhøyde" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                bredde: Number(e.target.value),
+              }))
+            }
+            className="text-xs"
+            type="number"
+            placeholder="Skurhøyde"
+            value={listProps.bredde}
+          />
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
-          <label className="text-xs" htmlFor="Treslag">
+          <label className="text-xs" htmlFor="xLog">
             X-log
           </label>
-          <select>
-            <option value="">Velg</option>
-            {xLog.map((option) => (
+          <select
+            className="text-xs"
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                xLog: e.target.value,
+              }))
+            }
+          >
+            <option className="text-xs" value="">
+              Velg
+            </option>
+            {xLogList.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
@@ -187,7 +342,15 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="Treslag">
             %
           </label>
-          <select>
+          <select
+            className="text-xs"
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                prosent: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {tProsent.map((option) => (
               <option key={option} value={option}>
@@ -200,19 +363,49 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="Anm">
             Anm
           </label>
-          <input className="text-xs" type="text" placeholder="" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                anm: e.target.value,
+              }))
+            }
+            className="text-xs"
+            type="text"
+            placeholder=""
+            value={listProps.anm}
+          />
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="Anm">
             Anm2
           </label>
-          <input className="text-xs" type="text" placeholder="" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                anm2: e.target.value,
+              }))
+            }
+            className="text-xs"
+            type="text"
+            placeholder=""
+            value={listProps.anm2}
+          />
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="VS66">
             VS66
           </label>
-          <select>
+          <select
+            className="text-xs"
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                vs66: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {bordtykkelser.map((option) => (
               <option key={option} value={option}>
@@ -225,7 +418,15 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="VS66Br">
             VS66Br
           </label>
-          <select>
+          <select
+            className="text-xs"
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                vs66Br: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {bordbredder.map((option) => (
               <option key={option} value={option}>
@@ -264,7 +465,14 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="VS66">
             MKV
           </label>
-          <select>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                mkvBord: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {bordtykkelser.map((option) => (
               <option key={option} value={option}>
@@ -277,7 +485,14 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="VS66Br">
             MKVBr
           </label>
-          <select>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                mkvBordBr: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {bordbredder.map((option) => (
               <option key={option} value={option}>
@@ -290,13 +505,30 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="Dim">
             Dim
           </label>
-          <input className="text-xs" type="text" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                dimensjon: e.target.value,
+              }))
+            }
+            className="text-xs"
+            type="text"
+            value={listProps.dimensjon}
+          />
         </div>
         <div className="flex w-28 flex-col bg-red-200 p-2">
           <label className="text-xs" htmlFor="Sortering">
             Sortering
           </label>
-          <select>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                sortering: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {sortering.map((option) => (
               <option key={option} value={option}>
@@ -309,7 +541,14 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="KvalKode">
             KvalKode
           </label>
-          <select>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                kode: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {kvalKode.map((option) => (
               <option key={option} value={option}>
@@ -322,7 +561,14 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="prosent">
             Tørkeprosent
           </label>
-          <select>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                torke: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {prosent.map((option) => (
               <option key={option} value={option}>
@@ -335,7 +581,14 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="anmerk">
             Anmerk
           </label>
-          <select>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                anmerk: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {anmerk.map((option) => (
               <option key={option} value={option}>
@@ -348,7 +601,14 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="torke">
             Tørke
           </label>
-          <select>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                destinasjon: e.target.value,
+              }))
+            }
+          >
             <option value="">Velg</option>
             {torke.map((option) => (
               <option key={option} value={option}>
@@ -361,7 +621,17 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="Merknad">
             Merknad
           </label>
-          <input className="text-xs" type="text" />
+          <input
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                text: e.target.value,
+              }))
+            }
+            className="text-xs"
+            type="text"
+            value={listProps.text}
+          />
         </div>
         <button className="btn btn-info btn-xs text-white">Lagre</button>
       </form>

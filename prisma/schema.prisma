@@ -87,6 +87,7 @@ model skurliste {
     treslag     String
     klasse      String
     klGrense    String
+    klType      String
     postNr      String
     antall      Int
     m3          Int

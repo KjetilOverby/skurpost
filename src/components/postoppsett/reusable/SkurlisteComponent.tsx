@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
 
 const SkurlisteComponent = ({ skurliste }) => {
-  const [mkvBlad, setMkvBlad] = useState(0);
-
   return (
     <div>
       {" "}
