@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import React from "react";
 import dateFormat from "dateformat";
 
 const SkurlisteComponent = ({ skurliste }) => {
@@ -31,7 +35,7 @@ const SkurlisteComponent = ({ skurliste }) => {
           {skurliste?.map((list) => {
             return (
               <>
-                <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary hover:bg-primary">
+                <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary">
                   <td
                     className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                   >

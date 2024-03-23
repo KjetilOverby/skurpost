@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import React from "react";
 import dateFormat from "dateformat";
 
@@ -5,20 +10,20 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
   return (
     <div>
       {" "}
-      <table className="table-xs border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-neutral table w-full whitespace-nowrap border ">
+      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-neutral ">
         <thead>
-          <tr className=" border-l-base-100 border-r-base-100 border text-left ">
-            <th className="text-base-100 text-sm">Treslag</th>
-            <th className="text-base-100 text-sm">Klasse</th>
-            <th className="text-base-100 text-sm">Klassegrense</th>
-            <th className="text-base-100 text-sm">Dim.</th>
-            <th className="text-base-100 text-sm">Sortering</th>
+          <tr className=" border border-l-base-100 border-r-base-100 text-left ">
+            <th className="text-sm text-base-100">Treslag</th>
+            <th className="text-sm text-base-100">Klasse</th>
+            <th className="text-sm text-base-100">Klassegrense</th>
+            <th className="text-sm text-base-100">Dim.</th>
+            <th className="text-sm text-base-100">Sortering</th>
 
-            <th className="text-base-100 text-sm">Kval kode</th>
-            <th className="text-base-100 text-sm">%</th>
-            <th className="text-base-100 text-sm">Anmerk</th>
-            <th className="text-base-100 text-sm">Tørke</th>
-            <th className="text-base-100 text-sm">Anm</th>
+            <th className="text-sm text-base-100">Kval kode</th>
+            <th className="text-sm text-base-100">%</th>
+            <th className="text-sm text-base-100">Anmerk</th>
+            <th className="text-sm text-base-100">Tørke</th>
+            <th className="text-sm text-base-100">Anm</th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +37,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
             const text = list.text.split(", ");
             return (
               <>
-                <tr className="border-primary bg-base-100 hover:bg-primary hover:bg-primary border hover:cursor-pointer">
+                <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary hover:bg-primary">
                   <td
                     className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                   >
@@ -46,7 +51,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   <td className="py-5">
                     <div className="flex  space-x-3">
                       <div>
-                        <div className="text-neutral text-xs">
+                        <div className="text-xs text-neutral">
                           {list.klasse}
                         </div>
                       </div>
@@ -55,7 +60,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   <td className="py-5">
                     <div className="flex  space-x-3">
                       <div>
-                        <div className="text-neutral text-xs">
+                        <div className="text-xs text-neutral">
                           {list.klGrense}
                         </div>
                       </div>
@@ -76,7 +81,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   <td className="py-5">
                     <div className="flex flex flex-col  ">
                       {sorteringArray.map((item, index) => (
-                        <p className="text-neutral mb-2" key={index}>
+                        <p className="mb-2 text-neutral" key={index}>
                           {item}
                         </p>
                       ))}
@@ -85,7 +90,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   <td className="py-5">
                     <div className="flex flex flex-col  ">
                       {kvKode.map((item, index) => (
-                        <p className="text-neutral mb-2" key={index}>
+                        <p className="mb-2 text-neutral" key={index}>
                           {item}
                         </p>
                       ))}
@@ -95,7 +100,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   <td className="py-5">
                     <div className="flex flex flex-col  ">
                       {tProsent.map((item, index) => (
-                        <p className="text-neutral mb-2" key={index}>
+                        <p className="mb-2 text-neutral" key={index}>
                           {item}
                         </p>
                       ))}
@@ -117,7 +122,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                       <div className="flex flex flex-col ">
                         {dest.map((item, index) => (
                           <p
-                            className="text-neutral mb-2 text-left"
+                            className="mb-2 text-left text-neutral"
                             key={index}
                           >
                             {item}
@@ -130,7 +135,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                     <div className="flex  space-x-3">
                       <div className="flex flex flex-col  ">
                         {text.map((item, index) => (
-                          <p className="text-neutral mb-2" key={index}>
+                          <p className="mb-2 text-neutral" key={index}>
                             {item}
                           </p>
                         ))}

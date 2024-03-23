@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { api } from "~/utils/api";
 
 const InputListComponent = () => {
@@ -123,6 +123,25 @@ const InputListComponent = () => {
     },
   });
 
+  useEffect(() => {
+    let newBlad: number;
+
+    if (listProps.bredde >= 0 && listProps.bredde < 126) {
+      newBlad = 4.0;
+    } else if (listProps.bredde >= 126 && listProps.bredde <= 150) {
+      newBlad = 4.2;
+    } else if (listProps.bredde >= 151 && listProps.bredde <= 175) {
+      newBlad = 4.4;
+    } else if (listProps.bredde >= 175) {
+      newBlad = 4.6;
+    }
+
+    setListProps((prevState) => ({
+      ...prevState,
+      blad: newBlad,
+    }));
+  }, [listProps.bredde]);
+
   return (
     <div className="bg-base-100">
       <form
@@ -144,7 +163,7 @@ const InputListComponent = () => {
               }))
             }
             id="Treslag"
-            className="text-xs"
+            className="bg-base-100 text-xs"
           >
             <option selected>Velg</option>
             <option value="Gran">Gran</option>
@@ -157,7 +176,7 @@ const InputListComponent = () => {
           </label>
           <select
             id="Klasse"
-            className="w-20 text-xs"
+            className="w-20 bg-base-100 text-xs"
             value={listProps.klasse}
             onChange={(e) =>
               setListProps((prevState) => ({
@@ -187,6 +206,7 @@ const InputListComponent = () => {
                 klType: e.target.value,
               }))
             }
+            className="bg-base-100 text-xs"
           >
             <option value={listProps.klType}>Velg</option>
             {klassetype.map((option) => (
@@ -208,7 +228,7 @@ const InputListComponent = () => {
                 klGrense: e.target.value,
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="text"
             value={listProps.klGrense}
           />
@@ -224,7 +244,7 @@ const InputListComponent = () => {
                 postNr: e.target.value,
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="text"
             value={listProps.postNr}
           />
@@ -240,7 +260,7 @@ const InputListComponent = () => {
                 antall: Number(e.target.value),
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="number"
             value={listProps.antall}
           />
@@ -256,7 +276,7 @@ const InputListComponent = () => {
                 m3: Number(e.target.value),
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="number"
             value={listProps.m3}
           />
@@ -273,7 +293,7 @@ const InputListComponent = () => {
               }))
             }
             id="Status"
-            className="text-xs"
+            className="bg-base-100 text-xs"
             value={listProps.status}
           >
             <option selected>Velg</option>
@@ -292,7 +312,7 @@ const InputListComponent = () => {
                 post: e.target.value,
               }))
             }
-            className="text-xs"
+            className="text-xss bg-base-100"
             type="text"
             placeholder="eks: 2x50"
             value={listProps.post}
@@ -309,7 +329,7 @@ const InputListComponent = () => {
                 bredde: Number(e.target.value),
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="number"
             placeholder="Skurhøyde"
             value={listProps.bredde}
@@ -320,7 +340,7 @@ const InputListComponent = () => {
             X-log
           </label>
           <select
-            className="text-xs"
+            className="bg-base-100 text-xs"
             onChange={(e) =>
               setListProps((prevState) => ({
                 ...prevState,
@@ -343,7 +363,7 @@ const InputListComponent = () => {
             %
           </label>
           <select
-            className="text-xs"
+            className="bg-base-100 text-xs"
             onChange={(e) =>
               setListProps((prevState) => ({
                 ...prevState,
@@ -370,7 +390,7 @@ const InputListComponent = () => {
                 anm: e.target.value,
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="text"
             placeholder=""
             value={listProps.anm}
@@ -387,7 +407,7 @@ const InputListComponent = () => {
                 anm2: e.target.value,
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="text"
             placeholder=""
             value={listProps.anm2}
@@ -398,7 +418,7 @@ const InputListComponent = () => {
             VS66
           </label>
           <select
-            className="text-xs"
+            className="bg-base-100 text-xs"
             onChange={(e) =>
               setListProps((prevState) => ({
                 ...prevState,
@@ -415,11 +435,11 @@ const InputListComponent = () => {
           </select>
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
-          <label className="text-xs" htmlFor="VS66Br">
+          <label className="text-xs " htmlFor="VS66Br">
             VS66Br
           </label>
           <select
-            className="text-xs"
+            className="bg-base-100 text-xs"
             onChange={(e) =>
               setListProps((prevState) => ({
                 ...prevState,
@@ -439,7 +459,7 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="VS66">
             VS66 Xtra
           </label>
-          <select>
+          <select className="bg-base-100">
             <option value="">Velg</option>
             {bordtykkelser.map((option) => (
               <option key={option} value={option}>
@@ -452,7 +472,7 @@ const InputListComponent = () => {
           <label className="text-xs" htmlFor="VS66Br">
             VS66Br Xtra
           </label>
-          <select>
+          <select className="bg-base-100">
             <option value="">Velg</option>
             {bordbredder.map((option) => (
               <option key={option} value={option}>
@@ -472,6 +492,7 @@ const InputListComponent = () => {
                 mkvBord: e.target.value,
               }))
             }
+            className="bg-base-100 text-xs"
           >
             <option value="">Velg</option>
             {bordtykkelser.map((option) => (
@@ -492,6 +513,7 @@ const InputListComponent = () => {
                 mkvBordBr: e.target.value,
               }))
             }
+            className="bg-base-100"
           >
             <option value="">Velg</option>
             {bordbredder.map((option) => (
@@ -502,7 +524,7 @@ const InputListComponent = () => {
           </select>
         </div>
         <div className="flex w-28 flex-col bg-red-200 p-2">
-          <label className="text-xs" htmlFor="Dim">
+          <label className="text-xs " htmlFor="Dim">
             Dim
           </label>
           <input
@@ -512,7 +534,7 @@ const InputListComponent = () => {
                 dimensjon: e.target.value,
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="text"
             value={listProps.dimensjon}
           />
@@ -528,6 +550,7 @@ const InputListComponent = () => {
                 sortering: e.target.value,
               }))
             }
+            className="bg-base-100 text-xs"
           >
             <option value="">Velg</option>
             {sortering.map((option) => (
@@ -548,6 +571,7 @@ const InputListComponent = () => {
                 kode: e.target.value,
               }))
             }
+            className="bg-base-100 text-xs"
           >
             <option value="">Velg</option>
             {kvalKode.map((option) => (
@@ -568,6 +592,7 @@ const InputListComponent = () => {
                 torke: e.target.value,
               }))
             }
+            className="bg-base-100 text-xs"
           >
             <option value="">Velg</option>
             {prosent.map((option) => (
@@ -588,6 +613,7 @@ const InputListComponent = () => {
                 anmerk: e.target.value,
               }))
             }
+            className="bg-base-100 text-xs"
           >
             <option value="">Velg</option>
             {anmerk.map((option) => (
@@ -608,6 +634,7 @@ const InputListComponent = () => {
                 destinasjon: e.target.value,
               }))
             }
+            className="bg-base-100 text-xs"
           >
             <option value="">Velg</option>
             {torke.map((option) => (
@@ -628,7 +655,7 @@ const InputListComponent = () => {
                 text: e.target.value,
               }))
             }
-            className="text-xs"
+            className="bg-base-100 text-xs"
             type="text"
             value={listProps.text}
           />
