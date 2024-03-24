@@ -7,8 +7,17 @@ import SkurlisteComponent from "../postoppsett/reusable/SkurlisteComponent";
 import SkurlistePakkingComponent from "../postoppsett/reusable/SkurlistePakkingComponent";
 import SkurlisteComponentInput from "./SkurlisteComponentInput";
 import SkurlistePakkingInput from "./SkurlistePakkingInput";
+import { api } from "~/utils/api";
 
 const ListcreatorMain = ({ skurliste }) => {
+  const ctx = api.useContext();
+
+  const deletePost = api.skurliste.delete.useMutation({
+    onSuccess: () => {
+      void ctx.skurliste.getAll.invalidate();
+    },
+  });
+
   const [listProps, setListProps] = useState({
     treslag: "",
     klGrense: "",
@@ -39,6 +48,7 @@ const ListcreatorMain = ({ skurliste }) => {
     blad: 0,
     createdAt: new Date(),
     updatedAt: new Date(),
+    buffer: false,
   });
   return (
     <div className="bg-base-100">
@@ -57,7 +67,11 @@ const ListcreatorMain = ({ skurliste }) => {
       <div className="bg-base-100 pt-20">
         <div className="mb-10">
           <h1>Skurplan</h1>
-          <SkurlisteComponent skurliste={skurliste} edit={true} />
+          <SkurlisteComponent
+            skurliste={skurliste}
+            edit={true}
+            deletePost={deletePost}
+          />
         </div>
         <div>
           <h1>Pakking</h1>

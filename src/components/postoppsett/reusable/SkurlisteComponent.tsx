@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -5,7 +6,10 @@
 import React from "react";
 import dateFormat from "dateformat";
 
-const SkurlisteComponent = ({ skurliste, edit }) => {
+const SkurlisteComponent = ({ skurliste, edit, deletePost }) => {
+  const handleDelete = (id: string) => {
+    deletePost.mutate({ id: id });
+  };
   return (
     <div>
       {" "}
@@ -201,7 +205,10 @@ const SkurlisteComponent = ({ skurliste, edit }) => {
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <button className="btn btn-xs bg-red-500 text-white">
+                          <button
+                            onClick={() => handleDelete(list.id)}
+                            className="btn btn-xs bg-red-500 text-white"
+                          >
                             Slett
                           </button>
                         </div>

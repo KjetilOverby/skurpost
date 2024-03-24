@@ -53,6 +53,7 @@ export const skurlisteRouter = createTRPCRouter({
           text: z.string(),
           createdAt: z.date(),
           updatedAt: z.date(),
+          buffer: z.boolean(),
         })
       )
       .mutation(({ ctx, input }) => {
@@ -97,6 +98,7 @@ export const skurlisteRouter = createTRPCRouter({
             destinasjon: input.destinasjon,
             text: input.text,
             blad: input.blad,
+            buffer : input.buffer,
           },
         });
   
