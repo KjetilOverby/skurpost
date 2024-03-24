@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
@@ -13,6 +14,12 @@ const ListcreatorMain = ({ skurliste }) => {
   const ctx = api.useContext();
 
   const deletePost = api.skurliste.delete.useMutation({
+    onSuccess: () => {
+      void ctx.skurliste.getAll.invalidate();
+    },
+  });
+
+  const editPost = api.skurliste.update.useMutation({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
     },
@@ -71,6 +78,9 @@ const ListcreatorMain = ({ skurliste }) => {
             skurliste={skurliste}
             edit={true}
             deletePost={deletePost}
+            editPost={editPost}
+            listProps={listProps}
+            setListProps={setListProps}
           />
         </div>
         <div>

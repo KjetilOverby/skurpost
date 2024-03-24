@@ -9,8 +9,6 @@ import React, { useEffect } from "react";
 import { api } from "~/utils/api";
 
 const InputListComponent = ({ listProps, setListProps }) => {
-  console.log(listProps);
-
   const klassetype = [
     "Spesial",
     "Panel",
@@ -143,6 +141,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             }
             id="Treslag"
             className="bg-base-100 text-xs"
+            value={listProps.treslag}
           >
             <option selected>Velg</option>
             <option value="Gran">Gran</option>
@@ -162,6 +161,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
               }))
             }
             className="bg-base-100 text-xs"
+            value={listProps.klType}
           >
             <option value={listProps.klType}>Velg</option>
             {klassetype.map((option) => (
@@ -327,6 +327,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
                 xLog: e.target.value,
               }))
             }
+            value={listProps.xLog}
           >
             <option className="text-xs" value="">
               Velg
@@ -350,6 +351,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
                 prosent: e.target.value,
               }))
             }
+            value={listProps.prosent}
           >
             <option value="">Velg</option>
             {tProsent.map((option) => (
@@ -405,6 +407,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
                 vs66: e.target.value,
               }))
             }
+            value={listProps.vs66}
           >
             <option value="">Velg</option>
             {bordtykkelser.map((option) => (
@@ -426,6 +429,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
                 vs66Br: e.target.value,
               }))
             }
+            value={listProps.vs66Br}
           >
             <option value="">Velg</option>
             {bordbredder.map((option) => (
@@ -473,6 +477,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
               }))
             }
             className="bg-base-100 text-xs"
+            value={listProps.mkvBord}
           >
             <option value="">Velg</option>
             {bordtykkelser.map((option) => (
@@ -494,6 +499,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
               }))
             }
             className="bg-base-100"
+            value={listProps.mkvBordBr}
           >
             <option value="">Velg</option>
             {bordbredder.map((option) => (
@@ -531,6 +537,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
               }))
             }
             className="bg-base-100 text-xs"
+            value={listProps.sortering}
           >
             <option value="">Velg</option>
             {sortering.map((option) => (
@@ -552,6 +559,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
               }))
             }
             className="bg-base-100 text-xs"
+            value={listProps.kode}
           >
             <option value="">Velg</option>
             {kvalKode.map((option) => (
@@ -573,6 +581,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
               }))
             }
             className="bg-base-100 text-xs"
+            value={listProps.torke}
           >
             <option value="">Velg</option>
             {prosent.map((option) => (
@@ -594,6 +603,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
               }))
             }
             className="bg-base-100 text-xs"
+            value={listProps.anmerk}
           >
             <option value="">Velg</option>
             {anmerk.map((option) => (
@@ -615,6 +625,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
               }))
             }
             className="bg-base-100 text-xs"
+            value={listProps.destinasjon}
           >
             <option value="">Velg</option>
             {torke.map((option) => (

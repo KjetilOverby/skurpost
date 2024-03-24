@@ -1,14 +1,98 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import React from "react";
+import React, { useState } from "react";
 import dateFormat from "dateformat";
+import { set } from "zod";
 
-const SkurlisteComponent = ({ skurliste, edit, deletePost }) => {
+const SkurlisteComponent = ({
+  skurliste,
+  edit,
+  deletePost,
+  editPost,
+  listProps,
+  setListProps,
+}) => {
   const handleDelete = (id: string) => {
     deletePost.mutate({ id: id });
+  };
+
+  const [editingId, setEditingId] = useState(null);
+
+  const handleEditExecute = (id: string) => {
+    editPost.mutate({
+      id: id,
+      treslag: listProps.treslag,
+      klasse: listProps.klasse,
+      klGrense: listProps.klGrense,
+      klType: listProps.klType,
+      postNr: listProps.postNr,
+      antall: listProps.antall,
+      m3: listProps.m3,
+      status: listProps.status,
+      post: listProps.post,
+      xLog: listProps.xLog,
+      bredde: listProps.bredde,
+      prosent: listProps.prosent,
+      anm: listProps.anm,
+      anm2: listProps.anm2,
+      VS66Blad: listProps.VS66Blad,
+      vs66: listProps.vs66,
+      vs66Br: listProps.vs66Br,
+      mkvBord: listProps.mkvBord,
+      mkvBordBr: listProps.mkvBordBr,
+      blad: listProps.blad,
+      sortering: listProps.sortering,
+      kode: listProps.kode,
+      dimensjon: listProps.dimensjon,
+      torke: listProps.torke,
+      anmerk: listProps.anmerk,
+      destinasjon: listProps.destinasjon,
+      text: listProps.text,
+      buffer: listProps.buffer,
+    });
+    setEditingId(null);
+  };
+
+  const handleEdit = (id: string) => {
+    setEditingId(id);
+    const list = skurliste.find((list) => list.id === id);
+    setListProps({
+      treslag: list.treslag,
+      klasse: list.klasse,
+      klGrense: list.klGrense,
+      klType: list.klType,
+      postNr: list.postNr,
+      antall: list.antall,
+      m3: list.m3,
+      status: list.status,
+      post: list.post,
+      xLog: list.xLog,
+      bredde: list.bredde,
+      prosent: list.prosent,
+      anm: list.anm,
+      anm2: list.anm2,
+      VS66Blad: list.VS66Blad,
+      vs66: list.vs66,
+      vs66Br: list.vs66Br,
+      mkvBord: list.mkvBord,
+      mkvBordBr: list.mkvBordBr,
+      blad: list.blad,
+      sortering: list.sortering,
+      kode: list.kode,
+      dimensjon: list.dimensjon,
+      torke: list.torke,
+      anmerk: list.anmerk,
+      destinasjon: list.destinasjon,
+      text: list.text,
+      buffer: list.buffer,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
   };
   return (
     <div>
@@ -183,14 +267,17 @@ const SkurlisteComponent = ({ skurliste, edit, deletePost }) => {
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <button className="btn btn-xs bg-warning">
+                          <button
+                            onClick={() => handleEdit(list.id)}
+                            className="btn btn-xs bg-warning"
+                          >
                             Rediger
                           </button>
                         </div>
                       </div>
                     </td>
                   )}
-                  {edit && (
+                  {edit && list.id !== editingId && (
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
@@ -201,7 +288,7 @@ const SkurlisteComponent = ({ skurliste, edit, deletePost }) => {
                       </div>
                     </td>
                   )}
-                  {edit && (
+                  {edit && list.id !== editingId && (
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
@@ -210,6 +297,34 @@ const SkurlisteComponent = ({ skurliste, edit, deletePost }) => {
                             className="btn btn-xs bg-red-500 text-white"
                           >
                             Slett
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  )}
+                  {edit && list.id === editingId && (
+                    <td className="py-5">
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <button
+                            onClick={() => handleEditExecute(list.id)}
+                            className="btn btn-xs bg-green-500 text-white"
+                          >
+                            Oppdater
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  )}
+                  {edit && list.id === editingId && (
+                    <td className="py-5">
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="btn btn-xs bg-blue-500 text-white"
+                          >
+                            Avbryt
                           </button>
                         </div>
                       </div>
