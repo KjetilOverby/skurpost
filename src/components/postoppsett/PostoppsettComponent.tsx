@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import React from "react";
 import Ring from "./reusable/rings/Ring";
 import RawRing from "./reusable/rings/RawRing";

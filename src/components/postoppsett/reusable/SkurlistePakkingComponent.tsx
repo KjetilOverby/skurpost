@@ -10,20 +10,20 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
   return (
     <div>
       {" "}
-      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-neutral ">
+      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-green-200 ">
         <thead>
           <tr className=" border border-l-base-100 border-r-base-100 text-left ">
-            <th className="text-sm text-base-100">Treslag</th>
-            <th className="text-sm text-base-100">Klasse</th>
-            <th className="text-sm text-base-100">Klassegrense</th>
-            <th className="text-sm text-base-100">Dim.</th>
-            <th className="text-sm text-base-100">Sortering</th>
+            <th className="text-sm text-neutral">Treslag</th>
+            <th className="text-sm text-neutral">Kl</th>
+            <th className="text-sm text-neutral">KlGrense</th>
+            <th className="text-sm text-neutral">Dim</th>
+            <th className="text-sm text-neutral">Sortering</th>
 
-            <th className="text-sm text-base-100">Kval kode</th>
-            <th className="text-sm text-base-100">%</th>
-            <th className="text-sm text-base-100">Anmerk</th>
-            <th className="text-sm text-base-100">Tørke</th>
-            <th className="text-sm text-base-100">Anm</th>
+            <th className="text-sm text-neutral">Kode</th>
+            <th className="text-sm text-neutral">%</th>
+            <th className="text-sm text-neutral">Anmerk</th>
+            <th className="text-sm text-neutral">Tørke</th>
+            <th className="text-sm text-neutral">Anm</th>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
             const text = list.text.split(", ");
             return (
               <>
-                <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary hover:bg-primary">
+                <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary ">
                   <td
                     className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                   >
@@ -67,7 +67,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                     </div>
                   </td>
                   <td className="py-5">
-                    <div className="flex flex flex-col  ">
+                    <div className="flex flex-col  ">
                       {dim.map((item, index) => (
                         <p
                           className="mb-2 font-bold text-emerald-600"
@@ -79,7 +79,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                     </div>
                   </td>
                   <td className="py-5">
-                    <div className="flex flex flex-col  ">
+                    <div className="flex flex-col  ">
                       {sorteringArray.map((item, index) => (
                         <p className="mb-2 text-neutral" key={index}>
                           {item}
@@ -88,7 +88,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                     </div>
                   </td>
                   <td className="py-5">
-                    <div className="flex flex flex-col  ">
+                    <div className="flex flex-col  ">
                       {kvKode.map((item, index) => (
                         <p className="mb-2 text-neutral" key={index}>
                           {item}
@@ -98,7 +98,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   </td>
 
                   <td className="py-5">
-                    <div className="flex flex flex-col  ">
+                    <div className="flex flex-col  ">
                       {tProsent.map((item, index) => (
                         <p className="mb-2 text-neutral" key={index}>
                           {item}
@@ -108,7 +108,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   </td>
                   <td className="py-5">
                     <div className="flex  space-x-3">
-                      <div className="flex flex flex-col  ">
+                      <div className="flex flex-col  ">
                         {anmerk.map((item, index) => (
                           <p className="mb-2 text-blue-500" key={index}>
                             {item}
@@ -119,7 +119,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   </td>
                   <td className="py-5">
                     <div className="flex  space-x-3">
-                      <div className="flex flex flex-col ">
+                      <div className="flex flex-col ">
                         {dest.map((item, index) => (
                           <p
                             className="mb-2 text-left text-neutral"
@@ -133,7 +133,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
                   </td>
                   <td className="py-5">
                     <div className="flex  space-x-3">
-                      <div className="flex flex flex-col  ">
+                      <div className="flex flex-col  ">
                         {text.map((item, index) => (
                           <p className="mb-2 text-neutral" key={index}>
                             {item}

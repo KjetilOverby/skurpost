@@ -1,38 +1,16 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import React, { useEffect } from "react";
 import { api } from "~/utils/api";
 
-const InputListComponent = () => {
-  const [listProps, setListProps] = useState({
-    treslag: "",
-    klGrense: "",
-    klType: "",
-    klasse: "",
-    postNr: "",
-    antall: 0,
-    m3: 0,
-    status: "",
-    post: "",
-    bredde: 0,
-    xLog: "",
-    prosent: "",
-    anm: "",
-    anm2: "",
-    VS66Blad: 5,
-    vs66: "",
-    vs66Br: "",
-    mkvBord: "",
-    mkvBordBr: "",
-    dimensjon: "",
-    sortering: "",
-    kode: "",
-    torke: "",
-    anmerk: "",
-    destinasjon: "",
-    text: "",
-    blad: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
+const InputListComponent = ({ listProps, setListProps }) => {
+  console.log(listProps);
+
   const klassetype = [
     "Spesial",
     "Panel",
@@ -140,10 +118,11 @@ const InputListComponent = () => {
       ...prevState,
       blad: newBlad,
     }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listProps.bredde]);
 
   return (
-    <div className="bg-base-100">
+    <div className="">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -170,31 +149,7 @@ const InputListComponent = () => {
             <option value="Furu">Furu</option>
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
-          <label className="text-xs" htmlFor="Klasse">
-            Klasse
-          </label>
-          <select
-            id="Klasse"
-            className="w-20 bg-base-100 text-xs"
-            value={listProps.klasse}
-            onChange={(e) =>
-              setListProps((prevState) => ({
-                ...prevState,
-                klasse: e.target.value,
-              }))
-            }
-          >
-            <option selected disabled hidden value="">
-              Velg
-            </option>
-            {Array.from({ length: 25 }, (_, i) => i + 2).map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </div>
+
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="Treslag">
             Klassetype
@@ -232,6 +187,31 @@ const InputListComponent = () => {
             type="text"
             value={listProps.klGrense}
           />
+        </div>
+        <div className="flex w-28 flex-col bg-blue-200 p-2">
+          <label className="text-xs" htmlFor="Klasse">
+            Klasse
+          </label>
+          <select
+            id="Klasse"
+            className="w-20 bg-base-100 text-xs"
+            value={listProps.klasse}
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                klasse: e.target.value,
+              }))
+            }
+          >
+            <option selected disabled hidden value="">
+              Velg
+            </option>
+            {Array.from({ length: 25 }, (_, i) => i + 2).map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex w-28 flex-col bg-blue-200 p-2">
           <label className="text-xs" htmlFor="Klasse">
@@ -523,7 +503,7 @@ const InputListComponent = () => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-red-200 p-2">
+        <div className="flex w-28 flex-col bg-green-200 p-2">
           <label className="text-xs " htmlFor="Dim">
             Dim
           </label>
@@ -539,7 +519,7 @@ const InputListComponent = () => {
             value={listProps.dimensjon}
           />
         </div>
-        <div className="flex w-28 flex-col bg-red-200 p-2">
+        <div className="flex w-28 flex-col bg-green-200 p-2">
           <label className="text-xs" htmlFor="Sortering">
             Sortering
           </label>
@@ -560,7 +540,7 @@ const InputListComponent = () => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-red-200 p-2">
+        <div className="flex w-28 flex-col bg-green-200 p-2">
           <label className="text-xs" htmlFor="KvalKode">
             KvalKode
           </label>
@@ -581,7 +561,7 @@ const InputListComponent = () => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-red-200 p-2">
+        <div className="flex w-28 flex-col bg-green-200 p-2">
           <label className="text-xs" htmlFor="prosent">
             Tørkeprosent
           </label>
@@ -602,7 +582,7 @@ const InputListComponent = () => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-red-200 p-2">
+        <div className="flex w-28 flex-col bg-green-200 p-2">
           <label className="text-xs" htmlFor="anmerk">
             Anmerk
           </label>
@@ -623,7 +603,7 @@ const InputListComponent = () => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-red-200 p-2">
+        <div className="flex w-28 flex-col bg-green-200 p-2">
           <label className="text-xs" htmlFor="torke">
             Tørke
           </label>
@@ -644,7 +624,7 @@ const InputListComponent = () => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-red-200 p-2">
+        <div className="flex w-28 flex-col bg-green-200 p-2">
           <label className="text-xs" htmlFor="Merknad">
             Merknad
           </label>

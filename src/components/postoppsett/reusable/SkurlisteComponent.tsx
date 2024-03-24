@@ -5,17 +5,17 @@
 import React from "react";
 import dateFormat from "dateformat";
 
-const SkurlisteComponent = ({ skurliste }) => {
+const SkurlisteComponent = ({ skurliste, edit }) => {
   return (
     <div>
       {" "}
-      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-primary">
+      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-blue-200">
         <thead>
           <tr className=" border border-l-base-100 border-r-base-100 text-left">
             <th className="text-sm text-neutral">Treslag</th>
             <th className="text-sm text-neutral">Klassegrense</th>
-            <th className="text-sm text-neutral">Klasse</th>
-            <th className="text-sm text-neutral">PostningsNr.</th>
+            <th className="text-sm text-neutral">Kl</th>
+            <th className="text-sm text-neutral">PostNr.</th>
             <th className="text-sm text-neutral">Antall</th>
 
             <th className="text-sm text-neutral">M3</th>
@@ -24,11 +24,11 @@ const SkurlisteComponent = ({ skurliste }) => {
             <th className="text-sm text-neutral">X-log</th>
             <th className="text-sm text-neutral">%</th>
             <th className="text-sm text-neutral">Anm</th>
-            <th className="text-sm text-neutral">Bord VS66</th>
-            <th className="text-sm text-neutral">Bordbredde VS66</th>
-            <th className="text-sm text-neutral">Bord MKV</th>
-            <th className="text-sm text-neutral">Bordbredde MKV</th>
-            <th className="text-sm text-neutral">Blad MKV</th>
+            <th className="text-sm text-neutral">VS66</th>
+            <th className="text-sm text-neutral">Bredde VS66</th>
+            <th className="text-sm text-neutral">MKV</th>
+            <th className="text-sm text-neutral">Bredde MKV</th>
+            <th className="text-sm text-neutral">Blad</th>
           </tr>
         </thead>
         <tbody>
@@ -175,6 +175,39 @@ const SkurlisteComponent = ({ skurliste }) => {
                       </div>
                     </div>
                   </td>
+                  {edit && (
+                    <td className="py-5">
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <button className="btn btn-xs bg-warning">
+                            Rediger
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  )}
+                  {edit && (
+                    <td className="py-5">
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <button className="btn btn-xs bg-info text-white">
+                            Buffer
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  )}
+                  {edit && (
+                    <td className="py-5">
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <button className="btn btn-xs bg-red-500 text-white">
+                            Slett
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  )}
                 </tr>
               </>
             );
