@@ -11,10 +11,16 @@ export const skurlisteRouter = createTRPCRouter({
  
 
   getAll: publicProcedure
-  .query(({ ctx }) => {
+  .input(
+    z.object({
+
+      buffer: z.boolean(),
+    })
+  )
+  .query(({ ctx, input }) => {
     return ctx.db.skurliste.findMany({
       where: {
-        buffer: false,
+        buffer: input.buffer,
       },
       orderBy: {
        order: 'asc',
@@ -22,18 +28,7 @@ export const skurlisteRouter = createTRPCRouter({
     });
   }),
 
-  getAllBuffer: publicProcedure
-  .query(({ ctx }) => {
-    return ctx.db.skurliste.findMany({
-      where: {
-        buffer: true,
-      },
-      orderBy: {
-        createdAt: 'asc',
-      },
-    });
-  }),
-
+  
 
  
       create: protectedProcedure
@@ -221,6 +216,27 @@ export const skurlisteRouter = createTRPCRouter({
           data: {
       
             order: input.order,
+          },
+        });
+  
+
+
+}),
+      updateBuffer: protectedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          buffer: z.boolean(),
+        })
+      )
+      .mutation(({ ctx, input }) => {
+        return ctx.db.skurliste.update({
+          where: {
+            id: input.id
+        },
+          data: {
+      
+            buffer: input.buffer,
           },
         });
   

@@ -19,6 +19,10 @@ const SkurlisteComponent = ({
   moveUp,
   moveDown,
   maxOrder,
+  updateBufferHandler,
+  bufferStatus,
+  setBufferStatus,
+  updateBufferHandlerFalse,
 }) => {
   const handleDelete = (id: string) => {
     deletePost.mutate({ id: id });
@@ -100,12 +104,28 @@ const SkurlisteComponent = ({
   };
 
   useEffect(() => {
-    setListProps((prevProps) => ({ ...prevProps, order: maxOrder }));
+    if (edit) {
+      setListProps((prevProps) => ({ ...prevProps, order: maxOrder }));
+    }
   }, [maxOrder]);
 
   return (
     <div>
-      {" "}
+      {edit && (
+        <>
+          <button
+            className="btn btn-xs bg-info text-white"
+            onClick={() => setBufferStatus(!bufferStatus)}
+          >
+            {bufferStatus ? "Skjul buffer" : "Vis Buffer"}
+          </button>
+          <h1
+            className={`${!bufferStatus ? "text-neutral" : "text-2xl text-red-500"}`}
+          >
+            {bufferStatus ? "Buffer" : "Skurplan"}
+          </h1>
+        </>
+      )}
       <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-blue-200">
         <thead>
           <tr className=" border border-l-base-100 border-r-base-100 text-left">
@@ -286,12 +306,29 @@ const SkurlisteComponent = ({
                       </div>
                     </td>
                   )}
-                  {edit && list.id !== editingId && (
+                  {edit && list.id !== editingId && !list.buffer && (
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <button className="btn btn-xs bg-info text-white">
-                            Buffer
+                          <button
+                            onClick={() => updateBufferHandler(list.id)}
+                            className="btn btn-xs bg-info text-white"
+                          >
+                            Til buffer
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  )}
+                  {edit && list.id !== editingId && list.buffer && (
+                    <td className="py-5">
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <button
+                            onClick={() => updateBufferHandlerFalse(list.id)}
+                            className="btn btn-xs bg-info text-white"
+                          >
+                            Legg til i listen
                           </button>
                         </div>
                       </div>

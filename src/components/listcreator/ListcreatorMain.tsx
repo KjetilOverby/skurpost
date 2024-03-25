@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -12,7 +13,7 @@ import SkurlisteComponentInput from "./SkurlisteComponentInput";
 import SkurlistePakkingInput from "./SkurlistePakkingInput";
 import { api } from "~/utils/api";
 
-const ListcreatorMain = ({ skurliste }) => {
+const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
   const [maxOrder, setMaxOrder] = useState(1);
 
   useEffect(() => {
@@ -23,8 +24,6 @@ const ListcreatorMain = ({ skurliste }) => {
       setMaxOrder(1);
     }
   }, [skurliste]);
-
-  console.log(`Max order is ${maxOrder}`);
   const ctx = api.useContext();
 
   const deletePost = api.skurliste.delete.useMutation({
@@ -79,10 +78,29 @@ const ListcreatorMain = ({ skurliste }) => {
 
   const updateItemOrder = api.skurliste.updateOrder.useMutation({
     onSuccess: () => {
-      console.log("Mutation successful");
       void ctx.skurliste.getAll.invalidate();
     },
   });
+  const updateBuffer = api.skurliste.updateBuffer.useMutation({
+    onSuccess: () => {
+      void ctx.skurliste.getAll.invalidate();
+    },
+  });
+
+  const updateBufferHandler = (id) => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    updateBuffer.mutateAsync({
+      id: id,
+      buffer: true,
+    });
+  };
+  const updateBufferHandlerFalse = (id) => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    updateBuffer.mutateAsync({
+      id: id,
+      buffer: false,
+    });
+  };
 
   const updates = (id, order) => {
     console.log(`Updating item with id ${id} to order ${order}`);
@@ -153,7 +171,6 @@ const ListcreatorMain = ({ skurliste }) => {
       </div>
       <div className="bg-base-100 pt-20">
         <div className="mb-10">
-          <h1>Skurplan</h1>
           <SkurlisteComponent
             skurliste={skurliste}
             edit={true}
@@ -164,6 +181,10 @@ const ListcreatorMain = ({ skurliste }) => {
             moveUp={moveUp}
             moveDown={moveDown}
             maxOrder={maxOrder}
+            updateBufferHandler={updateBufferHandler}
+            setBufferStatus={setBufferStatus}
+            bufferStatus={bufferStatus}
+            updateBufferHandlerFalse={updateBufferHandlerFalse}
           />
         </div>
         <div>
