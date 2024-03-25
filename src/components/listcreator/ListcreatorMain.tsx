@@ -156,7 +156,7 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
     setListItems(skurliste);
   }, [skurliste]);
   return (
-    <div className="bg-base-100">
+    <div className="bg-base-100 pb-20">
       <div>
         <h1>Skurplan</h1>
         <SkurlisteComponentInput list={listProps} />
