@@ -17,7 +17,7 @@ export const skurlisteRouter = createTRPCRouter({
         buffer: false,
       },
       orderBy: {
-        createdAt: 'asc',
+       order: 'asc',
       },
     });
   }),
@@ -69,6 +69,7 @@ export const skurlisteRouter = createTRPCRouter({
           createdAt: z.date(),
           updatedAt: z.date(),
           buffer: z.boolean(),
+          order: z.number(),
         })
       )
       .mutation(({ ctx, input }) => {
@@ -114,6 +115,7 @@ export const skurlisteRouter = createTRPCRouter({
             text: input.text,
             blad: input.blad,
             buffer : input.buffer,
+            order: input.order,
           },
         });
   
@@ -152,6 +154,7 @@ export const skurlisteRouter = createTRPCRouter({
           destinasjon: z.string(),
           text: z.string(),
           buffer: z.boolean(),
+          order: z.number().optional(),
         })
       )
       .mutation(({ ctx, input }) => {
@@ -196,6 +199,28 @@ export const skurlisteRouter = createTRPCRouter({
             text: input.text,
             blad: input.blad,
             buffer : input.buffer,
+            order: input.order,
+          },
+        });
+  
+
+
+}),
+      updateOrder: protectedProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          order: z.number().optional(),
+        })
+      )
+      .mutation(({ ctx, input }) => {
+        return ctx.db.skurliste.update({
+          where: {
+            id: input.id
+        },
+          data: {
+      
+            order: input.order,
           },
         });
   

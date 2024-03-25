@@ -5,9 +5,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
-import { set } from "zod";
+import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
 
 const SkurlisteComponent = ({
   skurliste,
@@ -16,6 +16,9 @@ const SkurlisteComponent = ({
   editPost,
   listProps,
   setListProps,
+  moveUp,
+  moveDown,
+  maxOrder,
 }) => {
   const handleDelete = (id: string) => {
     deletePost.mutate({ id: id });
@@ -92,8 +95,14 @@ const SkurlisteComponent = ({
       buffer: list.buffer,
       createdAt: new Date(),
       updatedAt: new Date(),
+      order: maxOrder,
     });
   };
+
+  useEffect(() => {
+    setListProps((prevProps) => ({ ...prevProps, order: maxOrder }));
+  }, [maxOrder]);
+
   return (
     <div>
       {" "}
@@ -123,7 +132,7 @@ const SkurlisteComponent = ({
           {skurliste?.map((list) => {
             return (
               <>
-                <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary">
+                <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary ">
                   <td
                     className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                   >
@@ -329,6 +338,22 @@ const SkurlisteComponent = ({
                         </div>
                       </div>
                     </td>
+                  )}
+                  {edit && (
+                    <div className="flex items-center justify-center">
+                      <td className="flex h-full items-center">
+                        <FaArrowAltCircleUp
+                          onClick={() => moveUp(list.id)}
+                          className="text-lg text-green-600"
+                        />
+                      </td>
+                      <td className="flex h-full items-center">
+                        <FaArrowAltCircleDown
+                          onClick={() => moveDown(list.id)}
+                          className="text-lg text-green-600"
+                        />
+                      </td>
+                    </div>
                   )}
                 </tr>
               </>

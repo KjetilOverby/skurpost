@@ -112,6 +112,7 @@ model skurliste {
     destinasjon String
     text        String
     buffer      Boolean
+    order       Int
 }
 
 model postningsoppsett {
