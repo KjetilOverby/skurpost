@@ -29,22 +29,12 @@ export default function Home() {
               {sessionData ? "Sign out" : "Sign in"}
             </Link>
           </div>
-        </div>
-        <div>
-          <div>
-            <Link href="/postoppsett">
-              <button>Post</button>
-            </Link>
-          </div>
-          <div>
-            <Link href="/list">
-              <button>Skurliste</button>
-            </Link>
-          </div>
-          <div>
-            <Link href="create/creator">
-              <button>Ny data</button>
-            </Link>
+          <div className="w-96">
+            <img
+              className="h-full w-full object-cover"
+              src="https://lh3.googleusercontent.com/pw/AP1GczOZr6sR-9_G1QsvI3tyF7MrebLri_2DFyzEsei_E5vTuU1SwXhQ-gs1vhLRmqRhdw_p7FcdgIlpVoB6EGIMwwoFJpDh-aDg4NFQKpcjMw8cU78FzDazJ0dVDv1vU1G7CnksCyNSYM5py7Q6VSZ2uAa2GVQ_3PGWK0usOZxDUkMg7jE-osmUDMrWAxL32V5ntgde0J_hVgnZjc-kfg_j8YsDjW6vv-ufjA2Q_wcJeqJnQ9STuxbmcD6RPZBI1oU4wxxNnWJ-DQ9wLVSloESZsZg65nSE8y8NOMpSNy8U045kOUFmov-Mj_FqFFdbCu-pRDvmK-kXCS-ec4GdHereRyyVp2YkTzQ0qWaAL1Rhn5dqh9BfDz6-vZmeLemkmjOWSIWlBmI6zVae2x1JeOOGG2i-5fBiVHenMXuKXHJr4jeVOUFff-ppZ9PwZ7N8vtPk-a_ePa1t8ybPYx8ijN4UpwHrIZEXTkoPw3OmOrwALwzayBsaKQsTtEV3AOCDyvPK_xTZIa0I1gUIYdH5507tvXfPaJnXmPxMsi4f2ijFBnCoPEJWYAlEyEunCx7mMwPfKvhEJ4GY1hTmwmV-gQps7LiV9SReGpmepzIPFKvsLNZMqw_6Is31PgvKqkrGzUYKKS65lno26iBu54fSPjOOCUoAnyaJuXnvFkbxs9Y5I8fkMKbRf_23v2wZaMEouLDzEFpjWLRSuURFAkl7es34QgUHg8KyhaVDPSrIy4QZqHF-Pyug5mP5uNW9CH6N3Fla3tPsKy2L08Hg3XHKZNqyh4XksMcTYb0GpJiG9xrZqgfYZAEPEki5EzLXhHtOIJTGKmq5r_jF8p3IluPJlhv8XvZouISBiFD3F_rY3oLuaacoltBfRZ7Dq-z-0ycLSYaiDJ8yzF7P1nTyqgsXe0YXD7r52Hk=w1920-h354-s-no?authuser=0"
+              alt=""
+            />
           </div>
         </div>
       </main>
