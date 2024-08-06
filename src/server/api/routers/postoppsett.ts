@@ -14,7 +14,9 @@ export const postoppsettRouter = createTRPCRouter({
    
         .query(({ ctx }) => {
          return ctx.db.postningsoppsett.findMany({
-       
+       where: {
+        header: "2x50",
+       },
        
             include: {
             
