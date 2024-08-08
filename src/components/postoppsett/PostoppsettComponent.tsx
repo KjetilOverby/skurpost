@@ -11,6 +11,7 @@ import RingPicker from "./reusable/ringpicker";
 import ringlist from "~/utils/ringlist";
 import { v4 as uuidv4 } from "uuid";
 import BladeSelector from "./Bladeselector";
+import { raw } from "@prisma/client/runtime/library";
 
 interface Item {
   header: string;
@@ -32,7 +33,6 @@ const PostoppsettComponent = ({
   const [rawinputSum, setRawinputSum] = useState(0);
   const [localData, setLocalData] = useState();
   const [rawInputValue, setRawInputValue] = useState(0);
-  const [bladeInputValue, setBladeInputValue] = useState(0);
 
   useEffect(() => {
     if (localData) {
@@ -56,15 +56,16 @@ const PostoppsettComponent = ({
       setEndringSum(endringTotal);
       setRawinputSum(rawinputTotal);
     }
-  }, [localData]);
-
-  console.log(localData);
+  }, [localData, rawInputValue]);
 
   useEffect(() => {
     if (data) {
       setLocalData(data);
     }
   }, [data]);
+
+  console.log(localData.blade);
+  console.log(rawinputSum);
 
   const deleteStartring = (id) => {
     setLocalData((prevData) => ({
@@ -112,6 +113,7 @@ const PostoppsettComponent = ({
           id: uuidv4(),
           input: rawInputValue,
           rawinputId: uuidv4(),
+          blade: localData.blade,
         },
       ],
     });
@@ -188,7 +190,8 @@ const PostoppsettComponent = ({
                       {(
                         calc.toMiddle -
                         rawinputSum / 2 -
-                        localData?.blade
+                        localData?.blade / 2 -
+                        localData?.rawinput.length * 0.7
                       ).toFixed(2)}
                     </p>
                     <p>utfylling: {startringSum}</p>
@@ -247,7 +250,8 @@ const PostoppsettComponent = ({
                     {(
                       calc.middleEnd -
                       rawinputSum / 2 -
-                      localData?.blade
+                      localData?.blade / 2 -
+                      localData?.rawinput.length * 0.7
                     ).toFixed(2)}
                   </p>
                   <p>utfylling: {endringSum}</p>
