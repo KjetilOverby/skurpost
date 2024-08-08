@@ -10,15 +10,11 @@ interface RawRingProps {
   blade: string;
 }
 
-const RawRing = ({ value, blade, mode }: RawRingProps) => {
-  console.log(blade);
-
+const RawRing = ({ value, blade, mode, edit }: RawRingProps) => {
   return (
     <div className=" flex items-center ">
       <div className=" relative grid h-20 w-8 place-items-center rounded-md border-[.5px] border-white bg-gradient-to-b from-green-900 via-gray-300 to-green-900 sm:h-28 sm:w-12 md:h-40 md:w-20">
-        <EditMode editMode={mode}>
-          <RiDeleteBin5Line />
-        </EditMode>
+        <EditMode editMode={mode}>{edit && <RiDeleteBin5Line />}</EditMode>
         <p className="absolute bottom-20 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs  md:bottom-40 md:text-sm">
           {value}
         </p>
@@ -26,10 +22,12 @@ const RawRing = ({ value, blade, mode }: RawRingProps) => {
           {value + 1.4}
         </p>
         <EditMode editMode={mode}>
-          <div className="flex gap-5">
-            <BsFillArrowLeftSquareFill />
-            <BsFillArrowRightSquareFill />
-          </div>
+          {edit && (
+            <div className="flex gap-5">
+              <BsFillArrowLeftSquareFill />
+              <BsFillArrowRightSquareFill />
+            </div>
+          )}
         </EditMode>
       </div>
       <Blade blade={blade} />

@@ -11,21 +11,18 @@ export const postoppsettRouter = createTRPCRouter({
  
 
     getAll: publicProcedure
-   
-        .query(({ ctx }) => {
-         return ctx.db.postningsoppsett.findMany({
-       where: {
-        header: "2x50",
-       },
-       
-            include: {
-            
-              startrings: {},
-              rawinput: {},
-              endrings: {}
-            },
-         })
-      }),
+    .query(({ ctx }) => {
+      return ctx.db.postningsoppsett.findUnique({
+        where: {
+          id: 'clziaceze0000q22myexd454e',
+        },
+        include: {
+          startrings: {},
+          rawinput: {},
+          endrings: {}
+        },
+      })
+    }),
 
 
    
