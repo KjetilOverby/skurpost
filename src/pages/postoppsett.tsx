@@ -6,6 +6,7 @@ import { api } from "~/utils/api";
 const postoppsett = () => {
   const { data: postoppsett } = api.postoppsett.getAll.useQuery();
   const [editMode, setEditMode] = useState(false);
+
   return (
     <div>
       <EditHeader setEditMode={setEditMode} editMode={editMode} />

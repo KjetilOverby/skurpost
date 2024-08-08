@@ -11,7 +11,7 @@ import RingPicker from "./reusable/ringpicker";
 import ringlist from "~/utils/ringlist";
 import { v4 as uuidv4 } from "uuid";
 import BladeSelector from "./Bladeselector";
-import { raw } from "@prisma/client/runtime/library";
+import { api } from "~/utils/api";
 
 interface Item {
   header: string;
@@ -33,8 +33,30 @@ const PostoppsettComponent = ({
   const [rawinputSum, setRawinputSum] = useState(0);
   const [localData, setLocalData] = useState();
   const [rawInputValue, setRawInputValue] = useState(0);
-  const [plankeTyInput, setPlankeTyInput] = useState(0);
 
+  const updatePost = api.postoppsett.updatePost.useMutation();
+
+  const updateData = async (id, data) => {
+    try {
+      const response = await updatePost.mutateAsync({ id, data });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleUpdate = async () => {
+    // get the id and data you want to update
+    const id = "your-post-id";
+    const data = {
+      // your updated data...
+    };
+
+    // call updateData with the id and data
+    await updateData(id, data);
+  };
+
+  // call updateData with the id and data you want to update
+  // updateData('clziaceze0000q22myexd454e', { header: 'testing' });
   useEffect(() => {
     if (localData) {
       const startringTotal = localData.startrings.reduce(
@@ -425,6 +447,9 @@ const PostoppsettComponent = ({
                   />
                 ))}
               </div>
+              <p onClick={handleUpdate} className="text-white">
+                test
+              </p>
               <EditMode editMode={editMode}>
                 <div>
                   <p>
