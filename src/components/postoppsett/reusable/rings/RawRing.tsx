@@ -17,6 +17,8 @@ const RawRing = ({
   edit,
   deleteRing,
   id,
+  moveLeft,
+  moveRight,
 }: RawRingProps) => {
   return (
     <div className=" flex items-center ">
@@ -33,8 +35,8 @@ const RawRing = ({
         <EditMode editMode={mode}>
           {edit && (
             <div className="flex gap-5">
-              <BsFillArrowLeftSquareFill />
-              <BsFillArrowRightSquareFill />
+              <BsFillArrowLeftSquareFill onClick={() => moveLeft(id)} />
+              <BsFillArrowRightSquareFill onClick={() => moveRight(id)} />
             </div>
           )}
         </EditMode>

@@ -33,6 +33,7 @@ const PostoppsettComponent = ({
   const [rawinputSum, setRawinputSum] = useState(0);
   const [localData, setLocalData] = useState();
   const [rawInputValue, setRawInputValue] = useState(0);
+  const [plankeTyInput, setPlankeTyInput] = useState(0);
 
   useEffect(() => {
     if (localData) {
@@ -64,8 +65,7 @@ const PostoppsettComponent = ({
     }
   }, [data]);
 
-  console.log(localData.blade);
-  console.log(rawinputSum);
+  console.log(localData);
 
   const deleteStartring = (id) => {
     setLocalData((prevData) => ({
@@ -124,14 +124,185 @@ const PostoppsettComponent = ({
       blade: parseFloat(event.target.value),
     });
   };
+  const prosentSelectHandler = (event) => {
+    setLocalData({
+      ...localData,
+      prosent: parseFloat(event.target.value),
+    });
+  };
+
+  const handlePlankeTy = (event) => {
+    setLocalData({
+      ...localData,
+      plankeTy: parseFloat(event.target.value),
+    });
+  };
+  const handleSpes = (event) => {
+    setLocalData({
+      ...localData,
+      spes: event.target.value,
+    });
+  };
+
+  const differenceEnd = (
+    calc.middleEnd -
+    rawinputSum / 2 -
+    localData?.blade -
+    endringSum
+  ).toFixed(2);
+
+  const differenceStart = (
+    calc.toMiddle -
+    rawinputSum / 2 -
+    localData?.blade -
+    startringSum
+  ).toFixed(2);
+
+  const moveLeft = async (id) => {
+    const index = localData.startrings.findIndex((item) => item.id === id);
+
+    if (index > 0) {
+      const newItems = [...localData.startrings];
+      const tempOrder = newItems[index].input;
+      newItems[index].input = newItems[index - 1].input;
+      newItems[index - 1].input = tempOrder;
+
+      // Update the localData state
+      setLocalData({
+        ...localData,
+        startrings: newItems,
+      });
+
+      // // Update the order in the database
+      // await Promise.all([
+      //   updates(newItems[index].id, newItems[index].input),
+      //   updates(newItems[index - 1].id, newItems[index - 1].input),
+      // ]);
+    }
+  };
+
+  const moveRight = async (id) => {
+    const index = localData.startrings.findIndex((item) => item.id === id);
+
+    if (index < localData.startrings.length - 1) {
+      const newItems = [...localData.startrings];
+      const tempOrder = newItems[index].input;
+      newItems[index].input = newItems[index + 1].input;
+      newItems[index + 1].input = tempOrder;
+
+      // Update the localData state
+      setLocalData({
+        ...localData,
+        startrings: newItems,
+      });
+
+      // Update the order in the database
+      // await Promise.all([
+      //   updates(newItems[index].id, newItems[index].input),
+      //   updates(newItems[index + 1].id, newItems[index + 1].input),
+      // ]);
+    }
+  };
+
+  const moveLeftEnd = async (id) => {
+    const index = localData.endrings.findIndex((item) => item.id === id);
+
+    if (index > 0) {
+      const newItems = [...localData.endrings];
+      const tempOrder = newItems[index].input;
+      newItems[index].input = newItems[index - 1].input;
+      newItems[index - 1].input = tempOrder;
+
+      // Update the localData state
+      setLocalData({
+        ...localData,
+        endrings: newItems,
+      });
+
+      // // Update the order in the database
+      // await Promise.all([
+      //   updates(newItems[index].id, newItems[index].input),
+      //   updates(newItems[index - 1].id, newItems[index - 1].input),
+      // ]);
+    }
+  };
+  const moveRightEnd = async (id) => {
+    const index = localData.endrings.findIndex((item) => item.id === id);
+
+    if (index < localData.endrings.length - 1) {
+      const newItems = [...localData.endrings];
+      const tempOrder = newItems[index].input;
+      newItems[index].input = newItems[index + 1].input;
+      newItems[index + 1].input = tempOrder;
+
+      // Update the localData state
+      setLocalData({
+        ...localData,
+        endrings: newItems,
+      });
+
+      // Update the order in the database
+      // await Promise.all([
+      //   updates(newItems[index].id, newItems[index].input),
+      //   updates(newItems[index + 1].id, newItems[index + 1].input),
+      // ]);
+    }
+  };
+
+  const moveLeftRaw = async (id) => {
+    const index = localData.rawinput.findIndex((item) => item.id === id);
+
+    if (index > 0) {
+      const newItems = [...localData.rawinput];
+      const tempOrder = newItems[index].input;
+      newItems[index].input = newItems[index - 1].input;
+      newItems[index - 1].input = tempOrder;
+
+      // Update the localData state
+      setLocalData({
+        ...localData,
+        rawinput: newItems,
+      });
+
+      // // Update the order in the database
+      // await Promise.all([
+      //   updates(newItems[index].id, newItems[index].input),
+      //   updates(newItems[index - 1].id, newItems[index - 1].input),
+      // ]);
+    }
+  };
+  const moveRightRaw = async (id) => {
+    const index = localData.rawinput.findIndex((item) => item.id === id);
+
+    if (index < localData.rawinput.length - 1) {
+      const newItems = [...localData.rawinput];
+      const tempOrder = newItems[index].input;
+      newItems[index].input = newItems[index + 1].input;
+      newItems[index + 1].input = tempOrder;
+
+      // Update the localData state
+      setLocalData({
+        ...localData,
+        rawinput: newItems,
+      });
+
+      // Update the order in the database
+      // await Promise.all([
+      //   updates(newItems[index].id, newItems[index].input),
+      //   updates(newItems[index + 1].id, newItems[index + 1].input),
+      // ]);
+    }
+  };
 
   return (
-    <div className="grid h-screen place-items-center">
+    <div className="flex h-screen flex-col items-center justify-center">
       {!editMode && (
         <div>
           <div key={data?.id}>
             <div className="absolute left-1/2 top-20 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
-              <p className="text-3xl">{data?.header}</p>
+              <p className="text-3xl">
+                {data?.xlog}x{data?.header}
+              </p>
             </div>
             <div className="flex">
               <div className="flex gap-1">
@@ -177,9 +348,14 @@ const PostoppsettComponent = ({
               onChange={handleRingPickerChange}
             />
           </EditMode>
+
           <div key={localData?.id}>
             <div className="absolute left-1/2 top-20 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
-              <p className="text-3xl">{localData?.header}</p>
+              <p className="text-3xl">
+                {localData?.rawinput.length}x{localData?.plankeTy}-
+                {localData?.prosent}%-{(localData?.blade + 1.4).toFixed(1)}
+                {localData?.spes}
+              </p>
             </div>
             <div className="flex">
               <div className="flex gap-1">
@@ -195,14 +371,14 @@ const PostoppsettComponent = ({
                       ).toFixed(2)}
                     </p>
                     <p>utfylling: {startringSum}</p>
-                    <p>
-                      Differanse:{" "}
-                      {(
-                        calc.toMiddle -
-                        rawinputSum / 2 -
-                        localData?.blade -
-                        startringSum
-                      ).toFixed(2)}
+                    <p
+                      className={`${
+                        differenceStart >= -0.05 && differenceStart <= 0.05
+                          ? "text-green-500"
+                          : "text-red-400"
+                      }`}
+                    >
+                      Differanse: {differenceStart}
                     </p>
                   </div>
                 </EditMode>
@@ -214,6 +390,8 @@ const PostoppsettComponent = ({
                     value={ringItem.input}
                     deleteRing={deleteStartring}
                     id={ringItem.id}
+                    moveLeft={moveLeft}
+                    moveRight={moveRight}
                   />
                 ))}
               </div>
@@ -228,6 +406,8 @@ const PostoppsettComponent = ({
                     blade={localData.blade}
                     deleteRing={deleteRawInput}
                     id={rawItem.id}
+                    moveLeft={moveLeftRaw}
+                    moveRight={moveRightRaw}
                   />
                 ))}
               </div>
@@ -240,6 +420,8 @@ const PostoppsettComponent = ({
                     value={endringItem.input}
                     deleteRing={deleteEndring}
                     id={endringItem.id}
+                    moveLeft={moveLeftEnd}
+                    moveRight={moveRightEnd}
                   />
                 ))}
               </div>
@@ -255,14 +437,14 @@ const PostoppsettComponent = ({
                     ).toFixed(2)}
                   </p>
                   <p>utfylling: {endringSum}</p>
-                  <p>
-                    Differanse:{" "}
-                    {(
-                      calc.middleEnd -
-                      rawinputSum / 2 -
-                      localData?.blade -
-                      endringSum
-                    ).toFixed(2)}
+                  <p
+                    className={`${
+                      differenceEnd >= -0.05 && differenceEnd <= 0.05
+                        ? "text-green-500"
+                        : "text-red-400"
+                    }`}
+                  >
+                    Differanse: {differenceEnd}
                   </p>
                 </div>
               </EditMode>
@@ -279,11 +461,56 @@ const PostoppsettComponent = ({
         </EditMode>
       </div>
       <EditMode editMode={editMode}>
-        <form action="" type="submit" onSubmit={handleRawRingPickerChange}>
-          <input onChange={(e) => setRawInputValue(e.target.value)} />
-          <button>Legg til</button>
-        </form>
-        <BladeSelector sawbladeSelectHandler={sawbladeSelectHandler} />
+        <div className="mt-20 flex flex-col">
+          <form
+            className="mb-5"
+            action=""
+            type="submit"
+            onSubmit={handleRawRingPickerChange}
+          >
+            <label>Legg til planketykkelse</label>
+            <div className="flex">
+              <input
+                step="0.01"
+                type="number"
+                className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                onChange={(e) => setRawInputValue(e.target.value)}
+              />
+              <button className="btn btn-primary">Legg til</button>
+            </div>
+          </form>
+          <div className="mb-5">
+            <label>planketykkelse i overskrift</label>
+            <input
+              className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              onChange={handlePlankeTy}
+              placeholder="eks: 50/38"
+            />
+          </div>
+          <select
+            className="mb-5 h-full rounded-md border-0 bg-gray-400 py-0 pl-2 pr-7 text-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+            onChange={prosentSelectHandler}
+          >
+            <option className="option" value="" selected disabled hidden>
+              Velg prosent
+            </option>
+            <option className="option" value={18}>
+              18
+            </option>
+            <option className="option" value={12}>
+              12
+            </option>
+          </select>
+
+          <BladeSelector sawbladeSelectHandler={sawbladeSelectHandler} />
+          <div>
+            <label>Legg til text i parantes</label>
+            <input
+              className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              onChange={handleSpes}
+            />
+          </div>
+        </div>
       </EditMode>
     </div>
   );

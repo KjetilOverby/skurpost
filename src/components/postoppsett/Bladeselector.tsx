@@ -4,7 +4,10 @@ const Bladeselector = ({ sawbladeSelectHandler }) => {
   return (
     <div>
       {" "}
-      <select className="select" onChange={sawbladeSelectHandler}>
+      <select
+        className="mb-5 h-full rounded-md border-0 bg-gray-400 bg-transparent py-0 pl-2 pr-7 text-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+        onChange={sawbladeSelectHandler}
+      >
         <option className="option" value="" selected disabled hidden>
           Velg sagblad
         </option>

@@ -112,8 +112,6 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
   };
   const [listItems, setListItems] = useState([]);
   const moveUp = async (id) => {
-    console.log(`moveUp called with id ${id}`);
-
     const index = listItems.findIndex((item) => item.id === id);
     console.log(`Index of item with id ${id} is ${index}`);
     if (index > 0) {
