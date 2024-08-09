@@ -14,13 +14,9 @@ export const postoppsettRouter = createTRPCRouter({
     .query(({ ctx }) => {
       return ctx.db.postningsoppsett.findUnique({
         where: {
-          id: 'clziaceze0000q22myexd454e',
+          id: 'clzmvjze30000atys8z6y2r00',
         },
-        include: {
-          startrings: {},
-          rawinput: {},
-          endrings: {}
-        },
+      
       })
     }),
 
@@ -41,19 +37,27 @@ export const postoppsettRouter = createTRPCRouter({
       });
       return savedData;
     }),
-    
+
     updatePost: protectedProcedure
-    .input(z.object({ id: z.string(), data: z.any() })) // define your data schema here
+    .input(z.object({ 
+      id: z.string(),  
+      header: z.string(), 
+      plankeTy: z.string(),
+      startRings: z.string(),
+      endRings: z.string()
+    })) // define your data schema here
     .mutation(async ({ input, ctx }) => {
-      const updatedData = await ctx.db.postningsoppsett.update({
+      return ctx.db.postningsoppsett.update({
         where: {
-          id: 'clziaceze0000q22myexd454e',
+          id: 'clzmvjze30000atys8z6y2r00', // use input.id instead of the hardcoded id
         },
-        data: {header: 'test'},
+        data: {
+          header: input.header,
+          plankeTy: input.plankeTy,
+          startRings: input.startRings,
+          endRings: input.endRings,
+        }
       });
-      console.log('works');
-      return updatedData;
-      
     }),
 
 

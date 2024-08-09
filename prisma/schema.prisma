@@ -140,48 +140,7 @@ model postningsoppsett {
     note        String
     deleter     String
     kunde       String
-
-    startrings    startrings[]
-    endrings      endrings[]
-    rawinput      rawinput[]
-    startringsAlt startringsAlt[]
-    endringAlt    endringAlt[]
-}
-
-model startrings {
-    id          String           @id @default(cuid())
-    input       Float
-    startringId String
-    bladedata   postningsoppsett @relation(fields: [startringId], references: [id])
-}
-
-model endrings {
-    id        String @id @default(cuid())
-    input     Float
-    endringId String
-
-    bladedata postningsoppsett @relation(fields: [endringId], references: [id])
-}
-
-model startringsAlt {
-    id          String           @id @default(cuid())
-    input       Float
-    startringId String
-    bladedata   postningsoppsett @relation(fields: [startringId], references: [id])
-}
-
-model endringAlt {
-    id        String @id @default(cuid())
-    input     Float
-    endringId String
-
-    bladedata postningsoppsett @relation(fields: [endringId], references: [id])
-}
-
-model rawinput {
-    id         String           @id @default(cuid())
-    input      Float
-    rawinputId String
-    bladedata  postningsoppsett @relation(fields: [rawinputId], references: [id])
-    blade      Float
+    startRings  Json
+    endRings    Json
+    rawInput    Json
 }
