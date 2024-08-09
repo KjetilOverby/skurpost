@@ -14,6 +14,7 @@ import BladeSelector from "./Bladeselector";
 import { api } from "~/utils/api";
 import EditHeader from "./reusable/EditHeader";
 import { log } from "console";
+import { set } from "zod";
 
 interface Item {
   header: string;
@@ -204,21 +205,32 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     });
   };
 
-  const differenceEnd = (
-    calc.middleEnd -
-    rawinputSum / 2 -
-    localData?.blade / 2 -
-    rawRingsParse.length * 0.7 -
-    endringSum
-  ).toFixed(2);
+  const [differenceEnd, setDifferenceEnd] = useState(null);
 
-  const differenceStart = (
-    calc.toMiddle -
-    rawinputSum / 2 -
-    localData?.blade / 2 -
-    rawRingsParse.length * 0.7 -
-    startringSum
-  ).toFixed(2);
+  useEffect(() => {
+    const calculatedDifferenceEnd = (
+      calc.middleEnd -
+      rawinputSum / 2 -
+      localData?.blade / 2 -
+      (rawRingsParse ? rawRingsParse.length * 0.7 : 0) -
+      endringSum
+    ).toFixed(2);
+    setDifferenceEnd(calculatedDifferenceEnd);
+  }, [data, localData, rawRingsParse, startRingsParse, endRingsParse]);
+
+  const [differenceStart, setDifferenceStart] = useState(null);
+
+  useEffect(() => {
+    const calculatedDifferenceStart = (
+      calc.toMiddle -
+      rawinputSum / 2 -
+      localData?.blade / 2 -
+      (rawRingsParse ? rawRingsParse.length * 0.7 : 0) -
+      startringSum
+    ).toFixed(2);
+
+    setDifferenceStart(calculatedDifferenceStart);
+  }, [data, localData, rawRingsParse, startRingsParse, endRingsParse]);
 
   const moveLeft = async (id) => {
     const index = startRingsParse.findIndex((item) => item.id === id);
@@ -399,7 +411,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                           calc.toMiddle -
                           rawinputSum / 2 -
                           localData?.blade / 2 -
-                          rawRingsParse.length * 0.7
+                          rawRingsParse?.length * 0.7
                         ).toFixed(2)}
                       </p>
                       <p>utfylling: {startringSum.toFixed(2)}</p>
@@ -479,7 +491,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                         calc.middleEnd -
                         rawinputSum / 2 -
                         localData?.blade / 2 -
-                        rawRingsParse.length * 0.7
+                        rawRingsParse?.length * 0.7
                       ).toFixed(2)}
                     </p>
                     <p>utfylling: {endringSum.toFixed(2)}</p>
