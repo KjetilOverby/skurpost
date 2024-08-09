@@ -44,7 +44,8 @@ export const postoppsettRouter = createTRPCRouter({
       header: z.string(), 
       plankeTy: z.string(),
       startRings: z.string(),
-      endRings: z.string()
+      endRings: z.string(),
+      rawInput: z.string(),
     })) // define your data schema here
     .mutation(async ({ input, ctx }) => {
       return ctx.db.postningsoppsett.update({
@@ -56,6 +57,7 @@ export const postoppsettRouter = createTRPCRouter({
           plankeTy: input.plankeTy,
           startRings: input.startRings,
           endRings: input.endRings,
+          rawInput: input.rawInput,
         }
       });
     }),
