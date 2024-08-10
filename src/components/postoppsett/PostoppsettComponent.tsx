@@ -50,7 +50,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     setHeaderText(
       `${rawRingsParse?.length}x${localData?.plankeTy}-${localData?.prosent}%-${(localData?.blade + 1.4).toFixed(1)}${localData?.spes}`,
     );
-  }, [data]);
+  }, [data, localData]);
 
   const ctx = api.useContext();
 
@@ -438,7 +438,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
 
             <div key={localData?.id}>
               <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
-                <p>Opprinnelig post: {localData.header}</p>
+                <p>Opprinnelig post: {localData?.header}</p>
                 <p className="text-3xl">
                   {rawRingsParse?.length}x{localData?.plankeTy}-
                   {localData?.prosent}%-{(localData?.blade + 1.4).toFixed(1)}
@@ -576,11 +576,13 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                 onChange={handlePlankeTy}
                 placeholder="eks: 50/38"
                 type="text"
+                value={localData?.plankeTy}
               />
             </div>
             <select
               className="mb-5 h-full rounded-md border-0 bg-gray-400 py-0 pl-2 pr-7 text-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
               onChange={prosentSelectHandler}
+              value={localData?.prosent}
             >
               <option className="option" value="" selected disabled hidden>
                 Velg prosent
@@ -593,12 +595,16 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
               </option>
             </select>
 
-            <BladeSelector sawbladeSelectHandler={sawbladeSelectHandler} />
+            <BladeSelector
+              sawbladeSelectHandler={sawbladeSelectHandler}
+              val={localData?.blade}
+            />
             <div>
               <label>Legg til text i parantes</label>
               <input
                 className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 onChange={handleSpes}
+                value={localData?.spes}
               />
             </div>
           </div>

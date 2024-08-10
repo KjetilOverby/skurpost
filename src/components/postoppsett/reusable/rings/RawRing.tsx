@@ -16,6 +16,7 @@ interface RawRingProps {
   moveLeft: any;
   moveRight: any;
   rawDivide: any[];
+  local: any;
 }
 
 const RawRing = ({
@@ -37,10 +38,10 @@ const RawRing = ({
       0,
     );
     setSum(total);
-  }, [rawDivide]);
+  }, [rawDivide, mode]);
 
   return (
-    <div className=" flex items-center ">
+    <div className=" relative flex items-center">
       <div className=" relative grid h-20 w-8 place-items-center rounded-md border-[.5px] border-white bg-gradient-to-b from-green-900 via-gray-300 to-green-900 sm:h-28 sm:w-12 md:h-40 md:w-20">
         <EditMode editMode={mode}>
           {edit && <RiDeleteBin5Line onClick={() => deleteRing(id)} />}
@@ -68,9 +69,11 @@ const RawRing = ({
                   <p>{item.value}</p>
                 </div>
               ))}
-              <p>{(value + 1.4 - sum).toFixed(1)}</p>
             </>
           )}
+        </div>
+        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs md:top-52 md:text-sm">
+          <p>{(value + 1.4 - sum).toFixed(1)}</p>
         </div>
       </div>
       <Blade blade={blade} />
