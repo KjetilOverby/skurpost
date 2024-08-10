@@ -13,8 +13,6 @@ import { v4 as uuidv4 } from "uuid";
 import BladeSelector from "./Bladeselector";
 import { api } from "~/utils/api";
 import EditHeader from "./reusable/EditHeader";
-import { log } from "console";
-import { set } from "zod";
 
 interface Item {
   header: string;
@@ -30,6 +28,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const [rawinputSum, setRawinputSum] = useState(0);
   const [localData, setLocalData] = useState();
   const [rawInputValue, setRawInputValue] = useState(0);
+  const [bladeSum, setBladeSum] = useState();
 
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
@@ -78,6 +77,29 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     await updateData(id, data);
   };
 
+  // useEffect(() => {
+  //   if (localData) {
+  //     const startringTotal = startRingsParse.reduce(
+  //       (total, ringItem) => total + Number(ringItem.value),
+  //       0,
+  //     );
+
+  //     const endringTotal = endRingsParse.reduce(
+  //       (total, ringItem) => total + Number(ringItem.value),
+  //       0,
+  //     );
+
+  //     const rawinputTotal = rawRingsParse.reduce(
+  //       (total, rawItem) => total + Number(rawItem.value),
+  //       0,
+  //     );
+
+  //     setStartringSum(startringTotal);
+  //     setEndringSum(endringTotal);
+  //     setRawinputSum(rawinputTotal);
+  //   }
+  // }, [localData, rawinputSum]);
+
   useEffect(() => {
     if (localData) {
       const startringTotal = startRingsParse.reduce(
@@ -91,16 +113,21 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       );
 
       const rawinputTotal = rawRingsParse.reduce(
-        (total, rawItem) =>
-          total + Number(rawItem.value) + Number(rawItem.blade),
+        (total, rawItem) => total + Number(rawItem.value) + 1.4,
         0,
       );
+
+      const bladeTotal = localData.blade * rawRingsParse.length;
 
       setStartringSum(startringTotal);
       setEndringSum(endringTotal);
       setRawinputSum(rawinputTotal);
+      setBladeSum(bladeTotal); // Assuming you have a state variable to store this
     }
   }, [localData, rawinputSum]);
+
+  console.log("rawInputSum: " + rawinputSum);
+  console.log("bladeSum: " + bladeSum);
 
   useEffect(() => {
     if (data) {
@@ -179,12 +206,14 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       rawInput: updatedRawRings,
     });
   };
+
   const sawbladeSelectHandler = (event) => {
     setLocalData({
       ...localData,
       blade: parseFloat(event.target.value),
     });
   };
+
   const prosentSelectHandler = (event) => {
     setLocalData({
       ...localData,
@@ -211,8 +240,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     const calculatedDifferenceEnd = (
       calc.middleEnd -
       rawinputSum / 2 -
+      bladeSum / 2 -
       localData?.blade / 2 -
-      (rawRingsParse ? rawRingsParse.length * 0.7 : 0) -
       endringSum
     ).toFixed(2);
     setDifferenceEnd(calculatedDifferenceEnd);
@@ -224,8 +253,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     const calculatedDifferenceStart = (
       calc.toMiddle -
       rawinputSum / 2 -
+      bladeSum / 2 -
       localData?.blade / 2 -
-      (rawRingsParse ? rawRingsParse.length * 0.7 : 0) -
       startringSum
     ).toFixed(2);
 
@@ -410,8 +439,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                         {(
                           calc.toMiddle -
                           rawinputSum / 2 -
-                          localData?.blade / 2 -
-                          rawRingsParse?.length * 0.7
+                          bladeSum / 2 -
+                          localData?.blade / 2
                         ).toFixed(2)}
                       </p>
                       <p>utfylling: {startringSum.toFixed(2)}</p>
@@ -490,8 +519,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                       {(
                         calc.middleEnd -
                         rawinputSum / 2 -
-                        localData?.blade / 2 -
-                        rawRingsParse?.length * 0.7
+                        bladeSum / 2 -
+                        localData?.blade / 2
                       ).toFixed(2)}
                     </p>
                     <p>utfylling: {endringSum.toFixed(2)}</p>
