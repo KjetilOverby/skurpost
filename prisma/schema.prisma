@@ -126,7 +126,7 @@ model postningsoppsett {
     updatedAt   DateTime @updatedAt
     updater     String
     updaterImg  String
-    header      String
+    header      String   @unique
     blade       Float
     plankeTy    String
     prosent     String
@@ -143,4 +143,5 @@ model postningsoppsett {
     startRings  Json
     endRings    Json
     rawInput    Json
+    rawDivide   Json
 }

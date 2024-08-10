@@ -13,6 +13,8 @@ import { v4 as uuidv4 } from "uuid";
 import BladeSelector from "./Bladeselector";
 import { api } from "~/utils/api";
 import EditHeader from "./reusable/EditHeader";
+import { set } from "zod";
+import { raw } from "@prisma/client/runtime/library";
 
 interface Item {
   header: string;
@@ -39,18 +41,30 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const startRingsParse = localData && JSON.parse(localData.startRings);
   const endRingsParse = localData && JSON.parse(localData.endRings);
   const rawRingsParse = localData && JSON.parse(localData.rawInput);
+  const rawDivideParse = localData && JSON.parse(localData.rawDivide);
 
   const [editMode, setEditMode] = useState(false);
+  const [headerText, setHeaderText] = useState("");
+
+  useEffect(() => {
+    setHeaderText(
+      `${rawRingsParse?.length}x${localData?.plankeTy}-${localData?.prosent}%-${(localData?.blade + 1.4).toFixed(1)}${localData?.spes}`,
+    );
+  }, [data]);
 
   const ctx = api.useContext();
 
   const updateData = async (id) => {
     try {
-      const header = "50";
+      const header = headerText;
       const plankeTy = String(localData.plankeTy);
       const startRings = localData.startRings;
       const endRings = localData.endRings;
       const rawInput = localData.rawInput;
+      const blade = localData.blade;
+      const prosent = String(localData.prosent);
+      const spes = localData.spes;
+      const xlog = String(rawRingsParse.length);
       const response = await updatePost.mutateAsync({
         id,
         header,
@@ -58,6 +72,10 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
         startRings,
         endRings,
         rawInput,
+        blade,
+        prosent,
+        spes,
+        xlog,
       });
       console.log(response);
       setEditMode(false);
@@ -125,9 +143,6 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       setBladeSum(bladeTotal); // Assuming you have a state variable to store this
     }
   }, [localData, rawinputSum]);
-
-  console.log("rawInputSum: " + rawinputSum);
-  console.log("bladeSum: " + bladeSum);
 
   useEffect(() => {
     if (data) {
@@ -373,9 +388,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
           <div>
             <div key={data?.id}>
               <div className="absolute left-1/2 top-20 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
-                <p className="text-3xl">
-                  {data?.xlog}x{data?.plankeTy}
-                </p>
+                <p className="text-3xl">{localData?.header}</p>
               </div>
               <div className="flex">
                 <div className="flex gap-1">
@@ -388,17 +401,18 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                   ))}
                 </div>
                 <Blade blade={data?.blade} />
-                <div className="flex gap-1">
+                <div className="flex">
                   {rawRingsParse?.map((ringItem: { value: string }) => (
                     <RawRing
                       mode={editMode}
                       key={ringItem.id}
                       value={ringItem.value}
-                      blade={ringItem.blade}
+                      blade={localData.blade}
+                      rawDivide={rawDivideParse}
                     />
                   ))}
                 </div>
-                <div className="flex">
+                <div className="flex gap-1">
                   {endRingsParse?.map((ringItem: { value: string }) => (
                     <Ring
                       mode={editMode}
@@ -423,13 +437,14 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
             </EditMode>
 
             <div key={localData?.id}>
-              {/* <div className="absolute left-1/2 top-20 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
+              <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
+                <p>Opprinnelig post: {localData.header}</p>
                 <p className="text-3xl">
-                  {localData?.rawinput.length}x{localData?.plankeTy}-
+                  {rawRingsParse?.length}x{localData?.plankeTy}-
                   {localData?.prosent}%-{(localData?.blade + 1.4).toFixed(1)}
                   {localData?.spes}
                 </p>
-              </div> */}
+              </div>
               <div className="flex">
                 <div className="flex gap-1">
                   <EditMode editMode={editMode}>
@@ -476,26 +491,14 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                       mode={editMode}
                       key={ringItem.id}
                       value={ringItem.value}
-                      blade={ringItem.blade}
+                      blade={localData?.blade}
                       deleteRing={deleteRawInput}
                       id={ringItem.id}
                       moveLeft={moveLeftRaw}
                       moveRight={moveRightRaw}
+                      rawDivide={rawDivideParse}
                     />
                   ))}
-                  {/* {localData?.rawinput.map((rawItem) => (
-                    <RawRing
-                      edit={true}
-                      mode={editMode}
-                      key={localData?.id}
-                      value={rawItem.input}
-                      blade={localData.blade}
-                      deleteRing={deleteRawInput}
-                      id={rawItem.id}
-                      moveLeft={moveLeftRaw}
-                      moveRight={moveRightRaw}
-                    />
-                  ))} */}
                 </div>
                 <div className="flex gap-1">
                   {endRingsParse?.map((ringItem: { value: string }) => (
@@ -582,10 +585,10 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
               <option className="option" value="" selected disabled hidden>
                 Velg prosent
               </option>
-              <option className="option" value={18}>
+              <option className="option" value="18">
                 18
               </option>
-              <option className="option" value={12}>
+              <option className="option" value="12">
                 12
               </option>
             </select>

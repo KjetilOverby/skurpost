@@ -1,2 +1,2 @@
 Ved flytting av ringer til venstre uten at det er flere til venstre får man en feilmelding: TypeError: null is not an object (evaluating 'ringItem.value')
- fikse oppdatering av blad
+
