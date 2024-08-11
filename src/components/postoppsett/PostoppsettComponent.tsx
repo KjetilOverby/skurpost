@@ -13,8 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import BladeSelector from "./Bladeselector";
 import { api } from "~/utils/api";
 import EditHeader from "./reusable/EditHeader";
-import { set } from "zod";
-import { raw } from "@prisma/client/runtime/library";
+import { RawDivideComponent } from "./RawDivideComponent";
 
 interface Item {
   header: string;
@@ -31,6 +30,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const [localData, setLocalData] = useState();
   const [rawInputValue, setRawInputValue] = useState(0);
   const [bladeSum, setBladeSum] = useState();
+  const [openRawDivide, setOpenRawDivide] = useState(false);
+  const [getRawValues, setGetRawValues] = useState([]);
 
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
@@ -52,6 +53,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     );
   }, [data, localData]);
 
+  console.log("rawVal: " + rawInputValue);
+
   const ctx = api.useContext();
 
   const updateData = async (id) => {
@@ -60,7 +63,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       const plankeTy = String(localData.plankeTy);
       const startRings = localData.startRings;
       const endRings = localData.endRings;
-      const rawInput = localData.rawInput;
+      const rawInput = rawInputValue;
       const blade = localData.blade;
       const prosent = String(localData.prosent);
       const spes = localData.spes;
@@ -83,6 +86,13 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       console.error(error);
     }
   };
+
+  const openRawDivideHandler = (value) => {
+    setOpenRawDivide(true);
+    setGetRawValues((prevValues) => [...prevValues, value]);
+  };
+
+  console.log("er " + getRawValues);
 
   const handleUpdate = async () => {
     // get the id and data you want to update
@@ -427,6 +437,9 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
         )}
         <div>
           <EditMode editMode={editMode}>
+            {openRawDivide && (
+              <RawDivideComponent setOpenRawDivide={setOpenRawDivide} />
+            )}
             <EditMode editMode={editMode}>
               <RingPicker
                 values={ringlist}
@@ -484,6 +497,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                   ))}
                 </div>
                 <Blade blade={localData?.blade} />
+
                 <div className="flex">
                   {rawRingsParse?.map((ringItem: { value: string }) => (
                     <RawRing
@@ -497,6 +511,14 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                       moveLeft={moveLeftRaw}
                       moveRight={moveRightRaw}
                       rawDivide={rawDivideParse}
+                      openRawDivideHandler={() =>
+                        openRawDivideHandler(ringItem.value)
+                      }
+                      getRawValues={getRawValues}
+                      ringItem={ringItem}
+                      setRawInputValue={setRawInputValue}
+                      rawInputValue={rawInputValue}
+                      rawData={localData && localData?.rawInput}
                     />
                   ))}
                 </div>
