@@ -80,6 +80,8 @@ const RawRing = ({
   rawInputValue,
   ringItem,
   rawData,
+  localData,
+  setLocalData,
 }: RawRingProps) => {
   const [sum, setSum] = useState(0);
 
@@ -100,8 +102,6 @@ const RawRing = ({
     }
   }, [rawData]); // dependencies
 
-  console.log("data:", data);
-
   const rawInputHandler = () => {
     if (data) {
       const updatedData = data.map((item) => {
@@ -115,7 +115,7 @@ const RawRing = ({
         return item;
       });
 
-      setRawInputValue(JSON.stringify(updatedData));
+      setLocalData({ ...localData, rawInput: JSON.stringify(updatedData) });
     }
   };
 

@@ -28,7 +28,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const [endringSum, setEndringSum] = useState(0);
   const [rawinputSum, setRawinputSum] = useState(0);
   const [localData, setLocalData] = useState();
-  const [rawInputValue, setRawInputValue] = useState(0);
+  const [rawInputValue, setRawInputValue] = useState("");
+  const [rawValueFromInput, setRawValueFromInput] = useState(0);
   const [bladeSum, setBladeSum] = useState();
   const [openRawDivide, setOpenRawDivide] = useState(false);
   const [getRawValues, setGetRawValues] = useState([]);
@@ -52,8 +53,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       `${rawRingsParse?.length}x${localData?.plankeTy}-${localData?.prosent}%-${(localData?.blade + 1.4).toFixed(1)}${localData?.spes}`,
     );
   }, [data, localData]);
-
-  console.log("rawVal: " + rawInputValue);
+  console.log("rawInputvalue: " + rawInputValue);
 
   const ctx = api.useContext();
 
@@ -63,7 +63,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       const plankeTy = String(localData.plankeTy);
       const startRings = localData.startRings;
       const endRings = localData.endRings;
-      const rawInput = rawInputValue;
+      const rawInput = localData.rawInput;
       const blade = localData.blade;
       const prosent = String(localData.prosent);
       const spes = localData.spes;
@@ -217,20 +217,40 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       endRings: updatedEndRings,
     });
   };
+
   const handleRawRingPickerChange = (value) => {
-    const rawRingsParse = JSON.parse(localData.rawInput);
-    rawRingsParse.push({
+    // Parse rawInput into an array if it's not an empty string
+    const rawRings = localData.rawInput ? JSON.parse(localData.rawInput) : [];
+
+    // Add the new item to the array
+    rawRings.push({
       id: uuidv4(),
-      value: Number(rawInputValue),
+      value: rawValueFromInput,
       blade: localData.blade,
     });
-    const updatedRawRings = JSON.stringify(rawRingsParse);
+
+    // Stringify the array and save it back to rawInput
+    const updatedRawRings = JSON.stringify(rawRings);
 
     setLocalData({
       ...localData,
       rawInput: updatedRawRings,
     });
   };
+  // const handleRawRingPickerChange = (value) => {
+  //   const rawRingsParse = JSON.parse(localData.rawInput);
+  //   rawRingsParse.push({
+  //     id: uuidv4(),
+  //     value: Number(rawInputValue),
+  //     blade: localData.blade,
+  //   });
+  //   const updatedRawRings = JSON.stringify(rawRingsParse);
+
+  //   setLocalData({
+  //     ...localData,
+  //     rawInput: updatedRawRings,
+  //   });
+  // };
 
   const sawbladeSelectHandler = (event) => {
     setLocalData({
@@ -519,6 +539,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                       setRawInputValue={setRawInputValue}
                       rawInputValue={rawInputValue}
                       rawData={localData && localData?.rawInput}
+                      localData={localData}
+                      setLocalData={setLocalData}
                     />
                   ))}
                 </div>
@@ -586,7 +608,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                   step="0.01"
                   type="number"
                   className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                  onChange={(e) => setRawInputValue(e.target.value)}
+                  onChange={(e) => setRawValueFromInput(e.target.value)}
                 />
                 <button className="btn btn-primary">Legg til</button>
               </div>
