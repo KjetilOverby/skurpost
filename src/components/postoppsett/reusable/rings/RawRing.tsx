@@ -83,42 +83,24 @@ const RawRing = ({
   localData,
   setLocalData,
 }: RawRingProps) => {
-  const [sum, setSum] = useState(0);
+  const [calculationResult, setCalculationResult] = useState("");
 
   useEffect(() => {
-    const total = rawDivide?.reduce(
-      (total, item) => total + Number(item.value),
-      0,
-    );
-    setSum(total);
-  }, [rawDivide, mode]);
-
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    if (rawData) {
-      const parsedData = JSON.parse(rawData);
-      setData(parsedData);
+    if (ringItem?.ring !== undefined || ringItem?.shims !== undefined) {
+      const result = (
+        Number(getRawValues) +
+        1.4 -
+        (ringItem?.ring || 0) -
+        (ringItem?.shims || 0)
+      ).toFixed(1);
+      setCalculationResult(result);
+    } else {
+      setCalculationResult("");
     }
-  }, [rawData]); // dependencies
+  }, [getRawValues, ringItem?.ring, ringItem?.shims, mode]);
 
-  const rawInputHandler = () => {
-    if (data) {
-      const updatedData = data.map((item) => {
-        if (item.value === 40.8) {
-          return {
-            ...item,
-            ring: 70,
-            newVal: "test",
-          };
-        }
-        return item;
-      });
-
-      setLocalData({ ...localData, rawInput: JSON.stringify(updatedData) });
-    }
-  };
-
+  // In your component
+  <p>{calculationResult}</p>;
   return (
     <div className=" relative z-20 flex items-center">
       <div className=" relative grid h-20 w-8 place-items-center rounded-md border-[.5px] border-white bg-gradient-to-b from-green-900 via-gray-300 to-green-900 sm:h-28 sm:w-12 md:h-40 md:w-20">
@@ -144,30 +126,11 @@ const RawRing = ({
           />
         </EditMode>
         <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs md:top-40 md:text-sm">
-          {/* {getRawValues?.includes(value) && ( // Check if getRawValues includes the current value
-            <>
-              {rawDivide?.map((item) => (
-                <div>
-                  <p>{item.value}</p>
-                </div>
-              ))}
-            </>
-          )} */}
-          {/* {value === getRawValues && (
-            <>
-              {rawDivide?.map((item) => (
-                <div>
-                  <p>{item.value}</p>
-                </div>
-              ))}
-            </>
-          )} */}
           <p> {ringItem?.ring}</p>
           <p> {ringItem?.shims}</p>
-          <button onClick={rawInputHandler}>test</button>
         </div>
         <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs md:top-[202px] md:text-sm">
-          <p>{(value + 1.4 - sum).toFixed(1)}</p>
+          <p>{calculationResult}</p>
         </div>
       </div>
       <Blade blade={blade} />

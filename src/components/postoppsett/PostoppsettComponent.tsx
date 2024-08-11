@@ -32,7 +32,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const [rawValueFromInput, setRawValueFromInput] = useState(0);
   const [bladeSum, setBladeSum] = useState();
   const [openRawDivide, setOpenRawDivide] = useState(false);
-  const [getRawValues, setGetRawValues] = useState([]);
+  const [getRawValues, setGetRawValues] = useState();
 
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
@@ -48,12 +48,13 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const [editMode, setEditMode] = useState(false);
   const [headerText, setHeaderText] = useState("");
 
+  const rawValues = rawRingsParse?.map((item) => item);
+
   useEffect(() => {
     setHeaderText(
       `${rawRingsParse?.length}x${localData?.plankeTy}-${localData?.prosent}%-${(localData?.blade + 1.4).toFixed(1)}${localData?.spes}`,
     );
   }, [data, localData]);
-  console.log("rawInputvalue: " + rawInputValue);
 
   const ctx = api.useContext();
 
@@ -89,10 +90,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
 
   const openRawDivideHandler = (value) => {
     setOpenRawDivide(true);
-    setGetRawValues((prevValues) => [...prevValues, value]);
+    setGetRawValues(value);
   };
-
-  console.log("er " + getRawValues);
 
   const handleUpdate = async () => {
     // get the id and data you want to update
@@ -458,7 +457,14 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
         <div>
           <EditMode editMode={editMode}>
             {openRawDivide && (
-              <RawDivideComponent setOpenRawDivide={setOpenRawDivide} />
+              <RawDivideComponent
+                setOpenRawDivide={setOpenRawDivide}
+                rawData={localData && localData?.rawInput}
+                getRawValues={getRawValues}
+                localData={localData}
+                setLocalData={setLocalData}
+                rawValues={rawValues}
+              />
             )}
             <EditMode editMode={editMode}>
               <RingPicker
@@ -519,30 +525,32 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                 <Blade blade={localData?.blade} />
 
                 <div className="flex">
-                  {rawRingsParse?.map((ringItem: { value: string }) => (
-                    <RawRing
-                      edit={true}
-                      mode={editMode}
-                      key={ringItem.id}
-                      value={ringItem.value}
-                      blade={localData?.blade}
-                      deleteRing={deleteRawInput}
-                      id={ringItem.id}
-                      moveLeft={moveLeftRaw}
-                      moveRight={moveRightRaw}
-                      rawDivide={rawDivideParse}
-                      openRawDivideHandler={() =>
-                        openRawDivideHandler(ringItem.value)
-                      }
-                      getRawValues={getRawValues}
-                      ringItem={ringItem}
-                      setRawInputValue={setRawInputValue}
-                      rawInputValue={rawInputValue}
-                      rawData={localData && localData?.rawInput}
-                      localData={localData}
-                      setLocalData={setLocalData}
-                    />
-                  ))}
+                  {rawRingsParse?.map((ringItem: { value: string }) => {
+                    return (
+                      <RawRing
+                        edit={true}
+                        mode={editMode}
+                        key={ringItem.id}
+                        value={ringItem.value}
+                        blade={localData?.blade}
+                        deleteRing={deleteRawInput}
+                        id={ringItem.id}
+                        moveLeft={moveLeftRaw}
+                        moveRight={moveRightRaw}
+                        rawDivide={rawDivideParse}
+                        openRawDivideHandler={() =>
+                          openRawDivideHandler(ringItem.value)
+                        }
+                        getRawValues={getRawValues}
+                        ringItem={ringItem}
+                        setRawInputValue={setRawInputValue}
+                        rawInputValue={rawInputValue}
+                        rawData={localData && localData?.rawInput}
+                        localData={localData}
+                        setLocalData={setLocalData}
+                      />
+                    );
+                  })}
                 </div>
                 <div className="flex gap-1">
                   {endRingsParse?.map((ringItem: { value: string }) => (
