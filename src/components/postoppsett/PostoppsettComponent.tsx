@@ -452,7 +452,6 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                 localData={localData}
                 setLocalData={setLocalData}
                 rawValues={rawValues}
-                ringItem={rawRings.map((item) => item)}
               />
             )}
             <EditMode editMode={editMode}>

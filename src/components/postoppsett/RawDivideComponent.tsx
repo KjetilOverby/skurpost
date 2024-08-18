@@ -9,12 +9,10 @@ export const RawDivideComponent = ({
   setLocalData,
   getRawValues,
   rawValues,
-  ringItem,
 }) => {
   const [data, setData] = useState(null);
   const [getRing, setGetRing] = useState(0);
-
-  console.log(ringItem.map((item) => item.value));
+  const [setshims1, setSetshims1] = useState(0);
 
   const rawInputHandler = () => {
     if (data) {
@@ -28,9 +26,24 @@ export const RawDivideComponent = ({
         return item;
       });
 
-      setLocalData({ ...localData, rawInput: JSON.stringify(updatedData) });
+      setLocalData({ ...localData, rawInput: updatedData });
     }
   };
+  // const rawInputHandler = () => {
+  //   if (data) {
+  //     const updatedData = data.map((item) => {
+  //       if (item.value === getRawValues) {
+  //         return {
+  //           ...item,
+  //           ring: getRing,
+  //         };
+  //       }
+  //       return item;
+  //     });
+
+  //     setLocalData({ ...localData, rawInput: updatedData });
+  //   }
+  // };
 
   const skimsHandler = () => {
     if (data) {
@@ -44,7 +57,7 @@ export const RawDivideComponent = ({
         return item;
       });
 
-      setLocalData({ ...localData, rawInput: JSON.stringify(updatedData) });
+      setLocalData({ ...localData, rawInput: updatedData });
     }
   };
   return (
@@ -71,8 +84,8 @@ export const RawDivideComponent = ({
           </div>
           <div>
             <p>X-verdi: {Number(getRawValues) + 1.4}</p>
-            <p>Ring: {rawValues.ring}</p>
-            <p>Skims: {getRing}</p>
+            <p>Ring: {getRing}</p>
+            <p>{(getRawValues + 1.4 - getRing).toFixed(1)}</p>
           </div>
         </div>
       </div>
