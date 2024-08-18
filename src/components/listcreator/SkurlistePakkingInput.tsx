@@ -15,7 +15,7 @@ const SkurlistePakkingInput = ({ list }) => {
   const dest = list.destinasjon ? list.destinasjon.split(", ") : [];
   const text = list.text ? list.text.split(", ") : [];
   return (
-    <div>
+    <div className="overflow-scroll">
       {" "}
       <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-green-200 ">
         <thead>

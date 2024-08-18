@@ -43,9 +43,20 @@ export const postoppsettRouter = createTRPCRouter({
       id: z.string(),  
       header: z.string(), 
       plankeTy: z.string(),
-      startRings: z.string(),
-      endRings: z.string(),
-      rawInput: z.string(),
+      startRings: z.array(z.object({
+        id: z.string(),
+        value: z.number(),
+      })),
+      endRings: z.array(z.object({
+        id: z.string(),
+        value: z.number(),
+      })),
+      rawInput: z.array(z.object({
+        id: z.string(),
+        value: z.number(),
+        ring: z.number().optional(),
+        shims: z.number().optional(),
+      })),
       blade: z.number(),
       prosent: z.string(),
       spes: z.string(),

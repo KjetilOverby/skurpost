@@ -1,3 +1,9 @@
-Ved flytting av ringer til venstre uten at det er flere til venstre får man en feilmelding: TypeError: null is not an object (evaluating 'ringItem.value')
 
-fix rawInput 
+opprette ny post
+
+Finne løsning på rawDivide
+
+søke på poster med søk, direkte fra lista
+
+Lage my liste for postoppsett
+

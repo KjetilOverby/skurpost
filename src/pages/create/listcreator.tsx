@@ -12,7 +12,7 @@ const listcreator = () => {
   return (
     <div className="min-h-screen bg-base-100">
       <HeaderComponent />
-      <div data-theme="lightmode" className="min-h-screen pt-20 lg:px-96">
+      <div data-theme="lightmode" className="min-h-screen px-5 pt-20 xl:px-96">
         <ListcreatorMain
           skurliste={skurliste}
           setBufferStatus={setBufferStatus}

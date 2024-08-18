@@ -97,7 +97,7 @@ const RawRing = ({
     } else {
       setCalculationResult("");
     }
-  }, [getRawValues, ringItem?.ring, ringItem?.shims, mode]);
+  }, [getRawValues, ringItem?.ring, ringItem?.shims, mode, value, blade, edit]);
 
   // In your component
   <p>{calculationResult}</p>;

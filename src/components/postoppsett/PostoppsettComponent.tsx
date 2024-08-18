@@ -28,7 +28,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const [endringSum, setEndringSum] = useState(0);
   const [rawinputSum, setRawinputSum] = useState(0);
   const [localData, setLocalData] = useState();
-  const [rawInputValue, setRawInputValue] = useState("");
+  const [rawInputValue, setRawInputValue] = useState(0);
   const [rawValueFromInput, setRawValueFromInput] = useState(0);
   const [bladeSum, setBladeSum] = useState();
   const [openRawDivide, setOpenRawDivide] = useState(false);
@@ -40,19 +40,19 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     },
   });
 
-  const startRingsParse = localData && JSON.parse(localData.startRings);
-  const endRingsParse = localData && JSON.parse(localData.endRings);
-  const rawRingsParse = localData && JSON.parse(localData.rawInput);
-  const rawDivideParse = localData && JSON.parse(localData.rawDivide);
+  const startRings = localData && localData.startRings;
+  const endRings = localData && localData.endRings;
+  const rawRings = localData && localData.rawInput;
+  const rawDivideParse = localData && localData.rawDivide;
 
   const [editMode, setEditMode] = useState(false);
   const [headerText, setHeaderText] = useState("");
 
-  const rawValues = rawRingsParse?.map((item) => item);
+  const rawValues = rawRings?.map((item) => item);
 
   useEffect(() => {
     setHeaderText(
-      `${rawRingsParse?.length}x${localData?.plankeTy}-${localData?.prosent}%-${(localData?.blade + 1.4).toFixed(1)}${localData?.spes}`,
+      `${rawRings?.length}x${localData?.plankeTy}-${localData?.prosent}%-${(localData?.blade + 1.4).toFixed(1)}${localData?.spes}`,
     );
   }, [data, localData]);
 
@@ -68,7 +68,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       const blade = localData.blade;
       const prosent = String(localData.prosent);
       const spes = localData.spes;
-      const xlog = String(rawRingsParse.length);
+      const xlog = String(rawRings.length);
       const response = await updatePost.mutateAsync({
         id,
         header,
@@ -106,17 +106,17 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
 
   // useEffect(() => {
   //   if (localData) {
-  //     const startringTotal = startRingsParse.reduce(
+  //     const startringTotal = startRings.reduce(
   //       (total, ringItem) => total + Number(ringItem.value),
   //       0,
   //     );
 
-  //     const endringTotal = endRingsParse.reduce(
+  //     const endringTotal = endRings.reduce(
   //       (total, ringItem) => total + Number(ringItem.value),
   //       0,
   //     );
 
-  //     const rawinputTotal = rawRingsParse.reduce(
+  //     const rawinputTotal = rawRings.reduce(
   //       (total, rawItem) => total + Number(rawItem.value),
   //       0,
   //     );
@@ -129,22 +129,22 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
 
   useEffect(() => {
     if (localData) {
-      const startringTotal = startRingsParse.reduce(
+      const startringTotal = startRings.reduce(
         (total, ringItem) => total + Number(ringItem.value),
         0,
       );
 
-      const endringTotal = endRingsParse.reduce(
+      const endringTotal = endRings.reduce(
         (total, ringItem) => total + Number(ringItem.value),
         0,
       );
 
-      const rawinputTotal = rawRingsParse.reduce(
+      const rawinputTotal = rawRings.reduce(
         (total, rawItem) => total + Number(rawItem.value) + 1.4,
         0,
       );
 
-      const bladeTotal = localData.blade * rawRingsParse.length;
+      const bladeTotal = localData.blade * rawRings.length;
 
       setStartringSum(startringTotal);
       setEndringSum(endringTotal);
@@ -161,89 +161,82 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
 
   const deleteStartring = (id) => {
     setLocalData((prevData) => {
-      const startRingsParse = JSON.parse(prevData.startRings);
-      const updatedStartRings = startRingsParse.filter(
+      const updatedStartRings = prevData.startRings.filter(
         (ringItem) => ringItem.id !== id,
       );
       return {
         ...prevData,
-        startRings: JSON.stringify(updatedStartRings),
+        startRings: updatedStartRings,
       };
     });
   };
+
   const deleteEndring = (id) => {
     setLocalData((prevData) => {
-      const endRingsParse = JSON.parse(prevData.endRings);
-      const updatedEndRings = endRingsParse.filter(
+      const updatedEndRings = prevData.endRings.filter(
         (ringItem) => ringItem.id !== id,
       );
       return {
         ...prevData,
-        endRings: JSON.stringify(updatedEndRings),
+        endRings: updatedEndRings,
       };
     });
   };
   const deleteRawInput = (id) => {
     setLocalData((prevData) => {
-      const rawRingsParse = JSON.parse(prevData.rawInput);
-      const updatedRawRings = rawRingsParse.filter(
+      const updatedRawRings = prevData.rawInput.filter(
         (ringItem) => ringItem.id !== id,
       );
       return {
         ...prevData,
-        rawInput: JSON.stringify(updatedRawRings),
+        rawInput: updatedRawRings,
       };
     });
   };
 
   const handleRingPickerChange = (value) => {
-    const startRingsParse = JSON.parse(localData.startRings);
-    startRingsParse.push({ id: uuidv4(), value: value });
-    const updatedStartRings = JSON.stringify(startRingsParse);
+    const startRingsCopy = [...localData.startRings];
+    startRingsCopy.push({ id: uuidv4(), value: value });
 
     setLocalData({
       ...localData,
-      startRings: updatedStartRings,
+      startRings: startRingsCopy,
     });
   };
   const handleEndRingPickerChange = (value) => {
-    const endRingsParse = JSON.parse(localData.endRings);
-    endRingsParse.push({ id: uuidv4(), value: value });
-    const updatedEndRings = JSON.stringify(endRingsParse);
+    const endRingsCopy = [...localData.endRings];
+    endRingsCopy.push({ id: uuidv4(), value: value });
 
     setLocalData({
       ...localData,
-      endRings: updatedEndRings,
+      endRings: endRingsCopy,
     });
   };
 
   const handleRawRingPickerChange = (value) => {
-    // Parse rawInput into an array if it's not an empty string
-    const rawRings = localData.rawInput ? JSON.parse(localData.rawInput) : [];
+    // Copy rawInput into a new array
+    const rawRings = [...localData.rawInput];
 
     // Add the new item to the array
     rawRings.push({
       id: uuidv4(),
-      value: rawValueFromInput,
+      value: Number(rawValueFromInput),
       blade: localData.blade,
     });
 
-    // Stringify the array and save it back to rawInput
-    const updatedRawRings = JSON.stringify(rawRings);
-
     setLocalData({
       ...localData,
-      rawInput: updatedRawRings,
+      rawInput: rawRings,
     });
   };
   // const handleRawRingPickerChange = (value) => {
-  //   const rawRingsParse = JSON.parse(localData.rawInput);
-  //   rawRingsParse.push({
+  //   const rawRings = JSON.parse(localData.rawInput);
+  //   rawRings.push({
   //     id: uuidv4(),
   //     value: Number(rawInputValue),
   //     blade: localData.blade,
   //   });
-  //   const updatedRawRings = JSON.stringify(rawRingsParse);
+  //   const updatedRawRings = JSON.stringify(rawRings);
 
   //   setLocalData({
   //     ...localData,
@@ -268,7 +261,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const handlePlankeTy = (event) => {
     setLocalData({
       ...localData,
-      plankeTy: parseFloat(event.target.value),
+      plankeTy: String(event.target.value),
     });
   };
   const handleSpes = (event) => {
@@ -289,7 +282,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       endringSum
     ).toFixed(2);
     setDifferenceEnd(calculatedDifferenceEnd);
-  }, [data, localData, rawRingsParse, startRingsParse, endRingsParse]);
+  }, [data, localData, rawRings, startRings, endRings]);
 
   const [differenceStart, setDifferenceStart] = useState(null);
 
@@ -303,13 +296,13 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     ).toFixed(2);
 
     setDifferenceStart(calculatedDifferenceStart);
-  }, [data, localData, rawRingsParse, startRingsParse, endRingsParse]);
+  }, [data, localData, rawRings, startRings, endRings]);
 
   const moveLeft = async (id) => {
-    const index = startRingsParse.findIndex((item) => item.id === id);
+    const index = startRings.findIndex((item) => item.id === id);
 
     if (index > 0) {
-      const newItems = [...startRingsParse];
+      const newItems = [...startRings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index - 1];
       newItems[index - 1] = tempItem;
@@ -317,90 +310,85 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       //Update the localData state
       setLocalData({
         ...localData,
-        startRings: JSON.stringify(newItems),
+        startRings: newItems,
       });
     }
   };
 
   const moveRight = (id) => {
-    const index = startRingsParse.findIndex((item) => item.id === id);
+    const index = startRings.findIndex((item) => item.id === id);
 
-    if (index < startRingsParse.length - 1) {
-      const newItems = [...startRingsParse];
+    if (index < startRings.length - 1) {
+      const newItems = [...startRings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index + 1];
       newItems[index + 1] = tempItem;
 
-      // Update the localData state
       setLocalData({
         ...localData,
-        startRings: JSON.stringify(newItems),
+        startRings: newItems,
       });
     }
   };
 
   const moveRightEnd = async (id) => {
-    const index = endRingsParse.findIndex((item) => item.id === id);
+    const index = endRings.findIndex((item) => item.id === id);
 
-    if (index < endRingsParse.length - 1) {
-      const newItems = [...endRingsParse];
+    if (index < endRings.length - 1) {
+      const newItems = [...endRings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index + 1];
       newItems[index + 1] = tempItem;
 
-      // Update the localData state
       setLocalData({
         ...localData,
-        endRings: JSON.stringify(newItems),
+        endRings: newItems,
       });
     }
   };
   const moveLeftEnd = async (id) => {
-    const index = endRingsParse.findIndex((item) => item.id === id);
+    const index = endRings.findIndex((item) => item.id === id);
 
-    if (index < endRingsParse.length + 1) {
-      const newItems = [...endRingsParse];
+    if (index > 0) {
+      const newItems = [...endRings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index - 1];
       newItems[index - 1] = tempItem;
 
-      // Update the localData state
       setLocalData({
         ...localData,
-        endRings: JSON.stringify(newItems),
+        endRings: newItems,
       });
     }
   };
 
   const moveLeftRaw = async (id) => {
-    const index = rawRingsParse.findIndex((item) => item.id === id);
+    const index = rawRings.findIndex((item) => item.id === id);
 
-    if (index < rawRingsParse.length + 1) {
-      const newItems = [...rawRingsParse];
+    if (index > 0) {
+      const newItems = [...rawRings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index - 1];
       newItems[index - 1] = tempItem;
 
-      // Update the localData state
       setLocalData({
         ...localData,
-        rawInput: JSON.stringify(newItems),
+        rawInput: newItems,
       });
     }
   };
   const moveRightRaw = async (id) => {
-    const index = rawRingsParse.findIndex((item) => item.id === id);
+    const index = rawRings.findIndex((item) => item.id === id);
 
-    if (index < rawRingsParse.length - 1) {
-      const newItems = [...rawRingsParse];
+    if (index < rawRings.length - 1) {
+      const newItems = [...rawRings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index + 1];
       newItems[index + 1] = tempItem;
 
-      // Update the localData state
       setLocalData({
         ...localData,
-        rawInput: JSON.stringify(newItems),
+        rawInput: newItems,
       });
     }
   };
@@ -421,7 +409,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
               </div>
               <div className="flex">
                 <div className="flex gap-1">
-                  {startRingsParse?.map((ringItem: { value: string }) => (
+                  {startRings?.map((ringItem: { value: string }) => (
                     <Ring
                       mode={editMode}
                       key={ringItem.id}
@@ -431,7 +419,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                 </div>
                 <Blade blade={data?.blade} />
                 <div className="flex">
-                  {rawRingsParse?.map((ringItem: { value: string }) => (
+                  {rawRings?.map((ringItem: { value: string }) => (
                     <RawRing
                       mode={editMode}
                       key={ringItem.id}
@@ -442,7 +430,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                   ))}
                 </div>
                 <div className="flex gap-1">
-                  {endRingsParse?.map((ringItem: { value: string }) => (
+                  {endRings?.map((ringItem: { value: string }) => (
                     <Ring
                       mode={editMode}
                       key={ringItem.id}
@@ -464,6 +452,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                 localData={localData}
                 setLocalData={setLocalData}
                 rawValues={rawValues}
+                ringItem={rawRings.map((item) => item)}
               />
             )}
             <EditMode editMode={editMode}>
@@ -479,8 +468,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
               <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
                 <p>Opprinnelig post: {localData?.header}</p>
                 <p className="text-3xl">
-                  {rawRingsParse?.length}x{localData?.plankeTy}-
-                  {localData?.prosent}%-{(localData?.blade + 1.4).toFixed(1)}
+                  {rawRings?.length}x{localData?.plankeTy}-{localData?.prosent}
+                  %-{(localData?.blade + 1.4).toFixed(1)}
                   {localData?.spes}
                 </p>
               </div>
@@ -509,7 +498,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                       </p>
                     </div>
                   </EditMode>
-                  {startRingsParse?.map((ringItem: { value: string }) => (
+                  {startRings?.map((ringItem: { value: string }) => (
                     <Ring
                       edit={true}
                       mode={editMode}
@@ -525,7 +514,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                 <Blade blade={localData?.blade} />
 
                 <div className="flex">
-                  {rawRingsParse?.map((ringItem: { value: string }) => {
+                  {rawRings?.map((ringItem: { value: string }) => {
                     return (
                       <RawRing
                         edit={true}
@@ -553,7 +542,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                   })}
                 </div>
                 <div className="flex gap-1">
-                  {endRingsParse?.map((ringItem: { value: string }) => (
+                  {endRings?.map((ringItem: { value: string }) => (
                     <Ring
                       edit={true}
                       mode={editMode}
@@ -616,7 +605,9 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                   step="0.01"
                   type="number"
                   className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                  onChange={(e) => setRawValueFromInput(e.target.value)}
+                  onChange={(e) =>
+                    setRawValueFromInput(parseFloat(e.target.value))
+                  }
                 />
                 <button className="btn btn-primary">Legg til</button>
               </div>

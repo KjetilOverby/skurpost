@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import ringlist from "~/utils/ringlist";
 import RingPickerRaw from "./reusable/RingPickerRaw";
-import { get } from "http";
-
 export const RawDivideComponent = ({
   setOpenRawDivide,
   rawData,
@@ -11,16 +9,13 @@ export const RawDivideComponent = ({
   setLocalData,
   getRawValues,
   rawValues,
+  ringItem,
 }) => {
   const [data, setData] = useState(null);
   const [getRing, setGetRing] = useState(0);
 
-  useEffect(() => {
-    if (rawData) {
-      const parsedData = JSON.parse(rawData);
-      setData(parsedData);
-    }
-  }, [rawData]); // dependencies
+  console.log(ringItem.map((item) => item.value));
+
   const rawInputHandler = () => {
     if (data) {
       const updatedData = data.map((item) => {

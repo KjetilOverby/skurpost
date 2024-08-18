@@ -7,7 +7,7 @@ import dateFormat from "dateformat";
 
 const SkurlisteComponentInput = ({ list }) => {
   return (
-    <div>
+    <div className="overflow-scroll">
       {" "}
       <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-blue-200">
         <thead>
