@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import ringlist from "~/utils/ringlist";
 import RingPickerRaw from "./reusable/RingPickerRaw";
+import { set } from "zod";
 export const RawDivideComponent = ({
   setOpenRawDivide,
   rawData,
@@ -9,56 +10,25 @@ export const RawDivideComponent = ({
   setLocalData,
   getRawValues,
   rawValues,
+  firstRingVal,
+  shimsVal,
+  shimsVal2,
+  setFirstRingVal,
+  setShimsVal,
+  setShimsVal2,
 }) => {
   const [data, setData] = useState(null);
   const [getRing, setGetRing] = useState(0);
-  const [setshims1, setSetshims1] = useState(0);
 
   const rawInputHandler = () => {
-    if (data) {
-      const updatedData = data.map((item) => {
-        if (item.value === getRawValues) {
-          return {
-            ...item,
-            ring: getRing,
-          };
-        }
-        return item;
-      });
-
-      setLocalData({ ...localData, rawInput: updatedData });
-    }
+    setFirstRingVal(getRing);
   };
-  // const rawInputHandler = () => {
-  //   if (data) {
-  //     const updatedData = data.map((item) => {
-  //       if (item.value === getRawValues) {
-  //         return {
-  //           ...item,
-  //           ring: getRing,
-  //         };
-  //       }
-  //       return item;
-  //     });
-
-  //     setLocalData({ ...localData, rawInput: updatedData });
-  //   }
-  // };
 
   const skimsHandler = () => {
-    if (data) {
-      const updatedData = data.map((item) => {
-        if (item.value === getRawValues) {
-          return {
-            ...item,
-            shims: getRing,
-          };
-        }
-        return item;
-      });
-
-      setLocalData({ ...localData, rawInput: updatedData });
-    }
+    setShimsVal(getRing);
+    setShimsVal2(
+      (Number(getRawValues) + 1.4 - firstRingVal - shimsVal).toFixed(1),
+    );
   };
   return (
     <div className="absolute bottom-0 left-0 right-0 top-10  z-10 mx-auto my-auto flex h-[900px] w-screen flex-col justify-end rounded-xl bg-gray-700 p-5">
@@ -84,8 +54,9 @@ export const RawDivideComponent = ({
           </div>
           <div>
             <p>X-verdi: {Number(getRawValues) + 1.4}</p>
-            <p>Ring: {getRing}</p>
-            <p>{(getRawValues + 1.4 - getRing).toFixed(1)}</p>
+            <p>Ring: {firstRingVal}</p>
+            <p>shims2: {shimsVal}</p>
+            <p>Shims: {shimsVal2 > 0 && shimsVal2}</p>
           </div>
         </div>
       </div>

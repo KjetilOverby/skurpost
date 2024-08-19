@@ -103,11 +103,11 @@ const RawRing = ({
   <p>{calculationResult}</p>;
   return (
     <div className=" relative z-20 flex items-center">
-      <div className=" relative grid h-20 w-8 place-items-center rounded-md border-[.5px] border-white bg-gradient-to-b from-green-900 via-gray-300 to-green-900 sm:h-28 sm:w-12 md:h-40 md:w-20">
+      <div className=" relative grid h-20 w-8 place-items-center rounded-md border-[.5px] border-white bg-gradient-to-b from-green-900 via-gray-300 to-green-900 sm:h-28 sm:w-12 md:h-44 md:w-20">
         <EditMode editMode={mode}>
           {edit && <RiDeleteBin5Line onClick={() => deleteRing(id)} />}
         </EditMode>
-        <p className="absolute bottom-20 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs  md:bottom-40 md:text-sm">
+        <p className="absolute bottom-20 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs  md:bottom-44 md:text-sm">
           {value}
         </p>
         <p className="text-xs text-black sm:text-sm md:text-xl">

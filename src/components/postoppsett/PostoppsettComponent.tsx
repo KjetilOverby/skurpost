@@ -34,6 +34,10 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const [openRawDivide, setOpenRawDivide] = useState(false);
   const [getRawValues, setGetRawValues] = useState();
 
+  const [firstRingVal, setFirstRingVal] = useState(0);
+  const [shimsVal, setShimsVal] = useState(0);
+  const [shimsVal2, setShimsVal2] = useState(0);
+
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
       void ctx.postoppsett.getAll.invalidate();
@@ -452,6 +456,12 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                 localData={localData}
                 setLocalData={setLocalData}
                 rawValues={rawValues}
+                firstRingVal={firstRingVal}
+                setFirstRingVal={setFirstRingVal}
+                shimsVal={shimsVal}
+                setShimsVal={setShimsVal}
+                shimsVal2={shimsVal2}
+                setShimsVal2={setShimsVal2}
               />
             )}
             <EditMode editMode={editMode}>
