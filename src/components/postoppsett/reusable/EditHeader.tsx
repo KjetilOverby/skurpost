@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { EditMode } from "../modes/editMode";
 
-const EditHeader = ({ setEditMode, editMode, handleUpdate }) => {
+const EditHeader = ({ setEditMode, editMode, handleUpdate, createData }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -44,6 +44,7 @@ const EditHeader = ({ setEditMode, editMode, handleUpdate }) => {
                   Oppdater post
                 </a>
                 <a
+                  onClick={createData}
                   href="#"
                   className="block cursor-pointer px-4 py-2 text-gray-400 hover:bg-gray-600 hover:text-white"
                 >

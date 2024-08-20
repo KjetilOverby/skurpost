@@ -23,6 +23,7 @@ const SkurlisteComponent = ({
   bufferStatus,
   setBufferStatus,
   updateBufferHandlerFalse,
+  setSearchInput,
 }) => {
   const handleDelete = (id: string) => {
     deletePost.mutate({ id: id });
@@ -103,6 +104,10 @@ const SkurlisteComponent = ({
     });
   };
 
+  const clickSearch = (post) => {
+    setSearchInput(`${post.post}-${post.prosent}%-${post.blad.toFixed(1)}`);
+  };
+
   useEffect(() => {
     if (edit) {
       setListProps((prevProps) => ({ ...prevProps, order: maxOrder }));
@@ -153,7 +158,10 @@ const SkurlisteComponent = ({
             {skurliste?.map((list) => {
               return (
                 <>
-                  <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary ">
+                  <tr
+                    onClick={() => clickSearch(list)}
+                    className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary "
+                  >
                     <td
                       className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                     >

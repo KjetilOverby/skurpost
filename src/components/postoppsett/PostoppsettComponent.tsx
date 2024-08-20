@@ -37,6 +37,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
   const [firstRingVal, setFirstRingVal] = useState(0);
   const [shimsVal, setShimsVal] = useState(0);
   const [shimsVal2, setShimsVal2] = useState(0);
+  const [calculationResult, setCalculationResult] = useState(0);
 
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
@@ -60,6 +61,30 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     );
   }, [data, localData]);
 
+  useEffect(() => {
+    if (localData) {
+      setLocalData((prevData) => {
+        const updatedRawInput = prevData.rawInput.map((item) => {
+          if (item.value === getRawValues) {
+            return {
+              ...item,
+              ring: firstRingVal,
+              shimsVal: shimsVal,
+              shimsVal2: Number(calculationResult),
+            };
+          } else {
+            return item;
+          }
+        });
+
+        return {
+          ...prevData,
+          rawInput: updatedRawInput,
+        };
+      });
+    }
+  }, [firstRingVal, shimsVal, getRawValues]);
+
   const ctx = api.useContext();
 
   const updateData = async (id) => {
@@ -75,6 +100,41 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
       const xlog = String(rawRings.length);
       const response = await updatePost.mutateAsync({
         id,
+        header,
+        plankeTy,
+        startRings,
+        endRings,
+        rawInput,
+        blade,
+        prosent,
+        spes,
+        xlog,
+      });
+      console.log(response);
+      setEditMode(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const createPost = api.postoppsett.createPost.useMutation({
+    onSuccess: () => {
+      void ctx.postoppsett.getAll.invalidate();
+    },
+  });
+
+  const createData = async () => {
+    try {
+      const header = headerText;
+      const plankeTy = String(localData.plankeTy);
+      const startRings = localData.startRings;
+      const endRings = localData.endRings;
+      const rawInput = localData.rawInput;
+      const blade = localData.blade;
+      const prosent = String(localData.prosent);
+      const spes = localData.spes;
+      const xlog = String(rawRings.length);
+      const response = await createPost.mutateAsync({
         header,
         plankeTy,
         startRings,
@@ -225,7 +285,6 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
     rawRings.push({
       id: uuidv4(),
       value: Number(rawValueFromInput),
-      blade: localData.blade,
     });
 
     setLocalData({
@@ -403,6 +462,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
         setEditMode={setEditMode}
         editMode={editMode}
         handleUpdate={handleUpdate}
+        createData={createData}
       />
       <div className="flex h-screen flex-col items-center justify-center">
         {!editMode && (
@@ -430,6 +490,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                       value={ringItem.value}
                       blade={localData.blade}
                       rawDivide={rawDivideParse}
+                      ringItem={ringItem}
                     />
                   ))}
                 </div>
@@ -462,6 +523,8 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
                 setShimsVal={setShimsVal}
                 shimsVal2={shimsVal2}
                 setShimsVal2={setShimsVal2}
+                calculationResult={calculationResult}
+                setCalculationResult={setCalculationResult}
               />
             )}
             <EditMode editMode={editMode}>

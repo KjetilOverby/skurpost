@@ -97,9 +97,8 @@ const RawRing = ({
     } else {
       setCalculationResult("");
     }
-  }, [getRawValues, ringItem?.ring, ringItem?.shims, mode, value, blade, edit]);
+  }, [getRawValues, ringItem, mode, value, blade, edit]);
 
-  // In your component
   <p>{calculationResult}</p>;
   return (
     <div className=" relative z-20 flex items-center">
@@ -125,12 +124,13 @@ const RawRing = ({
             className="absolute bottom-11 left-1/2 -translate-x-1/2 transform text-sm text-gray-700"
           />
         </EditMode>
-        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs md:top-40 md:text-sm">
+        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs md:top-44 md:text-sm">
           <p> {ringItem?.ring}</p>
-          <p> {ringItem?.shims}</p>
+          <p> {ringItem?.shimsVal}</p>
+          <p> {ringItem?.shimsVal2}</p>
         </div>
         <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs md:top-[202px] md:text-sm">
-          <p>{calculationResult}</p>
+          {/* <p>{calculationResult}</p> */}
         </div>
       </div>
       <Blade blade={blade} />

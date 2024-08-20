@@ -14,10 +14,23 @@ export const postoppsettRouter = createTRPCRouter({
     .query(({ ctx }) => {
       return ctx.db.postningsoppsett.findUnique({
         where: {
-          id: 'clzny399g0000s8jym3pzcutr',
+          id: 'cm0242fvb000r2dzlqaug9m16',
         },
       
       })
+    }),
+    getByHeader: publicProcedure
+    .input(z.object({
+      header: z.string(),
+    }))
+    .query(async ({ input, ctx }) => {
+      return ctx.db.postningsoppsett.findMany({
+        where: {
+          header: {
+            contains: input.header,
+          },
+        },
+      });
     }),
 
 
@@ -55,7 +68,8 @@ export const postoppsettRouter = createTRPCRouter({
         id: z.string(),
         value: z.number(),
         ring: z.number().optional(),
-        shims: z.number().optional(),
+        shimsVal: z.number().optional(),
+        shimsVal2: z.number().optional(),
       })),
       blade: z.number(),
       prosent: z.string(),
@@ -65,7 +79,7 @@ export const postoppsettRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       return ctx.db.postningsoppsett.update({
         where: {
-          id: 'clzny399g0000s8jym3pzcutr', // use input.id instead of the hardcoded id
+          id: 'cm0242fvb000r2dzlqaug9m16', // use input.id instead of the hardcoded id
         },
         data: {
           header: input.header,
@@ -81,8 +95,63 @@ export const postoppsettRouter = createTRPCRouter({
       });
     }),
 
+    createPost: protectedProcedure
+  .input(z.object({ 
+    // same input schema as updatePost, but without the id
+    header: z.string(), 
+    plankeTy: z.string(),
+    startRings: z.array(z.object({
+      id: z.string(),
+      value: z.number(),
+    })),
+    endRings: z.array(z.object({
+      id: z.string(),
+      value: z.number(),
+    })),
+    rawInput: z.array(z.object({
+      id: z.string(),
+      value: z.number(),
+      ring: z.number().optional(),
+      shimsVal: z.number().optional(),
+      shimsVal2: z.number().optional(),
+    })),
+    blade: z.number(),
+    prosent: z.string(),
+    spes: z.string(),
+    xlog: z.string(),
+  }))
+  .mutation(async ({ input, ctx }) => {
+    return ctx.db.postningsoppsett.create({
+      data: {
+        header: input.header,
+        plankeTy: input.plankeTy,
+        startRings: input.startRings,
+        endRings: input.endRings,
+        rawInput: input.rawInput,
+        blade: input.blade,
+        prosent: input.prosent,
+        spes: input.spes,
+        xlog: input.xlog,
+        updater: '',
+        updaterImg: '',
+        creator: '',
+        creatorImg: '',
+        deleted: false,
+        note: '',
+        deleter: '',
+        kunde: '',
+        rawDivide: '',
+        createdBy: { connect: { id: ctx.session.user.id} },
+       
+      }
+    });
+  }),
+
+    
+
 
 })
+
 
 
  

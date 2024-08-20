@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
+import { api } from "~/utils/api";
 import PostoppsettComponent from "~/components/postoppsett/PostoppsettComponent";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { api } from "~/utils/api";
 import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import RoleAdmin from "~/components/roles/RoleAdmin";
 

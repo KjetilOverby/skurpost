@@ -16,9 +16,17 @@ export const RawDivideComponent = ({
   setFirstRingVal,
   setShimsVal,
   setShimsVal2,
+  calculationResult,
+  setCalculationResult,
 }) => {
   const [data, setData] = useState(null);
   const [getRing, setGetRing] = useState(0);
+
+  useEffect(() => {
+    setCalculationResult(
+      (Number(getRawValues) + 1.4 - firstRingVal - shimsVal).toFixed(1),
+    );
+  }, [getRing, shimsVal, firstRingVal]);
 
   const rawInputHandler = () => {
     setFirstRingVal(getRing);
@@ -55,8 +63,8 @@ export const RawDivideComponent = ({
           <div>
             <p>X-verdi: {Number(getRawValues) + 1.4}</p>
             <p>Ring: {firstRingVal}</p>
-            <p>shims2: {shimsVal}</p>
-            <p>Shims: {shimsVal2 > 0 && shimsVal2}</p>
+            <p>Shims: {calculationResult}</p>
+            <p>shims2: {Number(shimsVal)}</p>
           </div>
         </div>
       </div>
