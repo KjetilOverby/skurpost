@@ -9,16 +9,18 @@ import {
 } from "~/server/api/trpc";
 export const postoppsettRouter = createTRPCRouter({
  
+  getById: publicProcedure.input(z.object({
+    postId: z.string(),
+  }))
+  .query(({ input, ctx }) => {
+    return ctx.db.postningsoppsett.findUnique({
+      where: {
+        id: input.postId,
+      },
+    })
+  }),
 
-    getAll: publicProcedure
-    .query(({ ctx }) => {
-      return ctx.db.postningsoppsett.findUnique({
-        where: {
-          id: 'cm0242fvb000r2dzlqaug9m16',
-        },
-      
-      })
-    }),
+
     getByHeader: publicProcedure
     .input(z.object({
       header: z.string(),
@@ -79,7 +81,7 @@ export const postoppsettRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       return ctx.db.postningsoppsett.update({
         where: {
-          id: 'cm0242fvb000r2dzlqaug9m16', // use input.id instead of the hardcoded id
+          id: input.id, // use input.id instead of the hardcoded id
         },
         data: {
           header: input.header,

@@ -4,14 +4,16 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
+import { useState } from "react";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const [postId, setPostId] = useState("cm0242fvb000r2dzlqaug9m16");
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <Component {...pageProps} postId={postId} setPostId={setPostId} />
     </SessionProvider>
   );
 };

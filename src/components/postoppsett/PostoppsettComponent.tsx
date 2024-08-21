@@ -23,7 +23,7 @@ interface Item {
   endrings: { input: string }[];
 }
 
-const PostoppsettComponent = ({ data }: { data: Item[] }) => {
+const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
   const [startringSum, setStartringSum] = useState(0);
   const [endringSum, setEndringSum] = useState(0);
   const [rawinputSum, setRawinputSum] = useState(0);
@@ -89,6 +89,7 @@ const PostoppsettComponent = ({ data }: { data: Item[] }) => {
 
   const updateData = async (id) => {
     try {
+      const id = postId;
       const header = headerText;
       const plankeTy = String(localData.plankeTy);
       const startRings = localData.startRings;

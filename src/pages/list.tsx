@@ -7,31 +7,30 @@ import SkurlisteComponent from "~/components/postoppsett/reusable/SkurlisteCompo
 import SkurlistePakkingComponent from "~/components/postoppsett/reusable/SkurlistePakkingComponent";
 import { api } from "~/utils/api";
 
-const list = () => {
+const list = ({ setPostId, postId }) => {
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
   });
 
   const [searchInput, setSearchInput] = useState("");
 
-  const {
-    data: posts,
-    error,
-    isLoading,
-  } = api.postoppsett.getByHeader.useQuery({ header: searchInput });
+  console.log(postId);
 
-  console.log(searchInput);
+  const { data: posts } = api.postoppsett.getByHeader.useQuery({
+    header: searchInput,
+  });
 
   return (
     <div>
       <HeaderComponent />
-      <SearchResultComponent results={posts} />
+      <SearchResultComponent results={posts} setPostId={setPostId} />
       <div data-theme="lightmode" className="min-h-screen px-5 xl:px-96">
         <h1 className="py-10 text-xl">Skurplan</h1>
         <SkurlisteComponent
           skurliste={skurliste}
           edit={false}
           setSearchInput={setSearchInput}
+          setPostId={setPostId}
         />
         <h1 className="mb-3 mt-10 text-xl">Pakking</h1>
         <SkurlistePakkingComponent skurliste={skurliste} edit={false} />

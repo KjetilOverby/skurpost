@@ -1,13 +1,24 @@
+import { useRouter } from "next/router";
 import React from "react";
 
-export const SearchResultComponent = ({ results }) => {
+export const SearchResultComponent = ({ results, setPostId }) => {
   const ringStyle = "flex h-20 w-10 items-center justify-center";
+  const router = useRouter();
+
+  const openPostHandler = (postId) => {
+    setPostId(postId);
+    router.push(`/postoppsett`);
+  };
+
   return (
     <div className="absolute z-40 ml-5 ">
       <div className="">
         {results?.map((result) => {
           return (
-            <div className="mb-5 rounded bg-black p-5">
+            <div
+              onClick={() => openPostHandler(result.id)}
+              className="mb-5 rounded bg-black p-5"
+            >
               <p className="mb-10">{result.header}</p>
               <div className="flex gap-2">
                 <div className="flex gap-2">
