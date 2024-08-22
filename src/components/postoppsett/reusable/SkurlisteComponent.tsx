@@ -24,6 +24,7 @@ const SkurlisteComponent = ({
   setBufferStatus,
   updateBufferHandlerFalse,
   setSearchInput,
+  setClickSearchOpen,
 }) => {
   const handleDelete = (id: string) => {
     deletePost.mutate({ id: id });
@@ -106,6 +107,7 @@ const SkurlisteComponent = ({
 
   const clickSearch = (post) => {
     setSearchInput(`${post.post}-${post.prosent}%-${post.blad.toFixed(1)}`);
+    setClickSearchOpen(true);
   };
 
   useEffect(() => {

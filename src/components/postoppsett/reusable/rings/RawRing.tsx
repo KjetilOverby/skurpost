@@ -102,11 +102,11 @@ const RawRing = ({
   <p>{calculationResult}</p>;
   return (
     <div className=" relative z-20 flex items-center">
-      <div className=" relative grid h-20 w-8 place-items-center rounded-md border-[.5px] border-white bg-gradient-to-b from-green-900 via-gray-300 to-green-900 sm:h-28 sm:w-12 md:h-44 md:w-20">
+      <div className=" relative grid h-20 w-8 place-items-center rounded-md border-[.5px] border-white bg-gradient-to-b from-sky-900 via-sky-100 to-sky-900 sm:h-28 sm:w-12 md:h-44 md:w-20">
         <EditMode editMode={mode}>
           {edit && <RiDeleteBin5Line onClick={() => deleteRing(id)} />}
         </EditMode>
-        <p className="absolute bottom-20 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs  md:bottom-44 md:text-sm">
+        <p className="absolute bottom-20 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs  md:bottom-44 md:text-sm">
           {value}
         </p>
         <p className="text-xs text-black sm:text-sm md:text-xl">
@@ -124,12 +124,12 @@ const RawRing = ({
             className="absolute bottom-11 left-1/2 -translate-x-1/2 transform text-sm text-gray-700"
           />
         </EditMode>
-        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs md:top-44 md:text-sm">
+        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs md:top-44 md:text-sm">
           <p> {ringItem?.ring}</p>
           <p> {ringItem?.shimsVal}</p>
           <p> {ringItem?.shimsVal2}</p>
         </div>
-        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-gray-400 sm:bottom-28 sm:text-xs md:top-[202px] md:text-sm">
+        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs md:top-[202px] md:text-sm">
           {/* <p>{calculationResult}</p> */}
         </div>
       </div>

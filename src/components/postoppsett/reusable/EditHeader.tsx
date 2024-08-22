@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { EditMode } from "../modes/editMode";
+import Link from "next/link";
 
 const EditHeader = ({ setEditMode, editMode, handleUpdate, createData }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,12 +18,19 @@ const EditHeader = ({ setEditMode, editMode, handleUpdate, createData }) => {
               onClick={() => setIsOpen(false)}
             >
               {!editMode && (
-                <a
-                  onClick={() => setEditMode(true)}
-                  className="block cursor-pointer px-4 py-2 text-gray-400 hover:bg-gray-600 hover:text-white"
-                >
-                  Rediger post
-                </a>
+                <>
+                  <a
+                    onClick={() => setEditMode(true)}
+                    className="block cursor-pointer px-4 py-2 text-gray-400 hover:bg-gray-600 hover:text-white"
+                  >
+                    Rediger post
+                  </a>
+                  <Link href="/list">
+                    <p className="block cursor-pointer px-4 py-2 text-gray-400 hover:bg-gray-600 hover:text-white">
+                      Skurliste
+                    </p>
+                  </Link>
+                </>
               )}
               <EditMode editMode={editMode}>
                 <a

@@ -5,7 +5,7 @@ const Bladeselector = ({ sawbladeSelectHandler, val }) => {
     <div>
       {" "}
       <select
-        className="mb-5 h-full rounded-md border-0 bg-gray-400 bg-transparent py-0 pl-2 pr-7 text-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+        className="mb-5 h-full rounded-md border-0 bg-lime-400 bg-transparent py-0 pl-2 pr-7 text-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
         onChange={sawbladeSelectHandler}
         value={val}
       >

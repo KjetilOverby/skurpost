@@ -1,9 +1,12 @@
 
-opprette ny post
+
 
 Finne løsning på rawDivide
 
-søke på poster med søk, direkte fra lista
 
-Lage my liste for postoppsett
+
+Lage liste for postoppsett
+
+oppdatering på header i ikke edit modus
+oppdatering på Differanse i edit modus
 

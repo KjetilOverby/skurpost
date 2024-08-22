@@ -14,6 +14,9 @@ import BladeSelector from "./Bladeselector";
 import { api } from "~/utils/api";
 import EditHeader from "./reusable/EditHeader";
 import { RawDivideComponent } from "./RawDivideComponent";
+import Link from "next/link";
+import { MiniList } from "./reusable/MiniList";
+import { SearchResultComponent } from "./reusable/SearchResultComponent";
 
 interface Item {
   header: string;
@@ -23,7 +26,13 @@ interface Item {
   endrings: { input: string }[];
 }
 
-const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
+const PostoppsettComponent = ({
+  data,
+  postId,
+  setPostId,
+}: {
+  data: Item[];
+}) => {
   const [startringSum, setStartringSum] = useState(0);
   const [endringSum, setEndringSum] = useState(0);
   const [rawinputSum, setRawinputSum] = useState(0);
@@ -38,6 +47,12 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
   const [shimsVal, setShimsVal] = useState(0);
   const [shimsVal2, setShimsVal2] = useState(0);
   const [calculationResult, setCalculationResult] = useState(0);
+  const [clickSearchOpen, setClickSearchOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+
+  const { data: posts } = api.postoppsett.getByHeader.useQuery({
+    header: searchInput,
+  });
 
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
@@ -165,32 +180,8 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
       // your updated data...
     };
 
-    // call updateData with the id and data
     await updateData(id, data);
   };
-
-  // useEffect(() => {
-  //   if (localData) {
-  //     const startringTotal = startRings.reduce(
-  //       (total, ringItem) => total + Number(ringItem.value),
-  //       0,
-  //     );
-
-  //     const endringTotal = endRings.reduce(
-  //       (total, ringItem) => total + Number(ringItem.value),
-  //       0,
-  //     );
-
-  //     const rawinputTotal = rawRings.reduce(
-  //       (total, rawItem) => total + Number(rawItem.value),
-  //       0,
-  //     );
-
-  //     setStartringSum(startringTotal);
-  //     setEndringSum(endringTotal);
-  //     setRawinputSum(rawinputTotal);
-  //   }
-  // }, [localData, rawinputSum]);
 
   useEffect(() => {
     if (localData) {
@@ -214,7 +205,7 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
       setStartringSum(startringTotal);
       setEndringSum(endringTotal);
       setRawinputSum(rawinputTotal);
-      setBladeSum(bladeTotal); // Assuming you have a state variable to store this
+      setBladeSum(bladeTotal);
     }
   }, [localData, rawinputSum]);
 
@@ -293,20 +284,6 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
       rawInput: rawRings,
     });
   };
-  // const handleRawRingPickerChange = (value) => {
-  //   const rawRings = JSON.parse(localData.rawInput);
-  //   rawRings.push({
-  //     id: uuidv4(),
-  //     value: Number(rawInputValue),
-  //     blade: localData.blade,
-  //   });
-  //   const updatedRawRings = JSON.stringify(rawRings);
-
-  //   setLocalData({
-  //     ...localData,
-  //     rawInput: updatedRawRings,
-  //   });
-  // };
 
   const sawbladeSelectHandler = (event) => {
     setLocalData({
@@ -457,6 +434,11 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
     }
   };
 
+  const clickSearch = (post) => {
+    setSearchInput(`${post.post}-${post.prosent}%-${post.blad.toFixed(1)}`);
+    setClickSearchOpen(true);
+  };
+
   return (
     <div>
       <EditHeader
@@ -465,7 +447,15 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
         handleUpdate={handleUpdate}
         createData={createData}
       />
-      <div className="flex h-screen flex-col items-center justify-center">
+      {clickSearchOpen && (
+        <SearchResultComponent
+          results={posts}
+          setPostId={setPostId}
+          setClickSearchOpen={setClickSearchOpen}
+        />
+      )}
+
+      <div className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0d243c] via-[#789abc] to-[#123456]">
         {!editMode && (
           <div>
             <div key={data?.id}>
@@ -670,14 +660,17 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
               className="mb-5"
               action=""
               type="submit"
-              onSubmit={handleRawRingPickerChange}
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleRawRingPickerChange();
+              }}
             >
               <label>Legg til planketykkelse</label>
               <div className="flex">
                 <input
                   step="0.01"
                   type="number"
-                  className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  className="focus:shadow-outline w-full appearance-none rounded border bg-lime-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   onChange={(e) =>
                     setRawValueFromInput(parseFloat(e.target.value))
                   }
@@ -688,7 +681,7 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
             <div className="mb-5">
               <label>planketykkelse i overskrift</label>
               <input
-                className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                className="w-full appearance-none rounded border bg-lime-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 onChange={handlePlankeTy}
                 placeholder="eks: 50/38"
                 type="text"
@@ -696,7 +689,7 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
               />
             </div>
             <select
-              className="mb-5 h-full rounded-md border-0 bg-gray-400 py-0 pl-2 pr-7 text-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+              className="mb-5 h-full rounded-md border-0 bg-lime-400 py-0 pl-2 pr-7 text-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
               onChange={prosentSelectHandler}
               value={localData?.prosent}
             >
@@ -718,7 +711,7 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
             <div>
               <label>Legg til text i parantes</label>
               <input
-                className="focus:shadow-outline w-full appearance-none rounded border bg-gray-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border bg-lime-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 onChange={handleSpes}
                 value={localData?.spes}
               />
@@ -726,6 +719,7 @@ const PostoppsettComponent = ({ data, postId }: { data: Item[] }) => {
           </div>
         </EditMode>
       </div>
+      {!editMode && <MiniList clickSearch={clickSearch} />}
     </div>
   );
 };

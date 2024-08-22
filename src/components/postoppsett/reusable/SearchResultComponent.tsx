@@ -1,7 +1,11 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-export const SearchResultComponent = ({ results, setPostId }) => {
+export const SearchResultComponent = ({
+  results,
+  setPostId,
+  setClickSearchOpen,
+}) => {
   const ringStyle = "flex h-20 w-10 items-center justify-center";
   const router = useRouter();
 
@@ -13,6 +17,7 @@ export const SearchResultComponent = ({ results, setPostId }) => {
   return (
     <div className="absolute z-40 ml-5 ">
       <div className="">
+        <button onClick={() => setClickSearchOpen(false)}>Lukk</button>
         {results?.map((result) => {
           return (
             <div
