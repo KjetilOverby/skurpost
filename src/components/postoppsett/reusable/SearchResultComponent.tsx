@@ -6,7 +6,7 @@ export const SearchResultComponent = ({
   setPostId,
   setClickSearchOpen,
 }) => {
-  const ringStyle = "flex h-20 w-10 items-center justify-center";
+  const ringStyle = "flex h-20 w-10 items-center justify-center rounded-md";
   const router = useRouter();
 
   const openPostHandler = (postId) => {
@@ -22,7 +22,7 @@ export const SearchResultComponent = ({
           return (
             <div
               onClick={() => openPostHandler(result.id)}
-              className="mb-5 rounded bg-black p-5"
+              className="mb-5 rounded bg-gradient-to-b from-[#123456] via-[#789abc] to-[#123456] p-5"
             >
               <p className="mb-10">{result.header}</p>
               <div className="flex gap-2">
@@ -30,7 +30,7 @@ export const SearchResultComponent = ({
                   {result.startRings.map((ring) => {
                     return (
                       <div
-                        className={`${ringStyle} border-white bg-gray-600 bg-gradient-to-b from-gray-900  via-gray-300 to-gray-900 text-black`}
+                        className={`${ringStyle} border-white bg-gradient-to-b from-teal-800 via-gray-300 via-teal-100  to-gray-900 to-teal-800 text-black`}
                       >
                         <p className="text-xs">{ring.value}</p>
                       </div>
@@ -41,9 +41,9 @@ export const SearchResultComponent = ({
                   {result.rawInput.map((ring) => {
                     return (
                       <div
-                        className={`${ringStyle} relative border-white bg-gray-600 bg-gradient-to-b  from-gray-900 via-blue-300 to-gray-900 text-white`}
+                        className={`${ringStyle} relative border-white bg-gradient-to-b from-[#123456] via-[#789abc] to-[#123456] text-white`}
                       >
-                        <p className="absolute bottom-20 text-xs text-gray-400">
+                        <p className="absolute bottom-20 text-xs text-gray-200">
                           {ring.value}
                         </p>
                         <p className="text-xs">
@@ -57,7 +57,7 @@ export const SearchResultComponent = ({
                   {result.endRings.map((ring) => {
                     return (
                       <div
-                        className={`${ringStyle}  border-white bg-gray-600 bg-gradient-to-b from-gray-900  via-gray-300 to-gray-900 text-black`}
+                        className={`${ringStyle}  border-white bg-gradient-to-b from-teal-800 via-gray-300 via-teal-100  to-gray-900 to-teal-800 text-black`}
                       >
                         <p className="text-xs">{ring.value}</p>
                       </div>

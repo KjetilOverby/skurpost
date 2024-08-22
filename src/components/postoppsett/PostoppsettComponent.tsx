@@ -30,6 +30,7 @@ const PostoppsettComponent = ({
   data,
   postId,
   setPostId,
+  colorMode
 }: {
   data: Item[];
 }) => {

@@ -106,10 +106,10 @@ const RawRing = ({
         <EditMode editMode={mode}>
           {edit && <RiDeleteBin5Line onClick={() => deleteRing(id)} />}
         </EditMode>
-        <p className="absolute bottom-20 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs  md:bottom-44 md:text-sm">
+        <p className="absolute bottom-20 text-[9px] text-gray-200 sm:bottom-28 sm:text-xs  md:bottom-44 md:text-sm">
           {value}
         </p>
-        <p className="text-xs text-black sm:text-sm md:text-xl">
+        <p className="text-xs text-blue-900 sm:text-sm md:text-xl">
           {(Number(value) + Number(1.4)).toFixed(1)}
         </p>
         <EditMode editMode={mode}>

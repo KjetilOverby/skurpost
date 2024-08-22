@@ -10,10 +10,16 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  const [postId, setPostId] = useState("cm0242fvb000r2dzlqaug9m16");
+  const [postId, setPostId] = useState("");
+  const [colorMode, setColorMode] = useState("darkmode");
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} postId={postId} setPostId={setPostId} />
+      <Component
+        {...pageProps}
+        postId={postId}
+        setPostId={setPostId}
+        colorMode={colorMode}
+      />
     </SessionProvider>
   );
 };

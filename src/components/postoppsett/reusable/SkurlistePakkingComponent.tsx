@@ -10,9 +10,9 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
   return (
     <div className="overflow-scroll">
       {" "}
-      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-green-200 ">
+      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-gray-600 ">
         <thead>
-          <tr className=" border border-l-base-100 border-r-base-100 text-left ">
+          <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left">
             <th className="text-sm text-neutral">Treslag</th>
             <th className="text-sm text-neutral">Kl</th>
             <th className="text-sm text-neutral">KlGrense</th>
@@ -37,7 +37,7 @@ const SkurlistePakkingComponent = ({ skurliste }) => {
             const text = list.text.split(", ");
             return (
               <>
-                <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary ">
+                <tr className="border border-gray-700 border-l-transparent border-r-transparent bg-base-100 hover:cursor-pointer hover:bg-primary ">
                   <td
                     className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                   >

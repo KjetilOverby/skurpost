@@ -17,7 +17,7 @@ interface headerProps {
   setTheme: Dispatch<SetStateAction<string>>;
 }
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ colorMode }) => {
   const router = useRouter();
   //   const { setTheme, theme, setDarkMode } = useContext(AppDataContext);
 
@@ -65,8 +65,8 @@ const HeaderComponent = () => {
 
   const { data: sessionData } = useSession();
   return (
-    <header>
-      <nav className="border border-x-0 border-t-0 border-gray-200 border-b-gray-200 bg-white px-4  py-2.5 ">
+    <header data-theme={colorMode}>
+      <nav className="border border-x-0 border-t-0 border-gray-200 border-b-secondary bg-primary px-4  py-2.5 ">
         <div
           className={` z-10 mx-auto flex max-w-screen-xl flex-wrap items-center justify-between`}
         >

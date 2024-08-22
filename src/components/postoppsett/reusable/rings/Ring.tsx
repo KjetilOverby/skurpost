@@ -17,7 +17,7 @@ const Ring = ({ value, mode, edit, deleteRing, id, moveLeft, moveRight }) => {
           )}
         </EditMode>
 
-        <p className="text-xs text-black sm:text-sm md:text-xl">{value}</p>
+        <p className="text-xs text-teal-700 sm:text-sm md:text-xl">{value}</p>
         <EditMode editMode={mode}>
           {edit && (
             <div className="flex gap-5">

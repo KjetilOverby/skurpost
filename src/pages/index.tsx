@@ -7,7 +7,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import RoleAdmin from "~/components/roles/RoleAdmin";
 
-export default function Home() {
+export default function Home({ colorMode }) {
   const { data: sessionData } = useSession();
 
   return (
@@ -18,7 +18,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="min-h-screen bg-white">
-        <HeaderComponent />
+        <HeaderComponent colorMode={colorMode} />
         <div className="flex flex-col items-center gap-2">
           <div className="flex flex-col items-center justify-center gap-4">
             <p className="text-center text-2xl text-white"></p>

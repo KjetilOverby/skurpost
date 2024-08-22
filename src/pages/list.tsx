@@ -7,7 +7,7 @@ import SkurlisteComponent from "~/components/postoppsett/reusable/SkurlisteCompo
 import SkurlistePakkingComponent from "~/components/postoppsett/reusable/SkurlistePakkingComponent";
 import { api } from "~/utils/api";
 
-const list = ({ setPostId }) => {
+const list = ({ setPostId, colorMode }) => {
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
   });
@@ -21,11 +21,11 @@ const list = ({ setPostId }) => {
 
   return (
     <div>
-      <HeaderComponent />
+      <HeaderComponent colorMode={colorMode} />
       {clickSearchOpen && (
         <SearchResultComponent results={posts} setPostId={setPostId} />
       )}
-      <div data-theme="lightmode" className="min-h-screen px-5 xl:px-96">
+      <div data-theme={colorMode} className="min-h-screen px-5 xl:px-96">
         <h1 className="py-10 text-xl">Skurplan</h1>
         <SkurlisteComponent
           skurliste={skurliste}

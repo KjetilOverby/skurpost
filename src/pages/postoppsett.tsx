@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PostoppsettComponent from "~/components/postoppsett/PostoppsettComponent";
 import { api } from "~/utils/api";
 
-const postoppsett = ({ postId, setPostId }) => {
+const postoppsett = ({ postId, setPostId, colorMode }) => {
   const { data: postoppsett } = api.postoppsett.getById.useQuery({ postId });
 
   return (
@@ -11,6 +11,7 @@ const postoppsett = ({ postId, setPostId }) => {
         data={postoppsett}
         postId={postId}
         setPostId={setPostId}
+        colorMode={colorMode}
       />
     </div>
   );

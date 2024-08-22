@@ -29,7 +29,7 @@ export default {
           "base-100": "rgb(51, 51, 51)",
         },
         darkmode: {
-          "primary": "#616161",
+          "primary": "rgb(51, 51, 51)",
           "secondary": "#474646",
           "accent": "#474646",
           "neutral": "#adadad",
