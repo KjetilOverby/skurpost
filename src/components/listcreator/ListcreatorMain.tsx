@@ -163,12 +163,12 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
         <h1 className="mt-5">Pakking</h1>
         <SkurlistePakkingInput list={listProps} />
       </div>
-      <div className="border bg-cyan-600 p-4">
-        <h1 className="text-cyan-200">Legg til verdier i listen.</h1>
+      <div className="border border-accent bg-secondary p-4">
+        <h1 className="text-neutral">Legg til verdier i listen.</h1>
         <InputListComponent listProps={listProps} setListProps={setListProps} />
       </div>
       <div className="bg-base-100 pt-20">
-        <div className="mb-10">
+        <div classNprimaryame="mb-10">
           <SkurlisteComponent
             skurliste={skurliste}
             edit={true}

@@ -134,7 +134,7 @@ const SkurlisteComponent = ({
         </>
       )}
       <div className="overflow-scroll">
-        <table className="bg-gray-00 table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-gray-600">
+        <table className="bg-gray-00 table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-primary">
           <thead>
             <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left">
               <th className="text-sm text-neutral">Treslag</th>

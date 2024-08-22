@@ -23,7 +23,11 @@ const list = ({ setPostId, colorMode }) => {
     <div>
       <HeaderComponent colorMode={colorMode} />
       {clickSearchOpen && (
-        <SearchResultComponent results={posts} setPostId={setPostId} />
+        <SearchResultComponent
+          results={posts}
+          setPostId={setPostId}
+          setClickSearchOpen={setClickSearchOpen}
+        />
       )}
       <div data-theme={colorMode} className="min-h-screen px-5 xl:px-96">
         <h1 className="py-10 text-xl">Skurplan</h1>

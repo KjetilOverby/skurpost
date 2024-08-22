@@ -17,9 +17,9 @@ const SkurlistePakkingInput = ({ list }) => {
   return (
     <div className="overflow-scroll">
       {" "}
-      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-green-200 ">
+      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-primary ">
         <thead>
-          <tr className=" border border-l-base-100 border-r-base-100 text-left ">
+          <tr className=" border border-l-base-100 border-r-base-100 border-t-accent text-left">
             <th className="text-sm text-neutral">Treslag</th>
             <th className="text-sm text-neutral">Klasse</th>
             <th className="text-sm text-neutral">Klassegrense</th>

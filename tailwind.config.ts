@@ -31,7 +31,7 @@ export default {
         darkmode: {
           "primary": "rgb(51, 51, 51)",
           "secondary": "#474646",
-          "accent": "#474646",
+          "accent": "#5e5e5e",
           "neutral": "#adadad",
           "base-100": "#292929",
         },

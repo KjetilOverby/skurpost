@@ -90,8 +90,6 @@ const InputListComponent = ({ listProps, setListProps }) => {
     "Kammer 17+-2%, Kanal 12+-2%",
   ];
 
-  console.log(listProps);
-
   const ctx = api.useContext();
   const createPost = api.skurliste.create.useMutation({
     onSuccess: () => {
@@ -120,7 +118,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
   }, [listProps.bredde]);
 
   return (
-    <div className="">
+    <div className="bg-base-accent">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -128,7 +126,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
         }}
         className="flex flex-wrap gap-2"
       >
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Treslag">
             Treslag
           </label>
@@ -149,7 +147,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
           </select>
         </div>
 
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Treslag">
             Klassetype
           </label>
@@ -172,7 +170,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
           </select>
         </div>
 
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Klasse">
             Klassegrense
           </label>
@@ -188,7 +186,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.klGrense}
           />
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Klasse">
             Klasse
           </label>
@@ -213,7 +211,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Klasse">
             PostningsNr
           </label>
@@ -229,7 +227,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.postNr}
           />
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Antall">
             Antall
           </label>
@@ -245,7 +243,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.antall}
           />
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Klasse">
             M3
           </label>
@@ -261,7 +259,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.m3}
           />
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Treslag">
             Status
           </label>
@@ -281,7 +279,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             <option value="stopp">stopp</option>
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Post">
             Post
           </label>
@@ -298,7 +296,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.post}
           />
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Bredde">
             Bredde
           </label>
@@ -315,7 +313,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.bredde}
           />
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="xLog">
             X-log
           </label>
@@ -339,7 +337,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Treslag">
             %
           </label>
@@ -361,7 +359,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Anm">
             Anm
           </label>
@@ -378,7 +376,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.anm}
           />
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="Anm">
             Anm2
           </label>
@@ -395,7 +393,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.anm2}
           />
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="VS66">
             VS66
           </label>
@@ -417,7 +415,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs " htmlFor="VS66Br">
             VS66Br
           </label>
@@ -465,7 +463,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="VS66">
             MKV
           </label>
@@ -487,7 +485,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-blue-200 p-2">
+        <div className="flex w-28 flex-col bg-accent p-2">
           <label className="text-xs" htmlFor="VS66Br">
             MKVBr
           </label>
@@ -509,7 +507,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-green-200 p-2">
+        <div className="flex w-28 flex-col bg-neutral p-2">
           <label className="text-xs " htmlFor="Dim">
             Dim
           </label>
@@ -525,7 +523,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             value={listProps.dimensjon}
           />
         </div>
-        <div className="flex w-28 flex-col bg-green-200 p-2">
+        <div className="flex w-28 flex-col bg-neutral p-2">
           <label className="text-xs" htmlFor="Sortering">
             Sortering
           </label>
@@ -547,7 +545,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-green-200 p-2">
+        <div className="flex w-28 flex-col bg-neutral p-2">
           <label className="text-xs" htmlFor="KvalKode">
             KvalKode
           </label>
@@ -569,7 +567,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-green-200 p-2">
+        <div className="flex w-28 flex-col bg-neutral p-2">
           <label className="text-xs" htmlFor="prosent">
             Tørkeprosent
           </label>
@@ -591,7 +589,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-green-200 p-2">
+        <div className="flex w-28 flex-col bg-neutral p-2">
           <label className="text-xs" htmlFor="anmerk">
             Anmerk
           </label>
@@ -613,7 +611,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-green-200 p-2">
+        <div className="flex w-28 flex-col bg-neutral p-2">
           <label className="text-xs" htmlFor="torke">
             Tørke
           </label>
@@ -635,7 +633,7 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-green-200 p-2">
+        <div className="flex w-28 flex-col bg-neutral p-2">
           <label className="text-xs" htmlFor="Merknad">
             Merknad
           </label>

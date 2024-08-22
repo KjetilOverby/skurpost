@@ -9,9 +9,9 @@ const SkurlisteComponentInput = ({ list }) => {
   return (
     <div className="overflow-scroll">
       {" "}
-      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-blue-200">
+      <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-transparent bg-primary ">
         <thead>
-          <tr className=" border border-l-base-100 border-r-base-100 text-left">
+          <tr className=" border border-l-base-100 border-r-base-100 border-t-accent text-left">
             <th className="text-sm text-neutral">Treslag</th>
             <th className="text-sm text-neutral">Klassegrense</th>
             <th className="text-sm text-neutral">Klasse</th>
