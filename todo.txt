@@ -1,12 +1,22 @@
-
-
-
 Finne løsning på rawDivide
+legge til alternativ utregning
+sette type sag i utregning postoppsett (MKV) account instillinger?
+Lagre id på post i nettleseren? (localStorage)
+validering av utregning foran
+validering av utregning bak
+legge til hva som skal skrives på posten nederst til venstre
+nullstille post 
+lage ny post
+fjerne kun utfylling
+slette post
+legge til opprettelsesdato
+info om posten
+legge til progress post som går og som har gått
+fikse alt som skal lagres ved nye poster
+fikse alt som skal lagres ved oppdatering av poster 
+søke på poster via input i skurliste
+søke på poster via input i postoppsett
 
 
 
-Lage liste for postoppsett
-
-oppdatering på header i ikke edit modus
-oppdatering på Differanse i edit modus
 

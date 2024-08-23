@@ -30,7 +30,6 @@ const PostoppsettComponent = ({
   data,
   postId,
   setPostId,
-  colorMode
 }: {
   data: Item[];
 }) => {
@@ -57,7 +56,7 @@ const PostoppsettComponent = ({
 
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
-      void ctx.postoppsett.getAll.invalidate();
+      void ctx.postoppsett.getById.invalidate();
     },
   });
 
@@ -136,7 +135,7 @@ const PostoppsettComponent = ({
 
   const createPost = api.postoppsett.createPost.useMutation({
     onSuccess: () => {
-      void ctx.postoppsett.getAll.invalidate();
+      void ctx.postoppsett.getById.invalidate();
     },
   });
 
@@ -324,10 +323,17 @@ const PostoppsettComponent = ({
       endringSum
     ).toFixed(2);
     setDifferenceEnd(calculatedDifferenceEnd);
-  }, [data, localData, rawRings, startRings, endRings]);
+  }, [
+    startRings,
+    endRings,
+    calc.toMiddle,
+    rawinputSum,
+    bladeSum,
+    localData?.blade,
+    endringSum,
+  ]);
 
   const [differenceStart, setDifferenceStart] = useState(null);
-
   useEffect(() => {
     const calculatedDifferenceStart = (
       calc.toMiddle -
@@ -338,8 +344,15 @@ const PostoppsettComponent = ({
     ).toFixed(2);
 
     setDifferenceStart(calculatedDifferenceStart);
-  }, [data, localData, rawRings, startRings, endRings]);
-
+  }, [
+    startRings,
+    endRings,
+    calc.toMiddle,
+    rawinputSum,
+    bladeSum,
+    localData?.blade,
+    startringSum,
+  ]);
   const moveLeft = async (id) => {
     const index = startRings.findIndex((item) => item.id === id);
 
@@ -666,7 +679,7 @@ const PostoppsettComponent = ({
                 handleRawRingPickerChange();
               }}
             >
-              <label>Legg til planketykkelse</label>
+              <label>Råmål</label>
               <div className="flex">
                 <input
                   step="0.01"
