@@ -58,6 +58,7 @@ export const postoppsettRouter = createTRPCRouter({
       id: z.string(),  
       header: z.string(), 
       plankeTy: z.string(),
+      sawType: z.string(),
       startRings: z.array(z.object({
         id: z.string(),
         value: z.number(),
@@ -93,6 +94,7 @@ export const postoppsettRouter = createTRPCRouter({
           prosent: input.prosent,
           spes: input.spes,
           xlog: input.xlog,
+          sawType: input.sawType,
         }
       });
     }),
@@ -102,6 +104,7 @@ export const postoppsettRouter = createTRPCRouter({
     // same input schema as updatePost, but without the id
     header: z.string(), 
     plankeTy: z.string(),
+    sawType: z.string(),
     startRings: z.array(z.object({
       id: z.string(),
       value: z.number(),
@@ -143,6 +146,7 @@ export const postoppsettRouter = createTRPCRouter({
         deleter: '',
         kunde: '',
         rawDivide: '',
+        sawType: input.sawType,
         createdBy: { connect: { id: ctx.session.user.id} },
        
       }

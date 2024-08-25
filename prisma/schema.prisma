@@ -118,6 +118,7 @@ model skurliste {
     text        String
     buffer      Boolean
     order       Int
+    progress    String
 }
 
 model postningsoppsett {
@@ -144,4 +145,5 @@ model postningsoppsett {
     endRings    Json
     rawInput    Json
     rawDivide   Json
+    sawType     String
 }

@@ -70,6 +70,7 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
     destinasjon: "",
     text: "",
     blad: 0,
+    progress: String(""),
     createdAt: new Date(),
     updatedAt: new Date(),
     buffer: false,

@@ -54,16 +54,18 @@ const PostoppsettComponent = ({
     header: searchInput,
   });
 
+  console.log(posts);
+
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
       void ctx.postoppsett.getById.invalidate();
     },
   });
 
-  const startRings = localData && localData.startRings;
-  const endRings = localData && localData.endRings;
-  const rawRings = localData && localData.rawInput;
-  const rawDivideParse = localData && localData.rawDivide;
+  const startRings = localData?.startRings;
+  const endRings = localData?.endRings;
+  const rawRings = localData?.rawInput;
+  const rawDivideParse = localData?.rawDivide;
 
   const [editMode, setEditMode] = useState(false);
   const [headerText, setHeaderText] = useState("");
@@ -106,14 +108,15 @@ const PostoppsettComponent = ({
     try {
       const id = postId;
       const header = headerText;
-      const plankeTy = String(localData.plankeTy);
-      const startRings = localData.startRings;
-      const endRings = localData.endRings;
-      const rawInput = localData.rawInput;
-      const blade = localData.blade;
-      const prosent = String(localData.prosent);
-      const spes = localData.spes;
-      const xlog = String(rawRings.length);
+      const plankeTy = String(localData?.plankeTy);
+      const startRings = localData?.startRings;
+      const endRings = localData?.endRings;
+      const rawInput = localData?.rawInput;
+      const blade = localData?.blade;
+      const prosent = String(localData?.prosent);
+      const spes = localData?.spes;
+      const xlog = String(rawRings?.length);
+      const sawType = String("mkv");
       const response = await updatePost.mutateAsync({
         id,
         header,
@@ -125,6 +128,7 @@ const PostoppsettComponent = ({
         prosent,
         spes,
         xlog,
+        sawType,
       });
       console.log(response);
       setEditMode(false);
@@ -142,14 +146,15 @@ const PostoppsettComponent = ({
   const createData = async () => {
     try {
       const header = headerText;
-      const plankeTy = String(localData.plankeTy);
-      const startRings = localData.startRings;
-      const endRings = localData.endRings;
-      const rawInput = localData.rawInput;
-      const blade = localData.blade;
-      const prosent = String(localData.prosent);
-      const spes = localData.spes;
-      const xlog = String(rawRings.length);
+      const plankeTy = String(localData?.plankeTy);
+      const startRings = localData?.startRings;
+      const endRings = localData?.endRings;
+      const rawInput = localData?.rawInput;
+      const blade = localData?.blade;
+      const prosent = String(localData?.prosent);
+      const spes = localData?.spes;
+      const xlog = String(rawRings?.length);
+      const sawType = "mkv";
       const response = await createPost.mutateAsync({
         header,
         plankeTy,
@@ -160,6 +165,7 @@ const PostoppsettComponent = ({
         prosent,
         spes,
         xlog,
+        sawType,
       });
       console.log(response);
       setEditMode(false);
@@ -185,22 +191,24 @@ const PostoppsettComponent = ({
 
   useEffect(() => {
     if (localData) {
-      const startringTotal = startRings.reduce(
-        (total, ringItem) => total + Number(ringItem.value),
-        0,
-      );
+      const startringTotal =
+        startRings?.reduce(
+          (total, ringItem) => total + Number(ringItem.value),
+          0,
+        ) || 0;
 
-      const endringTotal = endRings.reduce(
-        (total, ringItem) => total + Number(ringItem.value),
-        0,
-      );
+      const endringTotal =
+        endRings?.reduce(
+          (total, ringItem) => total + Number(ringItem.value),
+          0,
+        ) || 0;
 
-      const rawinputTotal = rawRings.reduce(
+      const rawinputTotal = rawRings?.reduce(
         (total, rawItem) => total + Number(rawItem.value) + 1.4,
         0,
       );
 
-      const bladeTotal = localData.blade * rawRings.length;
+      const bladeTotal = localData.blade * rawRings?.length;
 
       setStartringSum(startringTotal);
       setEndringSum(endringTotal);
@@ -251,7 +259,7 @@ const PostoppsettComponent = ({
   };
 
   const handleRingPickerChange = (value) => {
-    const startRingsCopy = [...localData.startRings];
+    const startRingsCopy = [...(localData?.startRings || [])];
     startRingsCopy.push({ id: uuidv4(), value: value });
 
     setLocalData({
@@ -260,7 +268,7 @@ const PostoppsettComponent = ({
     });
   };
   const handleEndRingPickerChange = (value) => {
-    const endRingsCopy = [...localData.endRings];
+    const endRingsCopy = [...(localData?.endRings || [])];
     endRingsCopy.push({ id: uuidv4(), value: value });
 
     setLocalData({
@@ -271,7 +279,7 @@ const PostoppsettComponent = ({
 
   const handleRawRingPickerChange = (value) => {
     // Copy rawInput into a new array
-    const rawRings = [...localData.rawInput];
+    const rawRings = [...(localData?.rawInput || [])];
 
     // Add the new item to the array
     rawRings.push({
@@ -316,7 +324,7 @@ const PostoppsettComponent = ({
 
   useEffect(() => {
     const calculatedDifferenceEnd = (
-      calc.middleEnd -
+      calc.mkv.middleEnd -
       rawinputSum / 2 -
       bladeSum / 2 -
       localData?.blade / 2 -
@@ -326,7 +334,7 @@ const PostoppsettComponent = ({
   }, [
     startRings,
     endRings,
-    calc.toMiddle,
+    calc.mkv.toMiddle,
     rawinputSum,
     bladeSum,
     localData?.blade,
@@ -336,7 +344,7 @@ const PostoppsettComponent = ({
   const [differenceStart, setDifferenceStart] = useState(null);
   useEffect(() => {
     const calculatedDifferenceStart = (
-      calc.toMiddle -
+      calc.mkv.toMiddle -
       rawinputSum / 2 -
       bladeSum / 2 -
       localData?.blade / 2 -
@@ -347,7 +355,7 @@ const PostoppsettComponent = ({
   }, [
     startRings,
     endRings,
-    calc.toMiddle,
+    calc.mkv.toMiddle,
     rawinputSum,
     bladeSum,
     localData?.blade,
@@ -435,7 +443,7 @@ const PostoppsettComponent = ({
   const moveRightRaw = async (id) => {
     const index = rawRings.findIndex((item) => item.id === id);
 
-    if (index < rawRings.length - 1) {
+    if (index < rawRings?.length - 1) {
       const newItems = [...rawRings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index + 1];
@@ -557,13 +565,13 @@ const PostoppsettComponent = ({
                       <p>
                         Distanse:{" "}
                         {(
-                          calc.toMiddle -
+                          calc.mkv.toMiddle -
                           rawinputSum / 2 -
                           bladeSum / 2 -
                           localData?.blade / 2
                         ).toFixed(2)}
                       </p>
-                      <p>utfylling: {startringSum.toFixed(2)}</p>
+                      <p>utfylling: {startringSum?.toFixed(2)}</p>
                       <p
                         className={`${
                           differenceStart >= -0.05 && differenceStart <= 0.05
@@ -638,13 +646,13 @@ const PostoppsettComponent = ({
                     <p>
                       Distanse:{" "}
                       {(
-                        calc.middleEnd -
+                        calc.mkv.middleEnd -
                         rawinputSum / 2 -
                         bladeSum / 2 -
                         localData?.blade / 2
                       ).toFixed(2)}
                     </p>
-                    <p>utfylling: {endringSum.toFixed(2)}</p>
+                    <p>utfylling: {endringSum?.toFixed(2)}</p>
                     <p
                       className={`${
                         differenceEnd >= -0.05 && differenceEnd <= 0.05

@@ -63,6 +63,7 @@ const SkurlisteComponent = ({
       destinasjon: listProps.destinasjon,
       text: listProps.text,
       buffer: listProps.buffer,
+      progress: "",
     });
     setEditingId(null);
   };
@@ -102,6 +103,7 @@ const SkurlisteComponent = ({
       createdAt: new Date(),
       updatedAt: new Date(),
       order: maxOrder,
+      proogress: "",
     });
   };
 

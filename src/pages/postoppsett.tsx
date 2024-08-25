@@ -5,6 +5,8 @@ import { api } from "~/utils/api";
 const postoppsett = ({ postId, setPostId, colorMode }) => {
   const { data: postoppsett } = api.postoppsett.getById.useQuery({ postId });
 
+  console.log(postoppsett);
+
   return (
     <div>
       <PostoppsettComponent

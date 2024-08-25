@@ -65,6 +65,7 @@ export const skurlisteRouter = createTRPCRouter({
           updatedAt: z.date(),
           buffer: z.boolean(),
           order: z.number(),
+          progress: z.string(),
         })
       )
       .mutation(({ ctx, input }) => {
@@ -111,6 +112,7 @@ export const skurlisteRouter = createTRPCRouter({
             blad: input.blad,
             buffer : input.buffer,
             order: input.order,
+            progress: input.progress,
           },
         });
   
