@@ -8,7 +8,6 @@ legge til hva som skal skrives på posten nederst til venstre
 nullstille post 
 lage ny post
 fjerne kun utfylling
-slette post
 legge til opprettelsesdato
 info om posten
 legge til progress post som går og som har gått

@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { EditMode } from "../modes/editMode";
 import Link from "next/link";
 
-const EditHeader = ({ setEditMode, editMode, handleUpdate, createData }) => {
+const EditHeader = ({
+  setEditMode,
+  editMode,
+  handleUpdate,
+  createData,
+  handleDelete,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -57,6 +63,13 @@ const EditHeader = ({ setEditMode, editMode, handleUpdate, createData }) => {
                   className="block cursor-pointer px-4 py-2 text-gray-400 hover:bg-gray-600 hover:text-white"
                 >
                   Lagre som ny post
+                </a>
+                <a
+                  onClick={handleDelete}
+                  href="#"
+                  className="block cursor-pointer px-4 py-2 text-red-400 hover:bg-gray-600 hover:text-white"
+                >
+                  Slett post
                 </a>
               </EditMode>
             </div>

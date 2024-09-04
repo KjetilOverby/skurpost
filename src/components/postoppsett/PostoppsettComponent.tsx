@@ -17,6 +17,8 @@ import { RawDivideComponent } from "./RawDivideComponent";
 import Link from "next/link";
 import { MiniList } from "./reusable/MiniList";
 import { SearchResultComponent } from "./reusable/SearchResultComponent";
+import { useRouter } from "next/router";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 interface Item {
   header: string;
@@ -33,6 +35,10 @@ const PostoppsettComponent = ({
 }: {
   data: Item[];
 }) => {
+  const { data: sessionData } = useSession();
+
+  const { data: users } = api.users.getUsers.useQuery({});
+
   const [startringSum, setStartringSum] = useState(0);
   const [endringSum, setEndringSum] = useState(0);
   const [rawinputSum, setRawinputSum] = useState(0);
@@ -49,18 +55,31 @@ const PostoppsettComponent = ({
   const [calculationResult, setCalculationResult] = useState(0);
   const [clickSearchOpen, setClickSearchOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [kundeID, setKundeID] = useState("");
+
+  const router = useRouter();
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
+    kundeID: kundeID,
   });
-
-  console.log(posts);
 
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
       void ctx.postoppsett.getById.invalidate();
     },
   });
+
+  const deletePost = api.postoppsett.deletePost.useMutation({
+    onSuccess: () => {
+      void ctx.postoppsett.getById.invalidate();
+      router.push(`/list`);
+    },
+  });
+
+  const handleDelete = (id: string) => {
+    deletePost.mutate({ id: postId });
+  };
 
   const startRings = localData?.startRings;
   const endRings = localData?.endRings;
@@ -71,6 +90,16 @@ const PostoppsettComponent = ({
   const [headerText, setHeaderText] = useState("");
 
   const rawValues = rawRings?.map((item) => item);
+
+  useEffect(() => {
+    users?.forEach((user) => {
+      if (user.role === "MV_ADMIN") {
+        setKundeID("MV");
+      } else if (user.role === "VS_ADMIN") {
+        setKundeID("VS");
+      }
+    });
+  }, [users]);
 
   useEffect(() => {
     setHeaderText(
@@ -155,6 +184,7 @@ const PostoppsettComponent = ({
       const spes = localData?.spes;
       const xlog = String(rawRings?.length);
       const sawType = "mkv";
+      const kunde = kundeID;
       const response = await createPost.mutateAsync({
         header,
         plankeTy,
@@ -166,6 +196,7 @@ const PostoppsettComponent = ({
         spes,
         xlog,
         sawType,
+        kunde,
       });
       console.log(response);
       setEditMode(false);
@@ -468,6 +499,7 @@ const PostoppsettComponent = ({
         editMode={editMode}
         handleUpdate={handleUpdate}
         createData={createData}
+        handleDelete={handleDelete}
       />
       {clickSearchOpen && (
         <SearchResultComponent

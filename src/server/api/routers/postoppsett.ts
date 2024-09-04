@@ -21,19 +21,27 @@ export const postoppsettRouter = createTRPCRouter({
   }),
 
 
-    getByHeader: publicProcedure
-    .input(z.object({
-      header: z.string(),
-    }))
-    .query(async ({ input, ctx }) => {
-      return ctx.db.postningsoppsett.findMany({
-        where: {
-          header: {
-            contains: input.header,
+  getByHeader: publicProcedure
+  .input(z.object({
+    header: z.string(),
+    kundeID: z.string(),
+  }))
+  .query(async ({ input, ctx }) => {
+    return ctx.db.postningsoppsett.findMany({
+      where: {
+        AND: [
+          {
+            header: {
+              contains: input.header,
+            },
           },
-        },
-      });
-    }),
+          {
+            kunde: input.kundeID,
+          },
+        ],
+      },
+    });
+  }),
 
 
     savePost: protectedProcedure
@@ -124,6 +132,7 @@ export const postoppsettRouter = createTRPCRouter({
     prosent: z.string(),
     spes: z.string(),
     xlog: z.string(),
+    kunde: z.string(),
   }))
   .mutation(async ({ input, ctx }) => {
     return ctx.db.postningsoppsett.create({
@@ -147,13 +156,24 @@ export const postoppsettRouter = createTRPCRouter({
         kunde: '',
         rawDivide: '',
         sawType: input.sawType,
+        kunde: input.kunde,
         createdBy: { connect: { id: ctx.session.user.id} },
        
       }
     });
   }),
 
-    
+  deletePost: protectedProcedure
+  .input(z.object({
+    id: z.string(), // input schema for deletePost, only needs the id
+  }))
+  .mutation(async ({ input, ctx }) => {
+    return ctx.db.postningsoppsett.delete({
+      where: {
+        id: input.id, // delete the post with the specified id
+      },
+    });
+  }),
 
 
 })

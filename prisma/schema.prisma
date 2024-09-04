@@ -55,15 +55,23 @@ model Session {
 
 enum UserRole {
     USER
+    LOGIN
     ADMIN
+    MV_ADMIN
+    VS_ADMIN
 }
 
 model User {
-    id               String             @id @default(cuid())
-    name             String?
-    email            String?            @unique
-    emailVerified    DateTime?
-    image            String?
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    image         String?
+    organization  String?
+
+    // role  UserRole @default(LOGIN)
+    role UserRole @default(LOGIN)
+
     accounts         Account[]
     sessions         Session[]
     posts            Post[]
