@@ -773,7 +773,7 @@ const PostoppsettComponent = ({
           </div>
         </EditMode>
       </div>
-      {!editMode && <MiniList clickSearch={clickSearch} />}
+      {!editMode && <MiniList clickSearch={clickSearch} kundeID={kundeID} />}
     </div>
   );
 };

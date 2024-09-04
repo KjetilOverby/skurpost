@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import { SearchResultComponent } from "~/components/postoppsett/reusable/SearchResultComponent";
 import SkurlisteComponent from "~/components/postoppsett/reusable/SkurlisteComponent";
@@ -8,15 +8,29 @@ import SkurlistePakkingComponent from "~/components/postoppsett/reusable/Skurlis
 import { api } from "~/utils/api";
 
 const list = ({ setPostId, colorMode }) => {
+  const { data: users } = api.users.getUsers.useQuery({});
+  const [kundeID, setKundeID] = useState();
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
+    kunde: kundeID,
   });
+
+  useEffect(() => {
+    users?.forEach((user) => {
+      if (user.role === "MV_ADMIN") {
+        setKundeID("MV");
+      } else if (user.role === "VS_ADMIN") {
+        setKundeID("VS");
+      }
+    });
+  }, [users]);
 
   const [searchInput, setSearchInput] = useState("");
   const [clickSearchOpen, setClickSearchOpen] = useState(false);
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
+    kundeID: kundeID,
   });
 
   return (

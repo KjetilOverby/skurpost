@@ -127,6 +127,7 @@ model skurliste {
     buffer      Boolean
     order       Int
     progress    String
+    kunde       String
 }
 
 model postningsoppsett {

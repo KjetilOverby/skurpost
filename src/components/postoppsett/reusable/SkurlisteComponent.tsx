@@ -103,7 +103,7 @@ const SkurlisteComponent = ({
       createdAt: new Date(),
       updatedAt: new Date(),
       order: maxOrder,
-      proogress: "",
+      progress: "",
     });
   };
 

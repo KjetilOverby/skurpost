@@ -14,7 +14,10 @@ import SkurlistePakkingInput from "./SkurlistePakkingInput";
 import { api } from "~/utils/api";
 
 const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
+  const { data: users } = api.users.getUsers.useQuery({});
   const [maxOrder, setMaxOrder] = useState(1);
+
+  const [kundeID, setKundeID] = useState();
 
   useEffect(() => {
     if (skurliste && skurliste.length > 0) {
@@ -41,6 +44,16 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
   useEffect(() => {
     setListProps((prevProps) => ({ ...prevProps, order: maxOrder }));
   }, [maxOrder]);
+
+  useEffect(() => {
+    users?.forEach((user) => {
+      if (user.role === "MV_ADMIN") {
+        setKundeID("MV");
+      } else if (user.role === "VS_ADMIN") {
+        setKundeID("VS");
+      }
+    });
+  }, [users]);
 
   const [listProps, setListProps] = useState({
     treslag: "",
@@ -75,7 +88,12 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
     updatedAt: new Date(),
     buffer: false,
     order: maxOrder,
+    kunde: "",
   });
+
+  useEffect(() => {
+    setListProps((prevProps) => ({ ...prevProps, kunde: kundeID }));
+  }, [kundeID]);
 
   const updateItemOrder = api.skurliste.updateOrder.useMutation({
     onSuccess: () => {

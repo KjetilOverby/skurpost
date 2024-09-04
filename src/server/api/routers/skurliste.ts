@@ -15,19 +15,20 @@ export const skurlisteRouter = createTRPCRouter({
     z.object({
 
       buffer: z.boolean(),
+      kunde: z.string(),
     })
   )
   .query(({ ctx, input }) => {
     return ctx.db.skurliste.findMany({
       where: {
         buffer: input.buffer,
+        kunde: input.kunde, 
       },
       orderBy: {
-       order: 'asc',
+        order: 'asc',
       },
     });
   }),
-
   
 
  
@@ -66,6 +67,7 @@ export const skurlisteRouter = createTRPCRouter({
           buffer: z.boolean(),
           order: z.number(),
           progress: z.string(),
+          kunde: z.string(),
         })
       )
       .mutation(({ ctx, input }) => {
@@ -113,6 +115,7 @@ export const skurlisteRouter = createTRPCRouter({
             buffer : input.buffer,
             order: input.order,
             progress: input.progress,
+            kunde: input.kunde,
           },
         });
   
