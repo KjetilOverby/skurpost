@@ -93,7 +93,7 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
 
   useEffect(() => {
     setListProps((prevProps) => ({ ...prevProps, kunde: kundeID }));
-  }, [kundeID]);
+  }, [kundeID, skurliste]);
 
   const updateItemOrder = api.skurliste.updateOrder.useMutation({
     onSuccess: () => {

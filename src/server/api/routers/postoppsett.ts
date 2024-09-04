@@ -135,6 +135,8 @@ export const postoppsettRouter = createTRPCRouter({
     kunde: z.string(),
   }))
   .mutation(async ({ input, ctx }) => {
+    const creatorName: string = ctx.session.user.name ?? "DefaultCreator";
+    const creatorImg: string = ctx.session.user.image ?? "DefaultCreator";
     return ctx.db.postningsoppsett.create({
       data: {
         header: input.header,
@@ -148,12 +150,11 @@ export const postoppsettRouter = createTRPCRouter({
         xlog: input.xlog,
         updater: '',
         updaterImg: '',
-        creator: '',
-        creatorImg: '',
+        creator: creatorName,
+        creatorImg: creatorImg,
         deleted: false,
         note: '',
         deleter: '',
-        kunde: '',
         rawDivide: '',
         sawType: input.sawType,
         kunde: input.kunde,
