@@ -6,14 +6,22 @@ import { SearchResultComponent } from "~/components/postoppsett/reusable/SearchR
 import SkurlisteComponent from "~/components/postoppsett/reusable/SkurlisteComponent";
 import SkurlistePakkingComponent from "~/components/postoppsett/reusable/SkurlistePakkingComponent";
 import { api } from "~/utils/api";
+import { useContext } from "react";
+import { PostInfoContext } from "../components/context";
 
 const list = ({ setPostId, colorMode }) => {
+  const [postInfoWrite, setPostInfoWrite] = useState("");
   const { data: users } = api.users.getUsers.useQuery({});
   const [kundeID, setKundeID] = useState();
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
     kunde: kundeID,
   });
+  const context = useContext(PostInfoContext);
+  if (!context) {
+    throw new Error();
+  }
+  const { postInfoWriteChange, setPostInfoWriteChange } = context;
 
   useEffect(() => {
     users?.forEach((user) => {
@@ -41,6 +49,8 @@ const list = ({ setPostId, colorMode }) => {
           results={posts}
           setPostId={setPostId}
           setClickSearchOpen={setClickSearchOpen}
+          setPostInfoWriteChange={setPostInfoWriteChange}
+          postInfoWrite={postInfoWrite}
         />
       )}
       <div data-theme={colorMode} className="min-h-screen px-5 xl:px-96">

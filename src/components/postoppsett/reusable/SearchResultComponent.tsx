@@ -5,6 +5,8 @@ export const SearchResultComponent = ({
   results,
   setPostId,
   setClickSearchOpen,
+  setPostInfoWriteChange,
+  postInfoWrite,
 }) => {
   const ringStyle = "flex h-20 w-10 items-center justify-center rounded-md";
   const router = useRouter();
@@ -12,6 +14,7 @@ export const SearchResultComponent = ({
   const openPostHandler = (postId) => {
     setPostId(postId);
     router.push(`/postoppsett`);
+    setPostInfoWriteChange(postInfoWrite);
   };
 
   return (

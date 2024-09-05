@@ -4,19 +4,18 @@ sette type sag i utregning postoppsett (MKV) account instillinger?
 Lagre id på post i nettleseren? (localStorage)
 validering av utregning foran
 validering av utregning bak
-legge til hva som skal skrives på posten nederst til venstre
 nullstille post 
 lage ny post
 fjerne kun utfylling
-legge til opprettelsesdato
 info om posten
 legge til progress post som går og som har gått
-fikse alt som skal lagres ved nye poster
-fikse alt som skal lagres ved oppdatering av poster 
 søke på poster via input i skurliste
 søke på poster via input i postoppsett
 spes is undefined on create new post
 legg til et blad som standard når nye poster skal lages
+lukk searchresultcomponent etter at post er valgt
+vis alle bladtykkelser i searchresult med en knapp
+sett postInfoWrite as a global variable
 
 
 

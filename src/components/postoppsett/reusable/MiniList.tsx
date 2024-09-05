@@ -1,11 +1,6 @@
 import React from "react";
-import { api } from "~/utils/api";
 
-export const MiniList = ({ clickSearch, kundeID }) => {
-  const { data: skurliste } = api.skurliste.getAll.useQuery({
-    buffer: false,
-    kunde: kundeID,
-  });
+export const MiniList = ({ clickSearch, skurliste }) => {
   return (
     <div className="absolute right-2 top-20">
       <table className="table table-xs w-full  bg-gray-600">

@@ -20,6 +20,8 @@ import { SearchResultComponent } from "./reusable/SearchResultComponent";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import dateFormat from "dateformat";
+import { useContext } from "react";
+import { PostInfoContext } from "../context";
 
 interface Item {
   header: string;
@@ -36,9 +38,14 @@ const PostoppsettComponent = ({
 }: {
   data: Item[];
 }) => {
-  const { data: sessionData } = useSession();
-
   const { data: users } = api.users.getUsers.useQuery({});
+  const context = useContext(PostInfoContext);
+  if (!context) {
+    throw new Error(
+      "SomeComponent must be used within a PostInfoContext.Provider",
+    );
+  }
+  const { postInfoWriteChange, setPostInfoWriteChange } = context;
 
   const [startringSum, setStartringSum] = useState(0);
   const [endringSum, setEndringSum] = useState(0);
@@ -57,12 +64,18 @@ const PostoppsettComponent = ({
   const [clickSearchOpen, setClickSearchOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [kundeID, setKundeID] = useState("");
+  const [postInfoWrite, setPostInfoWrite] = useState("");
 
   const router = useRouter();
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
     kundeID: kundeID,
+  });
+
+  const { data: skurliste } = api.skurliste.getAll.useQuery({
+    buffer: false,
+    kunde: kundeID,
   });
 
   const updatePost = api.postoppsett.updatePost.useMutation({
@@ -490,6 +503,7 @@ const PostoppsettComponent = ({
 
   const clickSearch = (post) => {
     setSearchInput(`${post.post}-${post.prosent}%-${post.blad.toFixed(1)}`);
+    setPostInfoWrite(`${post.post}x${post.bredde} ${post.blad.toFixed(1)}`);
     setClickSearchOpen(true);
   };
 
@@ -507,56 +521,70 @@ const PostoppsettComponent = ({
           results={posts}
           setPostId={setPostId}
           setClickSearchOpen={setClickSearchOpen}
+          postInfoWrite={postInfoWrite}
+          setPostInfoWriteChange={setPostInfoWriteChange}
         />
+      )}
+      {localData?.header && (
+        <div className="absolute bottom-5 left-5">
+          <p className="text-5xl font-thin">
+            {postInfoWriteChange && postInfoWriteChange}
+          </p>
+        </div>
       )}
 
       <div className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0d243c] via-[#789abc] to-[#123456]">
         {!editMode && (
           <div>
-            <div key={data?.id}>
-              <div className="absolute left-1/2 top-40 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
-                <p className="text-3xl text-neutral">{localData?.header}</p>
-                <p className="italic text-secondary">
-                  Oprettet:{" "}
-                  {dateFormat(localData?.createdAt, "dd.mm.yyyy, HH:MM")}
-                </p>
-              </div>
-              <div className="flex">
-                <div className="flex gap-1">
-                  {startRings?.map((ringItem: { value: string }) => (
-                    <Ring
-                      mode={editMode}
-                      key={ringItem.id}
-                      value={ringItem.value}
-                    />
-                  ))}
+            {localData?.header ? (
+              <div key={data?.id}>
+                <div className="absolute left-1/2 top-40 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
+                  <p className="text-3xl text-neutral">{localData?.header}</p>
+                  <p className="italic text-secondary">
+                    Oprettet:{" "}
+                    {dateFormat(localData?.createdAt, "dd.mm.yyyy, HH:MM")}
+                  </p>
                 </div>
-                <Blade blade={data?.blade} />
                 <div className="flex">
-                  {rawRings?.map((ringItem: { value: string }) => (
-                    <RawRing
-                      mode={editMode}
-                      key={ringItem.id}
-                      value={ringItem.value}
-                      blade={localData.blade}
-                      rawDivide={rawDivideParse}
-                      ringItem={ringItem}
-                    />
-                  ))}
-                </div>
-                <div className="flex gap-1">
-                  {endRings?.map((ringItem: { value: string }) => (
-                    <Ring
-                      mode={editMode}
-                      key={ringItem.id}
-                      value={ringItem.value}
-                    />
-                  ))}
+                  <div className="flex gap-1">
+                    {startRings?.map((ringItem: { value: string }) => (
+                      <Ring
+                        mode={editMode}
+                        key={ringItem.id}
+                        value={ringItem.value}
+                      />
+                    ))}
+                  </div>
+                  <Blade blade={data?.blade} />
+                  <div className="flex">
+                    {rawRings?.map((ringItem: { value: string }) => (
+                      <RawRing
+                        mode={editMode}
+                        key={ringItem.id}
+                        value={ringItem.value}
+                        blade={localData.blade}
+                        rawDivide={rawDivideParse}
+                        ringItem={ringItem}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex gap-1">
+                    {endRings?.map((ringItem: { value: string }) => (
+                      <Ring
+                        mode={editMode}
+                        key={ringItem.id}
+                        value={ringItem.value}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <p className="text-2xl text-primary">Ingen data valgt</p>
+            )}
           </div>
         )}
+
         <div>
           <EditMode editMode={editMode}>
             {openRawDivide && (
@@ -589,6 +617,10 @@ const PostoppsettComponent = ({
             <div key={localData?.id}>
               <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
                 <p>Opprinnelig post: {localData?.header}</p>
+                <p className="italic text-secondary">
+                  Oprettet:{" "}
+                  {dateFormat(localData?.createdAt, "dd.mm.yyyy, MM:HH")}
+                </p>
                 <p className="text-3xl">
                   {rawRings?.length}x{localData?.plankeTy}-{localData?.prosent}
                   %-{(localData?.blade + 1.4).toFixed(1)}
@@ -778,7 +810,13 @@ const PostoppsettComponent = ({
           </div>
         </EditMode>
       </div>
-      {!editMode && <MiniList clickSearch={clickSearch} kundeID={kundeID} />}
+      {!editMode && (
+        <MiniList
+          clickSearch={clickSearch}
+          kundeID={kundeID}
+          skurliste={skurliste}
+        />
+      )}
     </div>
   );
 };
