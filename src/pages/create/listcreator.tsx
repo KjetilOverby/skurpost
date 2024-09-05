@@ -4,7 +4,7 @@ import ListcreatorMain from "~/components/listcreator/ListcreatorMain";
 import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import { api } from "~/utils/api";
 
-const listcreator = ({ colorMode }) => {
+const listcreator = ({ colorMode }: { colorMode: string }) => {
   const { data: users } = api.users.getUsers.useQuery({});
   const [kundeID, setKundeID] = useState("");
   useEffect(() => {

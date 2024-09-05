@@ -19,6 +19,7 @@ import { MiniList } from "./reusable/MiniList";
 import { SearchResultComponent } from "./reusable/SearchResultComponent";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
+import dateFormat from "dateformat";
 
 interface Item {
   header: string;
@@ -513,8 +514,12 @@ const PostoppsettComponent = ({
         {!editMode && (
           <div>
             <div key={data?.id}>
-              <div className="absolute left-1/2 top-20 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
-                <p className="text-3xl">{localData?.header}</p>
+              <div className="absolute left-1/2 top-40 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
+                <p className="text-3xl text-neutral">{localData?.header}</p>
+                <p className="italic text-secondary">
+                  Oprettet:{" "}
+                  {dateFormat(localData?.createdAt, "dd.mm.yyyy, HH:MM")}
+                </p>
               </div>
               <div className="flex">
                 <div className="flex gap-1">
