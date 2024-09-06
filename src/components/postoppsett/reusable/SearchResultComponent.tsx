@@ -7,6 +7,8 @@ export const SearchResultComponent = ({
   setClickSearchOpen,
   setPostInfoWriteChange,
   postInfoWrite,
+  clickSearchAll,
+  setSearchInputAll,
 }) => {
   const ringStyle = "flex h-20 w-10 items-center justify-center rounded-md";
   const router = useRouter();
@@ -17,10 +19,15 @@ export const SearchResultComponent = ({
     setPostInfoWriteChange(postInfoWrite);
   };
 
+  const closeSearchResult = () => {
+    setSearchInputAll(false);
+    setClickSearchOpen(false);
+  };
+
   return (
-    <div className="absolute z-40 ml-5 ">
+    <div className="absolute z-40 ml-5 rounded-xl bg-secondary p-5">
       <div className="">
-        <button onClick={() => setClickSearchOpen(false)}>Lukk</button>
+        <button onClick={closeSearchResult}>Lukk</button>
         {results?.map((result) => {
           return (
             <div
@@ -72,6 +79,9 @@ export const SearchResultComponent = ({
           );
         })}
       </div>
+      <button onClick={clickSearchAll} className="btn bg-primary">
+        Vis alle bladtykkelser
+      </button>
     </div>
   );
 };

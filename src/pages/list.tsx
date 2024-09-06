@@ -8,9 +8,9 @@ import SkurlistePakkingComponent from "~/components/postoppsett/reusable/Skurlis
 import { api } from "~/utils/api";
 import { useContext } from "react";
 import { PostInfoContext } from "../components/context";
+import { set } from "zod";
 
 const list = ({ setPostId, colorMode }) => {
-  const [postInfoWrite, setPostInfoWrite] = useState("");
   const { data: users } = api.users.getUsers.useQuery({});
   const [kundeID, setKundeID] = useState();
   const { data: skurliste } = api.skurliste.getAll.useQuery({
@@ -21,7 +21,14 @@ const list = ({ setPostId, colorMode }) => {
   if (!context) {
     throw new Error();
   }
-  const { postInfoWriteChange, setPostInfoWriteChange } = context;
+  const {
+    postInfoWriteChange,
+    setPostInfoWriteChange,
+    postInfoWrite,
+    setPostInfoWrite,
+    setSearchInputAll,
+    searchInputAll,
+  } = context;
 
   useEffect(() => {
     users?.forEach((user) => {
@@ -34,12 +41,17 @@ const list = ({ setPostId, colorMode }) => {
   }, [users]);
 
   const [searchInput, setSearchInput] = useState("");
+
   const [clickSearchOpen, setClickSearchOpen] = useState(false);
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
     kundeID: kundeID,
   });
+
+  const clickSearchAll = () => {
+    setSearchInputAll(true);
+  };
 
   return (
     <div>
@@ -49,8 +61,10 @@ const list = ({ setPostId, colorMode }) => {
           results={posts}
           setPostId={setPostId}
           setClickSearchOpen={setClickSearchOpen}
+          setSearchInputAll={setSearchInputAll}
           setPostInfoWriteChange={setPostInfoWriteChange}
           postInfoWrite={postInfoWrite}
+          clickSearchAll={clickSearchAll}
         />
       )}
       <div data-theme={colorMode} className="min-h-screen px-5 xl:px-96">
@@ -59,8 +73,10 @@ const list = ({ setPostId, colorMode }) => {
           skurliste={skurliste}
           edit={false}
           setSearchInput={setSearchInput}
+          searchInputAll={searchInputAll}
           setPostId={setPostId}
           setClickSearchOpen={setClickSearchOpen}
+          setPostInfoWrite={setPostInfoWrite}
         />
         <h1 className="mb-3 mt-10 text-xl">Pakking</h1>
         <SkurlistePakkingComponent skurliste={skurliste} edit={false} />

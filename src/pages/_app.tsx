@@ -14,10 +14,19 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [postId, setPostId] = useState("");
   const [colorMode, setColorMode] = useState("darkmode");
   const [postInfoWriteChange, setPostInfoWriteChange] = useState("");
+  const [postInfoWrite, setPostInfoWrite] = useState("");
+  const [searchInputAll, setSearchInputAll] = useState(false);
   return (
     <SessionProvider session={session}>
       <PostInfoContext.Provider
-        value={{ postInfoWriteChange, setPostInfoWriteChange }}
+        value={{
+          postInfoWriteChange,
+          setPostInfoWriteChange,
+          postInfoWrite,
+          setPostInfoWrite,
+          searchInputAll,
+          setSearchInputAll,
+        }}
       >
         <Component
           {...pageProps}

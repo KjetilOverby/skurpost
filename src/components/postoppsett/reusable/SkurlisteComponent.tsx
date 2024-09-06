@@ -25,6 +25,8 @@ const SkurlisteComponent = ({
   updateBufferHandlerFalse,
   setSearchInput,
   setClickSearchOpen,
+  setPostInfoWrite,
+  searchInputAll,
 }) => {
   const handleDelete = (id: string) => {
     deletePost.mutate({ id: id });
@@ -107,10 +109,19 @@ const SkurlisteComponent = ({
     });
   };
 
+  const [getAllBlades, setGetAllBlades] = useState("");
+
   const clickSearch = (post) => {
     setSearchInput(`${post.post}-${post.prosent}%-${post.blad.toFixed(1)}`);
     setClickSearchOpen(true);
+    setPostInfoWrite(`${post.post}x${post.bredde} ${post.blad.toFixed(1)}`);
+    setGetAllBlades(`${post.post}-${post.prosent}%`);
   };
+  useEffect(() => {
+    if (searchInputAll) {
+      setSearchInput(getAllBlades);
+    }
+  }, [searchInputAll]);
 
   useEffect(() => {
     if (edit) {

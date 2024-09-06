@@ -14,8 +14,6 @@ søke på poster via input i postoppsett
 spes is undefined on create new post
 legg til et blad som standard når nye poster skal lages
 lukk searchresultcomponent etter at post er valgt
-vis alle bladtykkelser i searchresult med en knapp
-sett postInfoWrite as a global variable
 
 
 

@@ -4,8 +4,10 @@ import React from "react";
 interface ContextType {
   postInfoWriteChange: string;
   setPostInfoWriteChange: React.Dispatch<React.SetStateAction<string>>;
-  anotherVariable: string;
-  setAnotherVariable: React.Dispatch<React.SetStateAction<string>>;
+  postInfoWrite: string;
+  setPostInfoWrite: React.Dispatch<React.SetStateAction<string>>;
+  searchInputAll: boolean;
+  setSearchInputAll: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const PostInfoContext = React.createContext<ContextType | undefined>(

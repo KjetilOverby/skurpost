@@ -45,7 +45,12 @@ const PostoppsettComponent = ({
       "SomeComponent must be used within a PostInfoContext.Provider",
     );
   }
-  const { postInfoWriteChange, setPostInfoWriteChange } = context;
+  const {
+    postInfoWriteChange,
+    setPostInfoWriteChange,
+    searchInputAll,
+    setSearchInputAll,
+  } = context;
 
   const [startringSum, setStartringSum] = useState(0);
   const [endringSum, setEndringSum] = useState(0);
@@ -501,10 +506,23 @@ const PostoppsettComponent = ({
     }
   };
 
+  const [searchGetAll, setSearchGetAll] = useState("");
+
   const clickSearch = (post) => {
     setSearchInput(`${post.post}-${post.prosent}%-${post.blad.toFixed(1)}`);
     setPostInfoWrite(`${post.post}x${post.bredde} ${post.blad.toFixed(1)}`);
     setClickSearchOpen(true);
+    setSearchGetAll(`${post.post}-${post.prosent}%`);
+  };
+
+  useEffect(() => {
+    if (searchInputAll) {
+      setSearchInput(searchGetAll);
+    }
+  }, [searchInputAll]);
+
+  const clickSearchAll = () => {
+    setSearchInputAll(true);
   };
 
   return (
@@ -523,6 +541,8 @@ const PostoppsettComponent = ({
           setClickSearchOpen={setClickSearchOpen}
           postInfoWrite={postInfoWrite}
           setPostInfoWriteChange={setPostInfoWriteChange}
+          setSearchInputAll={setSearchInputAll}
+          clickSearchAll={clickSearchAll}
         />
       )}
       {localData?.header && (
