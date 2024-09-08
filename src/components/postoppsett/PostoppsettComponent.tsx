@@ -197,6 +197,8 @@ const PostoppsettComponent = ({
       const plankeTy = String(localData?.plankeTy);
       const startRings = localData?.startRings;
       const endRings = localData?.endRings;
+      const startRingsAlt = localData?.startRings;
+      const endRingsAlt = localData?.endRings;
       const rawInput = localData?.rawInput;
       const blade = localData?.blade;
       const prosent = String(localData?.prosent);
@@ -209,6 +211,8 @@ const PostoppsettComponent = ({
         plankeTy,
         startRings,
         endRings,
+        startRingsAlt,
+        endRingsAlt,
         rawInput,
         blade,
         prosent,

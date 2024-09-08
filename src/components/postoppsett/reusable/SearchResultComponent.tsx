@@ -17,6 +17,7 @@ export const SearchResultComponent = ({
     setPostId(postId);
     router.push(`/postoppsett`);
     setPostInfoWriteChange(postInfoWrite);
+    setClickSearchOpen(false);
   };
 
   const closeSearchResult = () => {
