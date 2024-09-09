@@ -8,6 +8,8 @@ const EditHeader = ({
   handleUpdate,
   createData,
   handleDelete,
+  resetPostHandler,
+  resetUtfyllingHandler,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,10 +48,18 @@ const EditHeader = ({
                   Avbryt
                 </a>
                 <a
+                  onClick={resetPostHandler}
                   href="#"
                   className="block px-4 py-2 text-gray-400 hover:bg-gray-600 hover:text-white"
                 >
                   Nullstill
+                </a>
+                <a
+                  onClick={resetUtfyllingHandler}
+                  href="#"
+                  className="block px-4 py-2 text-gray-400 hover:bg-gray-600 hover:text-white"
+                >
+                  Nullstill utfylling
                 </a>
                 <a
                   onClick={handleUpdate}

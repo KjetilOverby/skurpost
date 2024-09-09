@@ -510,6 +510,22 @@ const PostoppsettComponent = ({
     }
   };
 
+  const resetPostHandler = () => {
+    setLocalData({
+      header: "",
+      startRings: [],
+      endRings: [],
+      rawInput: [],
+      blade: 0,
+      prosent: 0,
+      spes: "",
+    });
+  };
+
+  const resetUtfyllingHandler = () => {
+    setLocalData({ ...localData, startRings: [], endRings: [] });
+  };
+
   const [searchGetAll, setSearchGetAll] = useState("");
 
   const clickSearch = (post) => {
@@ -537,6 +553,8 @@ const PostoppsettComponent = ({
         handleUpdate={handleUpdate}
         createData={createData}
         handleDelete={handleDelete}
+        resetPostHandler={resetPostHandler}
+        resetUtfyllingHandler={resetUtfyllingHandler}
       />
       {clickSearchOpen && (
         <SearchResultComponent
