@@ -101,7 +101,9 @@ const PostoppsettComponent = ({
   };
 
   const startRings = localData?.startRings;
+  const startRingsAlt = localData?.startRingsAlt;
   const endRings = localData?.endRings;
+  const endRingsAlt = localData?.endRingsAlt;
   const rawRings = localData?.rawInput;
   const rawDivideParse = localData?.rawDivide;
 
@@ -158,7 +160,9 @@ const PostoppsettComponent = ({
       const header = headerText;
       const plankeTy = String(localData?.plankeTy);
       const startRings = localData?.startRings;
+      const startRingsAlt = localData?.startRingsAlt;
       const endRings = localData?.endRings;
+      const endRingsAlt = localData?.endRingsAlt;
       const rawInput = localData?.rawInput;
       const blade = localData?.blade;
       const prosent = String(localData?.prosent);
@@ -170,6 +174,8 @@ const PostoppsettComponent = ({
         header,
         plankeTy,
         startRings,
+        startRingsAlt,
+        endRingsAlt,
         endRings,
         rawInput,
         blade,
@@ -197,8 +203,8 @@ const PostoppsettComponent = ({
       const plankeTy = String(localData?.plankeTy);
       const startRings = localData?.startRings;
       const endRings = localData?.endRings;
-      const startRingsAlt = localData?.startRings;
-      const endRingsAlt = localData?.endRings;
+      const startRingsAlt = localData?.startRingsAlt;
+      const endRingsAlt = localData?.endRingsAlt;
       const rawInput = localData?.rawInput;
       const blade = localData?.blade;
       const prosent = String(localData?.prosent);
@@ -288,6 +294,17 @@ const PostoppsettComponent = ({
       };
     });
   };
+  const deleteStartringAlt = (id) => {
+    setLocalData((prevData) => {
+      const updatedStartRings = prevData.startRingsAlt.filter(
+        (ringItem) => ringItem.id !== id,
+      );
+      return {
+        ...prevData,
+        startRingsAlt: updatedStartRings,
+      };
+    });
+  };
 
   const deleteEndring = (id) => {
     setLocalData((prevData) => {
@@ -321,6 +338,17 @@ const PostoppsettComponent = ({
       startRings: startRingsCopy,
     });
   };
+
+  const handleRingPickerChangeAlt = (value) => {
+    const startRingsCopy = [...(localData?.startRingsAlt || [])];
+    startRingsCopy.push({ id: uuidv4(), value: value });
+
+    setLocalData({
+      ...localData,
+      startRingsAlt: startRingsCopy,
+    });
+  };
+
   const handleEndRingPickerChange = (value) => {
     const endRingsCopy = [...(localData?.endRings || [])];
     endRingsCopy.push({ id: uuidv4(), value: value });
@@ -416,34 +444,38 @@ const PostoppsettComponent = ({
     startringSum,
   ]);
   const moveLeft = async (id) => {
-    const index = startRings.findIndex((item) => item.id === id);
+    const ringsKey = !startRingsAltShow ? "startRingsAlt" : "startRings";
+    const rings = localData[ringsKey];
+    const index = rings.findIndex((item) => item.id === id);
 
     if (index > 0) {
-      const newItems = [...startRings];
+      const newItems = [...rings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index - 1];
       newItems[index - 1] = tempItem;
 
-      //Update the localData state
+      // Update the localData state
       setLocalData({
         ...localData,
-        startRings: newItems,
+        [ringsKey]: newItems,
       });
     }
   };
 
   const moveRight = (id) => {
-    const index = startRings.findIndex((item) => item.id === id);
+    const ringsKey = !startRingsAltShow ? "startRingsAlt" : "startRings";
+    const rings = localData[ringsKey];
+    const index = rings.findIndex((item) => item.id === id);
 
-    if (index < startRings.length - 1) {
-      const newItems = [...startRings];
+    if (index < rings.length - 1) {
+      const newItems = [...rings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index + 1];
       newItems[index + 1] = tempItem;
 
       setLocalData({
         ...localData,
-        startRings: newItems,
+        [ringsKey]: newItems,
       });
     }
   };
@@ -545,6 +577,9 @@ const PostoppsettComponent = ({
     setSearchInputAll(true);
   };
 
+  const [startRingsAltShow, setstartRingsAltShow] = useState(false);
+  const [endRingsAltShow, setEndRingsAltShow] = useState(false);
+
   return (
     <div>
       <EditHeader
@@ -578,6 +613,12 @@ const PostoppsettComponent = ({
       <div className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0d243c] via-[#789abc] to-[#123456]">
         {!editMode && (
           <div>
+            <button
+              onClick={() => setstartRingsAltShow(!startRingsAltShow)}
+              className="btn btn-xs bg-primary text-secondary"
+            >
+              ALT
+            </button>
             {localData?.header ? (
               <div key={data?.id}>
                 <div className="absolute left-1/2 top-40 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
@@ -589,14 +630,23 @@ const PostoppsettComponent = ({
                 </div>
                 <div className="flex">
                   <div className="flex gap-1">
-                    {startRings?.map((ringItem: { value: string }) => (
-                      <Ring
-                        mode={editMode}
-                        key={ringItem.id}
-                        value={ringItem.value}
-                      />
-                    ))}
+                    {!startRingsAltShow
+                      ? startRings?.map((ringItem: { value: string }) => (
+                          <Ring
+                            mode={editMode}
+                            key={ringItem.id}
+                            value={ringItem.value}
+                          />
+                        ))
+                      : startRingsAlt?.map((ringItem: { value: string }) => (
+                          <Ring
+                            mode={editMode}
+                            key={ringItem.id}
+                            value={ringItem.value}
+                          />
+                        ))}
                   </div>
+
                   <Blade blade={data?.blade} />
                   <div className="flex">
                     {rawRings?.map((ringItem: { value: string }) => (
@@ -610,14 +660,29 @@ const PostoppsettComponent = ({
                       />
                     ))}
                   </div>
+
                   <div className="flex gap-1">
-                    {endRings?.map((ringItem: { value: string }) => (
-                      <Ring
-                        mode={editMode}
-                        key={ringItem.id}
-                        value={ringItem.value}
-                      />
-                    ))}
+                    {!endRingsAltShow
+                      ? endRings?.map((ringItem: { value: string }) => (
+                          <Ring
+                            mode={editMode}
+                            key={ringItem.id}
+                            value={ringItem.value}
+                          />
+                        ))
+                      : endRingsAlt?.map((ringItem: { value: string }) => (
+                          <Ring
+                            mode={editMode}
+                            key={ringItem.id}
+                            value={ringItem.value}
+                          />
+                        ))}
+                    <button
+                      onClick={() => setEndRingsAltShow(!endRingsAltShow)}
+                      className="btn btn-xs bg-primary text-secondary"
+                    >
+                      ALT
+                    </button>
                   </div>
                 </div>
               </div>
@@ -648,12 +713,21 @@ const PostoppsettComponent = ({
               />
             )}
             <EditMode editMode={editMode}>
-              <RingPicker
-                values={ringlist}
-                position="left-48"
-                title="Utfylling foran"
-                onChange={handleRingPickerChange}
-              />
+              {startRingsAltShow ? (
+                <RingPicker
+                  values={ringlist}
+                  position="left-48"
+                  title="Utfylling foran"
+                  onChange={handleRingPickerChange}
+                />
+              ) : (
+                <RingPicker
+                  values={ringlist}
+                  position="left-48"
+                  title="Utfylling foran Alternativ"
+                  onChange={handleRingPickerChangeAlt}
+                />
+              )}
             </EditMode>
 
             <div key={localData?.id}>
@@ -692,20 +766,39 @@ const PostoppsettComponent = ({
                       >
                         Differanse: {differenceStart}
                       </p>
+                      <button
+                        onClick={() => setstartRingsAltShow(!startRingsAltShow)}
+                        className="btn btn-xs bg-primary"
+                      >
+                        {!startRingsAltShow ? "Vis standard" : "Vis alternativ"}
+                      </button>
                     </div>
                   </EditMode>
-                  {startRings?.map((ringItem: { value: string }) => (
-                    <Ring
-                      edit={true}
-                      mode={editMode}
-                      key={ringItem.id}
-                      value={ringItem.value}
-                      deleteRing={deleteStartring}
-                      id={ringItem.id}
-                      moveLeft={moveLeft}
-                      moveRight={moveRight}
-                    />
-                  ))}
+                  {startRingsAltShow
+                    ? startRings?.map((ringItem: { value: string }) => (
+                        <Ring
+                          edit={true}
+                          mode={editMode}
+                          key={ringItem.id}
+                          value={ringItem.value}
+                          deleteRing={deleteStartring}
+                          id={ringItem.id}
+                          moveLeft={moveLeft}
+                          moveRight={moveRight}
+                        />
+                      ))
+                    : startRingsAlt?.map((ringItem: { value: string }) => (
+                        <Ring
+                          edit={true}
+                          mode={editMode}
+                          key={ringItem.id}
+                          value={ringItem.value}
+                          deleteRing={deleteStartringAlt}
+                          id={ringItem.id}
+                          moveLeft={moveLeft}
+                          moveRight={moveRight}
+                        />
+                      ))}
                 </div>
                 <Blade blade={localData?.blade} />
 
