@@ -251,9 +251,14 @@ const PostoppsettComponent = ({
 
     await updateData(id, data);
   };
-
   useEffect(() => {
     if (localData) {
+      const startRingsKey = startRingsAltShow ? "startRingsAlt" : "startRings";
+      const endRingsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
+
+      const startRings = localData[startRingsKey];
+      const endRings = localData[endRingsKey];
+
       const startringTotal =
         startRings?.reduce(
           (total, ringItem) => total + Number(ringItem.value),
@@ -278,7 +283,7 @@ const PostoppsettComponent = ({
       setRawinputSum(rawinputTotal);
       setBladeSum(bladeTotal);
     }
-  }, [localData, rawinputSum]);
+  }, [localData, rawinputSum, startRingsAltShow, endRingsAltShow]);
 
   useEffect(() => {
     if (data) {
@@ -470,7 +475,7 @@ const PostoppsettComponent = ({
     startringSum,
   ]);
   const moveLeft = async (id) => {
-    const ringsKey = !startRingsAltShow ? "startRingsAlt" : "startRings";
+    const ringsKey = startRingsAltShow ? "startRingsAlt" : "startRings";
     const rings = localData[ringsKey];
     const index = rings.findIndex((item) => item.id === id);
 
@@ -489,7 +494,7 @@ const PostoppsettComponent = ({
   };
 
   const moveRight = (id) => {
-    const ringsKey = !startRingsAltShow ? "startRingsAlt" : "startRings";
+    const ringsKey = startRingsAltShow ? "startRingsAlt" : "startRings";
     const rings = localData[ringsKey];
     const index = rings.findIndex((item) => item.id === id);
 
@@ -741,7 +746,7 @@ const PostoppsettComponent = ({
               />
             )}
             <EditMode editMode={editMode}>
-              {startRingsAltShow ? (
+              {!startRingsAltShow ? (
                 <RingPicker
                   values={ringlist}
                   position="left-48"
@@ -802,7 +807,7 @@ const PostoppsettComponent = ({
                       </button>
                     </div>
                   </EditMode>
-                  {startRingsAltShow
+                  {!startRingsAltShow
                     ? startRings?.map((ringItem: { value: string }) => (
                         <Ring
                           edit={true}
@@ -884,7 +889,6 @@ const PostoppsettComponent = ({
                           moveRight={moveRightEnd}
                         />
                       ))}
-                  0000
                 </div>
 
                 <EditMode editMode={editMode}>
