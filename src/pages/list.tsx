@@ -13,6 +13,7 @@ import { set } from "zod";
 const list = ({ setPostId, colorMode }) => {
   const { data: users } = api.users.getUsers.useQuery({});
   const [kundeID, setKundeID] = useState();
+  const [openManualSearch, setOpenManualSearch] = useState(false);
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
     kunde: kundeID,
@@ -68,6 +69,28 @@ const list = ({ setPostId, colorMode }) => {
         />
       )}
       <div data-theme={colorMode} className="min-h-screen px-5 xl:px-96">
+        <button
+          onClick={() => setOpenManualSearch(!openManualSearch)}
+          className="btn mt-5 bg-primary"
+        >
+          {`${openManualSearch ? "Lukk søk" : "Søk"}`}
+        </button>
+        {openManualSearch && (
+          <div>
+            <input
+              type="text"
+              placeholder="Søk etter post"
+              className="input"
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <button
+              onClick={() => setClickSearchOpen(true)}
+              className="btn mt-5 bg-secondary"
+            >
+              Søk
+            </button>
+          </div>
+        )}
         <h1 className="py-10 text-xl">Skurplan</h1>
         <SkurlisteComponent
           skurliste={skurliste}

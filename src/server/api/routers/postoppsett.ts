@@ -40,6 +40,7 @@ export const postoppsettRouter = createTRPCRouter({
           },
         ],
       },
+      take: 20,
     });
   }),
 
