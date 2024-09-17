@@ -14,7 +14,7 @@ legg til et blad som standard når nye poster skal lages
 legge rediger liste som en undermeny i skuliste på header
 Lage NY POST i header
 Finne løsning på rawDivide
-legge til alternativ utregning
+Fikse utregning på Alt
 
 
 

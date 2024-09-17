@@ -71,6 +71,9 @@ const PostoppsettComponent = ({
   const [kundeID, setKundeID] = useState("");
   const [postInfoWrite, setPostInfoWrite] = useState("");
 
+  const [startRingsAltShow, setstartRingsAltShow] = useState(false);
+  const [endRingsAltShow, setEndRingsAltShow] = useState(false);
+
   const router = useRouter();
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
@@ -317,6 +320,19 @@ const PostoppsettComponent = ({
       };
     });
   };
+
+  const deleteEndringAlt = (id) => {
+    setLocalData((prevData) => {
+      const updatedEndRings = prevData.endRingsAlt.filter(
+        (ringItem) => ringItem.id !== id,
+      );
+      return {
+        ...prevData,
+        endRingsAlt: updatedEndRings,
+      };
+    });
+  };
+
   const deleteRawInput = (id) => {
     setLocalData((prevData) => {
       const updatedRawRings = prevData.rawInput.filter(
@@ -356,6 +372,16 @@ const PostoppsettComponent = ({
     setLocalData({
       ...localData,
       endRings: endRingsCopy,
+    });
+  };
+
+  const handleEndRingPickerChangeAlt = (value) => {
+    const endRingsCopy = [...(localData?.endRingsAlt || [])];
+    endRingsCopy.push({ id: uuidv4(), value: value });
+
+    setLocalData({
+      ...localData,
+      endRingsAlt: endRingsCopy,
     });
   };
 
@@ -481,32 +507,37 @@ const PostoppsettComponent = ({
   };
 
   const moveRightEnd = async (id) => {
-    const index = endRings.findIndex((item) => item.id === id);
+    const ringsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
+    const rings = localData[ringsKey];
+    const index = rings.findIndex((item) => item.id === id);
 
-    if (index < endRings.length - 1) {
-      const newItems = [...endRings];
+    if (index < rings.length - 1) {
+      const newItems = [...rings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index + 1];
       newItems[index + 1] = tempItem;
 
       setLocalData({
         ...localData,
-        endRings: newItems,
+        [ringsKey]: newItems,
       });
     }
   };
+
   const moveLeftEnd = async (id) => {
-    const index = endRings.findIndex((item) => item.id === id);
+    const ringsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
+    const rings = localData[ringsKey];
+    const index = rings.findIndex((item) => item.id === id);
 
     if (index > 0) {
-      const newItems = [...endRings];
+      const newItems = [...rings];
       const tempItem = newItems[index];
       newItems[index] = newItems[index - 1];
       newItems[index - 1] = tempItem;
 
       setLocalData({
         ...localData,
-        endRings: newItems,
+        [ringsKey]: newItems,
       });
     }
   };
@@ -576,9 +607,6 @@ const PostoppsettComponent = ({
   const clickSearchAll = () => {
     setSearchInputAll(true);
   };
-
-  const [startRingsAltShow, setstartRingsAltShow] = useState(false);
-  const [endRingsAltShow, setEndRingsAltShow] = useState(false);
 
   return (
     <div>
@@ -831,18 +859,32 @@ const PostoppsettComponent = ({
                   })}
                 </div>
                 <div className="flex gap-1">
-                  {endRings?.map((ringItem: { value: string }) => (
-                    <Ring
-                      edit={true}
-                      mode={editMode}
-                      key={ringItem.id}
-                      value={ringItem.value}
-                      deleteRing={deleteEndring}
-                      id={ringItem.id}
-                      moveLeft={moveLeftEnd}
-                      moveRight={moveRightEnd}
-                    />
-                  ))}
+                  {!endRingsAltShow
+                    ? endRings?.map((ringItem: { value: string }) => (
+                        <Ring
+                          edit={true}
+                          mode={editMode}
+                          key={ringItem.id}
+                          value={ringItem.value}
+                          deleteRing={deleteEndring}
+                          id={ringItem.id}
+                          moveLeft={moveLeftEnd}
+                          moveRight={moveRightEnd}
+                        />
+                      ))
+                    : endRingsAlt?.map((ringItem: { value: string }) => (
+                        <Ring
+                          edit={true}
+                          mode={editMode}
+                          key={ringItem.id}
+                          value={ringItem.value}
+                          deleteRing={deleteEndringAlt}
+                          id={ringItem.id}
+                          moveLeft={moveLeftEnd}
+                          moveRight={moveRightEnd}
+                        />
+                      ))}
+                  0000
                 </div>
 
                 <EditMode editMode={editMode}>
@@ -866,16 +908,31 @@ const PostoppsettComponent = ({
                     >
                       Differanse: {differenceEnd}
                     </p>
+                    <button
+                      onClick={() => setEndRingsAltShow(!endRingsAltShow)}
+                      className="btn btn-xs bg-primary"
+                    >
+                      {!endRingsAltShow ? "Vis standard" : "Vis alternativ"}
+                    </button>
                   </div>
                 </EditMode>
               </div>
               <EditMode editMode={editMode}>
-                <RingPicker
-                  values={ringlist}
-                  position="right-48"
-                  title="Utfylling bak"
-                  onChange={handleEndRingPickerChange}
-                />
+                {!endRingsAltShow ? (
+                  <RingPicker
+                    values={ringlist}
+                    position="right-48"
+                    title="Utfylling bak"
+                    onChange={handleEndRingPickerChange}
+                  />
+                ) : (
+                  <RingPicker
+                    values={ringlist}
+                    position="right-48"
+                    title="Utfylling bak alternativ"
+                    onChange={handleEndRingPickerChangeAlt}
+                  />
+                )}
               </EditMode>
             </div>
           </EditMode>
