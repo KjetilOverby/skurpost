@@ -126,8 +126,8 @@ const RawRing = ({
         </EditMode>
         <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs md:top-44 md:text-sm">
           <p> {ringItem?.ring}</p>
-          <p> {ringItem?.shimsVal}</p>
-          <p> {ringItem?.shimsVal2}</p>
+          <p> {ringItem?.shimsVal2 === 0 ? "" : ringItem.shimsVal2}</p>
+          <p> {ringItem?.shimsVal === 0 ? "" : ringItem?.shimsVal}</p>
         </div>
         <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs md:top-[202px] md:text-sm">
           {/* <p>{calculationResult}</p> */}

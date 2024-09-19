@@ -153,7 +153,7 @@ const PostoppsettComponent = ({
         };
       });
     }
-  }, [firstRingVal, shimsVal, getRawValues]);
+  }, [firstRingVal, shimsVal, getRawValues, calculationResult]);
 
   const ctx = api.useContext();
 
