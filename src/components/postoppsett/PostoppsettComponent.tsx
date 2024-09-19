@@ -74,6 +74,9 @@ const PostoppsettComponent = ({
   const [startRingsAltShow, setstartRingsAltShow] = useState(false);
   const [endRingsAltShow, setEndRingsAltShow] = useState(false);
 
+  const [differenceStart, setDifferenceStart] = useState(null);
+  const [differenceEnd, setDifferenceEnd] = useState(null);
+
   const router = useRouter();
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
@@ -158,39 +161,45 @@ const PostoppsettComponent = ({
   const ctx = api.useContext();
 
   const updateData = async (id) => {
-    try {
-      const id = postId;
-      const header = headerText;
-      const plankeTy = String(localData?.plankeTy);
-      const startRings = localData?.startRings;
-      const startRingsAlt = localData?.startRingsAlt;
-      const endRings = localData?.endRings;
-      const endRingsAlt = localData?.endRingsAlt;
-      const rawInput = localData?.rawInput;
-      const blade = localData?.blade;
-      const prosent = String(localData?.prosent);
-      const spes = localData?.spes;
-      const xlog = String(rawRings?.length);
-      const sawType = String("mkv");
-      const response = await updatePost.mutateAsync({
-        id,
-        header,
-        plankeTy,
-        startRings,
-        startRingsAlt,
-        endRingsAlt,
-        endRings,
-        rawInput,
-        blade,
-        prosent,
-        spes,
-        xlog,
-        sawType,
-      });
-      console.log(response);
-      setEditMode(false);
-    } catch (error) {
-      console.error(error);
+    if (differenceStart >= 0.05 || differenceStart <= -0.05) {
+      alert("Ufylling foran er ikke korrekt");
+    } else if (differenceEnd >= 0.05 || differenceEnd <= -0.05) {
+      alert("Ufylling bak er ikke korrekt");
+    } else {
+      try {
+        const id = postId;
+        const header = headerText;
+        const plankeTy = String(localData?.plankeTy);
+        const startRings = localData?.startRings;
+        const startRingsAlt = localData?.startRingsAlt;
+        const endRings = localData?.endRings;
+        const endRingsAlt = localData?.endRingsAlt;
+        const rawInput = localData?.rawInput;
+        const blade = localData?.blade;
+        const prosent = String(localData?.prosent);
+        const spes = localData?.spes;
+        const xlog = String(rawRings?.length);
+        const sawType = String("mkv");
+        const response = await updatePost.mutateAsync({
+          id,
+          header,
+          plankeTy,
+          startRings,
+          startRingsAlt,
+          endRingsAlt,
+          endRings,
+          rawInput,
+          blade,
+          prosent,
+          spes,
+          xlog,
+          sawType,
+        });
+        console.log(response);
+        setEditMode(false);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -433,8 +442,6 @@ const PostoppsettComponent = ({
     });
   };
 
-  const [differenceEnd, setDifferenceEnd] = useState(null);
-
   useEffect(() => {
     const calculatedDifferenceEnd = (
       calc.mkv.middleEnd -
@@ -454,7 +461,8 @@ const PostoppsettComponent = ({
     endringSum,
   ]);
 
-  const [differenceStart, setDifferenceStart] = useState(null);
+  console.log(differenceStart);
+
   useEffect(() => {
     const calculatedDifferenceStart = (
       calc.mkv.toMiddle -
