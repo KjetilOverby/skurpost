@@ -77,6 +77,10 @@ const PostoppsettComponent = ({
   const [differenceStart, setDifferenceStart] = useState(null);
   const [differenceEnd, setDifferenceEnd] = useState(null);
 
+  // LOCAL STORAGE
+  const [localStorgeItem, setLocalStorgeItem] = useState();
+  const [parsedStorageItem, setParsedStorageItem] = useState();
+
   const router = useRouter();
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
@@ -118,6 +122,19 @@ const PostoppsettComponent = ({
 
   const rawValues = rawRings?.map((item) => item);
 
+  // *************** LOCAL STORAGE ***************
+  useEffect(() => {
+    if (localData) {
+      // Parse the data (assuming localData is already parsed)
+      const parsedData = JSON.stringify(localData);
+
+      // Save the parsed data to localStorage
+      localStorage.setItem("localDataKey", parsedData);
+    }
+  }, [localData]);
+
+  // *************** LOCAL STORAGE ***************
+
   useEffect(() => {
     users?.forEach((user) => {
       if (user.role === "MV_ADMIN") {
@@ -134,74 +151,86 @@ const PostoppsettComponent = ({
     );
   }, [data, localData]);
 
-  useEffect(() => {
-    if (localData) {
-      setLocalData((prevData) => {
-        const updatedRawInput = prevData.rawInput.map((item) => {
-          if (item.value === getRawValues) {
-            return {
-              ...item,
-              ring: firstRingVal,
-              shimsVal: shimsVal,
-              shimsVal2: Number(calculationResult),
-            };
-          } else {
-            return item;
-          }
-        });
+  const [alertShown, setAlertShown] = useState(false);
 
-        return {
-          ...prevData,
-          rawInput: updatedRawInput,
-        };
-      });
-    }
-  }, [firstRingVal, shimsVal, getRawValues, calculationResult]);
+  console.log("alertShown", alertShown);
 
-  const ctx = api.useContext();
-
-  const updateData = async (id) => {
+  const updateData = async (event, id) => {
     if (differenceStart >= 0.05 || differenceStart <= -0.05) {
       alert("Ufylling foran er ikke korrekt");
+      setAlertShown(true); // Set the alertShown flag
+      return null;
     } else if (differenceEnd >= 0.05 || differenceEnd <= -0.05) {
       alert("Ufylling bak er ikke korrekt");
-    } else {
-      try {
-        const id = postId;
-        const header = headerText;
-        const plankeTy = String(localData?.plankeTy);
-        const startRings = localData?.startRings;
-        const startRingsAlt = localData?.startRingsAlt;
-        const endRings = localData?.endRings;
-        const endRingsAlt = localData?.endRingsAlt;
-        const rawInput = localData?.rawInput;
-        const blade = localData?.blade;
-        const prosent = String(localData?.prosent);
-        const spes = localData?.spes;
-        const xlog = String(rawRings?.length);
-        const sawType = String("mkv");
-        const response = await updatePost.mutateAsync({
-          id,
-          header,
-          plankeTy,
-          startRings,
-          startRingsAlt,
-          endRingsAlt,
-          endRings,
-          rawInput,
-          blade,
-          prosent,
-          spes,
-          xlog,
-          sawType,
-        });
-        console.log(response);
-        setEditMode(false);
-      } catch (error) {
-        console.error(error);
-      }
+      setAlertShown(true); // Set the alertShown flag
+      return null;
+    }
+
+    try {
+      const id = postId;
+      const header = headerText;
+      const plankeTy = String(localData?.plankeTy);
+      const startRings = localData?.startRings;
+      const startRingsAlt = localData?.startRingsAlt;
+      const endRings = localData?.endRings;
+      const endRingsAlt = localData?.endRingsAlt;
+      const rawInput = localData?.rawInput;
+      const blade = localData?.blade;
+      const prosent = String(localData?.prosent);
+      const spes = localData?.spes;
+      const xlog = String(rawRings?.length);
+      const sawType = String("mkv");
+      const response = await updatePost.mutateAsync({
+        id,
+        header,
+        plankeTy,
+        startRings,
+        startRingsAlt,
+        endRingsAlt,
+        endRings,
+        rawInput,
+        blade,
+        prosent,
+        spes,
+        xlog,
+        sawType,
+      });
+      console.log(response);
+      setEditMode(false);
+    } catch (error) {
+      console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (alertShown) {
+      console.log("Alert was shown, skipping useEffect logic.");
+      return null;
+    } else if (!alertShown) {
+      if (localData) {
+        setLocalData((prevData) => {
+          const updatedRawInput = prevData.rawInput.map((item) => {
+            if (item.value === getRawValues) {
+              return {
+                ...item,
+                ring: firstRingVal,
+                shimsVal: shimsVal,
+                shimsVal2: Number(calculationResult),
+              };
+            } else {
+              return item;
+            }
+          });
+
+          return {
+            ...prevData,
+            rawInput: updatedRawInput,
+          };
+        });
+      }
+      console.log("The function is running" + new Date());
+    }
+  }, [firstRingVal, shimsVal, getRawValues, calculationResult, alertShown]);
 
   const createPost = api.postoppsett.createPost.useMutation({
     onSuccess: () => {
@@ -460,8 +489,6 @@ const PostoppsettComponent = ({
     localData?.blade,
     endringSum,
   ]);
-
-  console.log(differenceStart);
 
   useEffect(() => {
     const calculatedDifferenceStart = (
