@@ -147,7 +147,7 @@ const SkurlisteComponent = ({
         </>
       )}
       <div className="overflow-scroll">
-        <table className="bg-gray-00 table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-primary">
+        <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-primary">
           <thead>
             <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left">
               <th className="text-sm text-neutral">Treslag</th>
@@ -175,7 +175,7 @@ const SkurlisteComponent = ({
                 <>
                   <tr
                     onClick={() => clickSearch(list)}
-                    className="border border-gray-700 border-l-transparent border-r-transparent bg-base-100 hover:cursor-pointer hover:bg-primary "
+                    className="border border-gray-700 border-l-transparent border-r-transparent bg-base-100 hover:cursor-pointer hover:bg-neutral "
                   >
                     <td
                       className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
@@ -190,7 +190,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.klGrense}
                           </div>
                         </div>
@@ -199,7 +199,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.klasse}
                           </div>
                         </div>
@@ -208,7 +208,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.postNr}
                           </div>
                         </div>
@@ -217,7 +217,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.antall}
                           </div>
                         </div>
@@ -226,7 +226,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">{list.m3}</div>
+                          <div className="text-xs text-primary">{list.m3}</div>
                         </div>
                       </div>
                     </td>
@@ -234,7 +234,7 @@ const SkurlisteComponent = ({
                       <div className="flex items-center space-x-3">
                         <div>
                           <div
-                            className={`text-xs text-neutral ${list.status === "stopp" ? "text-red-500" : "text-green-500"}`}
+                            className={`text-xs text-primary ${list.status === "stopp" ? "text-red-500" : "text-green-500"}`}
                           >
                             {list.status}
                           </div>
@@ -253,7 +253,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.xLog}
                           </div>
                         </div>
@@ -262,7 +262,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.prosent}
                           </div>
                         </div>
@@ -280,7 +280,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.vs66}
                           </div>
                         </div>
@@ -289,7 +289,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.vs66Br}
                           </div>
                         </div>
@@ -298,7 +298,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.mkvBord}
                           </div>
                         </div>
@@ -307,7 +307,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.mkvBordBr}
                           </div>
                         </div>
@@ -316,7 +316,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs text-neutral">
+                          <div className="text-xs text-primary">
                             {list.blad.toFixed(1)}
                           </div>
                         </div>

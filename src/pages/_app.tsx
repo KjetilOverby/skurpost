@@ -12,7 +12,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   const [postId, setPostId] = useState("");
-  const [colorMode, setColorMode] = useState("coffee");
+  const [colorMode, setColorMode] = useState("bluefresh");
   const [postInfoWriteChange, setPostInfoWriteChange] = useState("");
   const [postInfoWrite, setPostInfoWrite] = useState("");
   const [searchInputAll, setSearchInputAll] = useState(false);

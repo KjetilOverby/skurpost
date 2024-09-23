@@ -3,7 +3,7 @@ import React from "react";
 export const MiniList = ({ clickSearch, skurliste }) => {
   return (
     <div className="absolute right-2 top-20">
-      <table className="table table-xs w-full  bg-gray-600">
+      <table className="table table-xs w-full  bg-accent">
         <thead>
           <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left">
             <th className="text-xs text-neutral">Treslag</th>
@@ -27,7 +27,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
               <>
                 <tr
                   onClick={() => clickSearch(list)}
-                  className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary "
+                  className="border border-base-100 bg-base-100 hover:cursor-pointer hover:bg-accent "
                 >
                   <td
                     className={` font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
@@ -38,7 +38,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-[.7rem] text-neutral">
+                        <div className="text-[.7rem] text-primary">
                           {list.klasse}
                         </div>
                       </div>
@@ -48,7 +48,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-xs text-neutral">
+                        <div className="text-xs text-primary">
                           {list.antall}
                         </div>
                       </div>
@@ -57,7 +57,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-xs text-neutral">{list.m3}</div>
+                        <div className="text-xs text-primary">{list.m3}</div>
                       </div>
                     </div>
                   </td>
@@ -65,7 +65,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                     <div className="flex items-center space-x-3">
                       <div>
                         <div
-                          className={`text-xs text-neutral ${list.status === "stopp" ? "text-red-500" : "text-green-500"}`}
+                          className={`text-xs text-primary ${list.status === "stopp" ? "text-red-500" : "text-green-500"}`}
                         >
                           {list.status}
                         </div>
@@ -84,14 +84,14 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-xs text-neutral">{list.xLog}</div>
+                        <div className="text-xs text-primary">{list.xLog}</div>
                       </div>
                     </div>
                   </td>
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-xs text-neutral">
+                        <div className="text-xs text-primary">
                           {list.prosent}
                         </div>
                       </div>
@@ -107,7 +107,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-xs text-neutral">{list.vs66}</div>
+                        <div className="text-xs text-primary">{list.vs66}</div>
                       </div>
                     </div>
                   </td>
@@ -115,7 +115,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-xs text-neutral">
+                        <div className="text-xs text-primary">
                           {list.mkvBord}
                         </div>
                       </div>
@@ -125,7 +125,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-xs text-neutral">
+                        <div className="text-xs text-primary">
                           {list.blad.toFixed(1)}
                         </div>
                       </div>

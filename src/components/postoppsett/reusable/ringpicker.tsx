@@ -17,7 +17,7 @@ const RingPicker = ({ values, position, title, onChange }) => {
       </div>
       {values.map((value) => (
         <button
-          className="m-1  h-12 w-12 rounded-full bg-neutral p-1 text-xs text-primary"
+          className="m-1  h-12 w-12 rounded-full bg-neutral p-1 text-xs text-primary hover:bg-accent"
           key={value}
           onClick={() => handleClick(value)}
         >

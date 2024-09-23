@@ -106,7 +106,7 @@ const RawRing = ({
         <EditMode editMode={mode}>
           {edit && <RiDeleteBin5Line onClick={() => deleteRing(id)} />}
         </EditMode>
-        <p className="absolute bottom-20 text-[9px] text-gray-200 sm:bottom-28 sm:text-xs  md:bottom-44 md:text-sm">
+        <p className="absolute bottom-20 text-[9px] text-primary sm:bottom-28 sm:text-xs  md:bottom-44 md:text-sm">
           {value}
         </p>
         <p className="text-xs text-blue-900 sm:text-sm md:text-xl">
@@ -124,7 +124,7 @@ const RawRing = ({
             className="absolute bottom-11 left-1/2 -translate-x-1/2 transform text-sm text-gray-700"
           />
         </EditMode>
-        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs md:top-44 md:text-sm">
+        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-primary sm:bottom-28 sm:text-xs md:top-44 md:text-sm">
           <p> {ringItem?.ring}</p>
           <p> {ringItem?.shimsVal2 === 0 ? "" : ringItem.shimsVal2}</p>
           <p> {ringItem?.shimsVal === 0 ? "" : ringItem?.shimsVal}</p>

@@ -726,8 +726,8 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
               {localData?.header ? (
                 <div key={data?.id}>
                   <div className="absolute left-1/2 top-40 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
-                    <p className="text-3xl text-neutral">{localData?.header}</p>
-                    <p className="italic text-secondary">
+                    <p className="text-3xl text-primary">{localData?.header}</p>
+                    <p className="italic text-primary">
                       Oprettet:{" "}
                       {dateFormat(localData?.createdAt, "dd.mm.yyyy, HH:MM")}
                     </p>
@@ -839,12 +839,12 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
 
               <div key={localData?.id}>
                 <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
-                  <p>Opprinnelig post: {localData?.header}</p>
-                  <p className="italic text-secondary">
+                  <p className="text-primary">Opprinnelig post: {localData?.header}</p>
+                  <p className="italic text-primary">
                     Oprettet:{" "}
                     {dateFormat(localData?.createdAt, "dd.mm.yyyy, MM:HH")}
                   </p>
-                  <p className="text-3xl">
+                  <p className="text-3xl text-primary">
                     {rawRings?.length}x{localData?.plankeTy}-
                     {localData?.prosent}
                     %-{(localData?.blade + 1.4).toFixed(1)}
@@ -855,7 +855,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   <div className="flex gap-1">
                     <EditMode editMode={editMode}>
                       <div>
-                        <p>
+                        <p className="text-primary">
                           Distanse:{" "}
                           {(
                             calc.mkv.toMiddle -
@@ -864,7 +864,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                             localData?.blade / 2
                           ).toFixed(2)}
                         </p>
-                        <p>utfylling: {startringSum?.toFixed(2)}</p>
+                        <p className="text-primary">utfylling: {startringSum?.toFixed(2)}</p>
                         <p
                           className={`${
                             differenceStart >= -0.05 && differenceStart <= 0.05
@@ -878,7 +878,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                           onClick={() =>
                             setstartRingsAltShow(!startRingsAltShow)
                           }
-                          className="btn btn-xs bg-primary"
+                          className="btn btn-xs bg-primary text-neutral"
                         >
                           {!startRingsAltShow
                             ? "Vis standard"
@@ -972,7 +972,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
 
                   <EditMode editMode={editMode}>
                     <div>
-                      <p>
+                      <p className="text-primary">
                         Distanse:{" "}
                         {(
                           calc.mkv.middleEnd -
@@ -981,7 +981,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                           localData?.blade / 2
                         ).toFixed(2)}
                       </p>
-                      <p>utfylling: {endringSum?.toFixed(2)}</p>
+                      <p className="text-primary">utfylling: {endringSum?.toFixed(2)}</p>
                       <p
                         className={`${
                           differenceEnd >= -0.05 && differenceEnd <= 0.05
@@ -993,7 +993,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                       </p>
                       <button
                         onClick={() => setEndRingsAltShow(!endRingsAltShow)}
-                        className="btn btn-xs bg-primary"
+                        className="btn btn-xs bg-primary text-neutral"
                       >
                         {!endRingsAltShow ? "Vis standard" : "Vis alternativ"}
                       </button>
@@ -1036,7 +1036,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   <input
                     step="0.01"
                     type="number"
-                    className="focus:shadow-outline w-full appearance-none rounded border bg-primary px-3 py-2 leading-tight text-neutral shadow focus:outline-none"
+                    className="focus:shadow-outline w-full appearance-none rounded border bg-neutral px-3 py-2 leading-tight text-primary shadow focus:outline-none"
                     onChange={(e) =>
                       setRawValueFromInput(parseFloat(e.target.value))
                     }
@@ -1047,7 +1047,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
               <div className="mb-5">
                 <label>planketykkelse i overskrift</label>
                 <input
-                  className="w-full appearance-none rounded border bg-primary px-3 py-2 leading-tight text-neutral shadow focus:outline-none"
+                  className="w-full appearance-none rounded border bg-neutral px-3 py-2 leading-tight text-primary shadow focus:outline-none"
                   onChange={handlePlankeTy}
                   placeholder="eks: 50/38"
                   type="text"
@@ -1055,7 +1055,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                 />
               </div>
               <select
-                className="mb-5 h-full rounded-md border-0 bg-primary py-0 pl-2 pr-7 text-neutral focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                className="mb-5 h-full rounded-md border-0 bg-neutral py-0 pl-2 pr-7 text-primary focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
                 onChange={prosentSelectHandler}
                 value={localData?.prosent}
               >
@@ -1077,7 +1077,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
               <div>
                 <label>Legg til text i parantes</label>
                 <input
-                  className="focus:shadow-outline w-full appearance-none rounded border bg-primary px-3 py-2 leading-tight text-neutral shadow focus:outline-none"
+                  className="focus:shadow-outline w-full appearance-none rounded border bg-neutral px-3 py-2 leading-tight text-primary shadow focus:outline-none"
                   onChange={handleSpes}
                   value={localData?.spes}
                 />

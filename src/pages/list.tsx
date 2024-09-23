@@ -68,7 +68,7 @@ const list = ({ setPostId, colorMode }) => {
           clickSearchAll={clickSearchAll}
         />
       )}
-      <div data-theme={colorMode} className="min-h-screen px-5 xl:px-96">
+      <div data-theme={colorMode} className="min-h-screen px-5 x1-1:px-96">
         <button
           onClick={() => setOpenManualSearch(!openManualSearch)}
           className="btn mt-5 bg-primary"

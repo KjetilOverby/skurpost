@@ -83,7 +83,7 @@ const HeaderComponent = ({ colorMode }) => {
 
   return (
     <header data-theme={colorMode}>
-      <nav className="border border-x-0 border-t-0 border-gray-200 border-b-secondary bg-primary px-4  py-2.5 ">
+      <nav className="border border-x-0 border-t-0 border-gray-200 border-b-secondary bg-neutral px-4  py-2.5 ">
         <div
           className={` z-10 mx-auto flex max-w-screen-xl flex-wrap items-center justify-between`}
         >
@@ -113,7 +113,7 @@ const HeaderComponent = ({ colorMode }) => {
                   </li>
                 </div>
                 {submenuVisibility.skurliste && (
-                  <ul className="absolute left-0 mt-2 w-48 bg-primary shadow-lg">
+                  <ul className="absolute left-0 mt-2 w-48 bg-accent shadow-lg">
                     <li className="px-4 py-2 hover:bg-secondary">
                       <Link href="/list">Skurliste</Link>
                     </li>
