@@ -77,6 +77,8 @@ model User {
     posts            Post[]
     postningsoppsett postningsoppsett[]
     skurliste        skurliste[]
+    Settings         Settings?          @relation(fields: [settingsId], references: [id])
+    settingsId       String?
 }
 
 model VerificationToken {
@@ -157,4 +159,19 @@ model postningsoppsett {
     rawInput      Json
     rawDivide     Json
     sawType       String
+}
+
+model Settings {
+    id           String   @id @default(cuid())
+    userId       String   @unique
+    theme        String
+    sawType      String
+    fonts        String
+    visPakking   Boolean
+    visMiniListe Boolean
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    creator      String
+
+    User User[]
 }

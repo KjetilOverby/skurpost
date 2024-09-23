@@ -13,6 +13,7 @@ import { FaClipboardList } from "react-icons/fa";
 import { IoIosHome } from "react-icons/io";
 import { BiSolidCalendarEdit } from "react-icons/bi";
 import { FaUserLarge } from "react-icons/fa6";
+import { IoSettingsOutline } from "react-icons/io5";
 import { PostInfoContext } from "../../context";
 
 interface headerProps {
@@ -35,7 +36,7 @@ const HeaderComponent = ({ colorMode }) => {
 
   const [submenuVisibility, setSubmenuVisibility] = useState({
     skurliste: false,
-    post: false,
+    innstillinger: false,
   });
 
   const classText = "font-bold underline";
@@ -75,10 +76,11 @@ const HeaderComponent = ({ colorMode }) => {
   const { data: sessionData } = useSession();
 
   const toggleSubmenu = (menu) => {
-    setSubmenuVisibility((prevVisibility) => ({
-      ...prevVisibility,
-      [menu]: !prevVisibility[menu],
-    }));
+    setSubmenuVisibility((prevVisibility) => {
+      const newVisibility = { skurliste: false, innstillinger: false };
+      newVisibility[menu] = !prevVisibility[menu];
+      return newVisibility;
+    });
   };
 
   return (
@@ -92,7 +94,7 @@ const HeaderComponent = ({ colorMode }) => {
             <ul className="mt-4 flex flex-row  space-x-8 font-medium lg:mt-0">
               <Link href="/">
                 <div className="grid place-items-center ">
-                  <IoIosHome className={`text-2xl ${logo}`} />
+                  <IoIosHome className={`text-2xl ${logo} mb-2`} />
                   <li>
                     <p className={`text-xs ${text} ${actualPage.listcreator}`}>
                       Hjem
@@ -105,7 +107,7 @@ const HeaderComponent = ({ colorMode }) => {
                   className="grid cursor-pointer place-items-center"
                   onClick={() => toggleSubmenu("skurliste")}
                 >
-                  <FaClipboardList className={`text-2xl ${logo}`} />
+                  <FaClipboardList className={`text-2xl ${logo} mb-2`} />
                   <li>
                     <p className={`text-xs ${text} ${actualPage.list}`}>
                       Rediger
@@ -121,7 +123,7 @@ const HeaderComponent = ({ colorMode }) => {
                       <Link href="/create/listcreator">Rediger skurliste</Link>
                     </li>
                     <li
-                      onClick={setEditMode(true)}
+                      onClick={() => setEditMode(true)}
                       className="px-4 py-2 hover:bg-secondary"
                     >
                       <Link href="/postoppsett">Lag ny post</Link>
@@ -129,10 +131,27 @@ const HeaderComponent = ({ colorMode }) => {
                   </ul>
                 )}
               </div>
+              <div className="relative">
+              <Link href='/innstillinger'>
+                <div
+                  className="grid cursor-pointer place-items-center"
+                  onClick={() => toggleSubmenu("innstillinger")}
+                >
+                  <IoSettingsOutline 
+                  className={`text-2xl ${logo} mb-2`} />
+                  <li>
+                    <p className={`text-xs ${text} ${actualPage.list}`}>
+                      Instillinger
+                    </p>
+                  </li>
+                </div>
+                </Link>
+            
+              </div>
 
               <Link href="/create/listcreator">
                 <div className="grid place-items-center ">
-                  <FaUserLarge className={`text-2xl ${logo}`} />
+                  <FaUserLarge className={`text-2xl ${logo} mb-2`} />
                   <li>
                     <p className={`text-xs ${text} ${actualPage.listcreator}`}>
                       Account
