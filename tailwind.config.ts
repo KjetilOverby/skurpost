@@ -3,10 +3,10 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   darkMode: 'class',
-  
+
   daisyui: {
     themes: [
-        {
+      {
         mytheme: {
           "primary": "#254e58",
           "secondary": "#379683",
@@ -29,18 +29,18 @@ export default {
           "base-100": "rgb(51, 51, 51)",
         },
         darkmode: {
-          "primary": "rgb(51, 51, 51)",
-          "secondary": "#474646",
-          "accent": "#5e5e5e",
-          "neutral": "#adadad",
-          "base-100": "#292929",
+          "primary": "#d3d9d4",
+          "secondary": "#748d92",
+          "accent": "#124e66",
+          "neutral": "#2e3944",
+          "base-100": "#212a31",
         },
         lightmode: {
-          "primary": "#e3e3e3",
-          "secondary": "#c2c0c0",
-          "accent": "#c2c0c0",
-          "neutral": "#5e5e5e",
-          "base-100": "#ffffff",
+          "primary": "#5d001e",
+          "secondary": "#ee4c7c",
+          "accent": "#e3afbc",
+          "neutral": "#9a1750",
+          "base-100": "#e3e2df",
         },
         // futurisk: {
         //   "primary": "#7d7d7d",
@@ -82,8 +82,8 @@ export default {
     ],
   },
 
-  content: ["./src/**/*.tsx",  "./src/**/*.{js,jsx,ts,tsx}",
-  "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",],
+  content: ["./src/**/*.tsx", "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",],
   theme: {
     extend: {
       fontFamily: {
@@ -91,11 +91,11 @@ export default {
       },
     },
   },
-  
+
   plugins: [require("daisyui")],
 
-  
-  
+
+
 } satisfies Config;
 
 

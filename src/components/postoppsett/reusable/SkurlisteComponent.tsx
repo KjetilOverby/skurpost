@@ -147,26 +147,26 @@ const SkurlisteComponent = ({
         </>
       )}
       <div className="overflow-scroll">
-        <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-primary">
+        <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-secondary">
           <thead>
             <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left">
-              <th className="text-sm text-neutral">Treslag</th>
-              <th className="text-sm text-neutral">Klassegrense</th>
-              <th className="text-sm text-neutral">Kl</th>
-              <th className="text-sm text-neutral">PostNr.</th>
-              <th className="text-sm text-neutral">Antall</th>
+              <th className="text-sm text-primary">Treslag</th>
+              <th className="text-sm text-primary">Klassegrense</th>
+              <th className="text-sm text-primary">Kl</th>
+              <th className="text-sm text-primary">PostNr.</th>
+              <th className="text-sm text-primary">Antall</th>
 
-              <th className="text-sm text-neutral">M3</th>
-              <th className="text-sm text-neutral">Status</th>
-              <th className="text-sm text-neutral">Uttak</th>
-              <th className="text-sm text-neutral">X-log</th>
-              <th className="text-sm text-neutral">%</th>
-              <th className="text-sm text-neutral">Anm</th>
-              <th className="text-sm text-neutral">VS66</th>
-              <th className="text-sm text-neutral">Bredde VS66</th>
-              <th className="text-sm text-neutral">MKV</th>
-              <th className="text-sm text-neutral">Bredde MKV</th>
-              <th className="text-sm text-neutral">Blad</th>
+              <th className="text-sm text-primary">M3</th>
+              <th className="text-sm text-primary">Status</th>
+              <th className="text-sm text-primary">Uttak</th>
+              <th className="text-sm text-primary">X-log</th>
+              <th className="text-sm text-primary">%</th>
+              <th className="text-sm text-primary">Anm</th>
+              <th className="text-sm text-primary">VS66</th>
+              <th className="text-sm text-primary">Bredde VS66</th>
+              <th className="text-sm text-primary">MKV</th>
+              <th className="text-sm text-primary">Bredde MKV</th>
+              <th className="text-sm text-primary">Blad</th>
             </tr>
           </thead>
           <tbody>
@@ -244,7 +244,7 @@ const SkurlisteComponent = ({
                     <td className="py-5">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <div className="text-xs font-bold text-emerald-600">
+                          <div className="text-xs font-bold text-primary">
                             {list.post}x{list.bredde}
                           </div>
                         </div>

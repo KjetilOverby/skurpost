@@ -9,6 +9,7 @@ export const SearchResultComponent = ({
   postInfoWrite,
   clickSearchAll,
   setSearchInputAll,
+  colorMode
 }) => {
   const ringStyle = "flex h-20 w-10 items-center justify-center rounded-md";
   const router = useRouter();
@@ -27,33 +28,33 @@ export const SearchResultComponent = ({
 
   return (
     <>
-      <div className="animationsv absolute z-40 ml-5 rounded-xl bg-secondary p-5">
+      <div data-theme={colorMode} className="animationsv absolute z-40 ml-5 rounded-xl bg-accent p-5">
         <div className="">
           <button onClick={closeSearchResult}>Lukk</button>
           {results?.map((result) => {
             return (
               <div
                 onClick={() => openPostHandler(result.id)}
-                className="mb-5 rounded bg-gradient-to-b from-[#123456] via-[#789abc] to-[#123456] p-5"
+                className="mb-5 rounded bg-base-100 p-5"
               >
                 <p className="mb-10">{result.header}</p>
-                <div className="flex gap-2">
-                  <div className="flex gap-2">
+                <div className="flex gap-1">
+                  <div className="flex gap-1">
                     {result.startRings.map((ring) => {
                       return (
                         <div
-                          className={`${ringStyle} border-white bg-gradient-to-b from-teal-800 via-gray-300 via-teal-100  to-gray-900 to-teal-800 text-black`}
+                          className={`${ringStyle} border border-primary bg-gradient-to-b from-accent via-primary to-accent text-accent`}
                         >
                           <p className="text-xs">{ring.value}</p>
                         </div>
                       );
                     })}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1">
                     {result.rawInput.map((ring) => {
                       return (
                         <div
-                          className={`${ringStyle} relative border-white bg-gradient-to-b from-[#123456] via-[#789abc] to-[#123456] text-white`}
+                          className={`${ringStyle} relative border border-primary bg-gradient-to-b from-neutral via-primary to-neutral text-accent`}
                         >
                           <p className="absolute bottom-20 text-xs text-gray-200">
                             {ring.value}
@@ -65,11 +66,11 @@ export const SearchResultComponent = ({
                       );
                     })}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1">
                     {result.endRings.map((ring) => {
                       return (
                         <div
-                          className={`${ringStyle}  border-white bg-gradient-to-b from-teal-800 via-gray-300 via-teal-100  to-gray-900 to-teal-800 text-black`}
+                          className={`${ringStyle}  border-primary border bg-gradient-to-b from-accent via-primary to-accent text-accent`}
                         >
                           <p className="text-xs">{ring.value}</p>
                         </div>
@@ -81,7 +82,7 @@ export const SearchResultComponent = ({
             );
           })}
         </div>
-        <button onClick={clickSearchAll} className="btn  bg-primary">
+        <button onClick={clickSearchAll} className="btn  bg-accent">
           Vis alle bladtykkelser
         </button>
       </div>

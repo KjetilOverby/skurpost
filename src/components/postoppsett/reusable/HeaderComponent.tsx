@@ -23,8 +23,8 @@ const HeaderComponent = ({ colorMode }) => {
   const router = useRouter();
   const context = useContext(PostInfoContext);
 
-  const text = "text-slate-500";
-  const logo = "text-slate-400";
+  const text = "text-primary";
+  const logo = "text-primary";
 
   const { editMode, setEditMode } = context;
 
@@ -83,7 +83,7 @@ const HeaderComponent = ({ colorMode }) => {
 
   return (
     <header data-theme={colorMode}>
-      <nav className="border border-x-0 border-t-0 border-gray-200 border-b-secondary bg-neutral px-4  py-2.5 ">
+      <nav className="border border-x-0 border-t-0 border-gray-200 border-b-secondary bg-accent px-4  py-2.5 ">
         <div
           className={` z-10 mx-auto flex max-w-screen-xl flex-wrap items-center justify-between`}
         >

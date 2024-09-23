@@ -66,12 +66,13 @@ const list = ({ setPostId, colorMode }) => {
           setPostInfoWriteChange={setPostInfoWriteChange}
           postInfoWrite={postInfoWrite}
           clickSearchAll={clickSearchAll}
+          colorMode={colorMode}
         />
       )}
-      <div data-theme={colorMode} className="min-h-screen px-5 x1-1:px-96">
+      <div data-theme={colorMode} className="min-h-screen px-5 xl:px-96">
         <button
           onClick={() => setOpenManualSearch(!openManualSearch)}
-          className="btn mt-5 bg-primary"
+          className="btn mt-5 bg-accent"
         >
           {`${openManualSearch ? "Lukk søk" : "Søk"}`}
         </button>
@@ -85,7 +86,7 @@ const list = ({ setPostId, colorMode }) => {
             />
             <button
               onClick={() => setClickSearchOpen(true)}
-              className="btn mt-5 bg-secondary"
+              className="btn mt-5 bg-accent text-primary"
             >
               Søk
             </button>

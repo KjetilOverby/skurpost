@@ -6,19 +6,19 @@ export const MiniList = ({ clickSearch, skurliste }) => {
       <table className="table table-xs w-full  bg-accent">
         <thead>
           <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left">
-            <th className="text-xs text-neutral">Treslag</th>
-            <th className="text-xs text-neutral">Kl</th>
-            <th className="text-xs text-neutral">Antall</th>
+            <th className="text-xs text-primary">Treslag</th>
+            <th className="text-xs text-primary">Kl</th>
+            <th className="text-xs text-primary">Antall</th>
 
-            <th className="text-xs text-neutral">M3</th>
-            <th className="text-xs text-neutral">Status</th>
-            <th className="text-xs text-neutral">Uttak</th>
-            <th className="text-xs text-neutral">X-log</th>
-            <th className="text-xs text-neutral">%</th>
-            <th className="text-xs text-neutral">Anm</th>
-            <th className="text-xs text-neutral">VS66</th>
-            <th className="text-xs text-neutral">MKV</th>
-            <th className="text-xs text-neutral">Blad</th>
+            <th className="text-xs text-primary">M3</th>
+            <th className="text-xs text-primary">Status</th>
+            <th className="text-xs text-primary">Uttak</th>
+            <th className="text-xs text-primary">X-log</th>
+            <th className="text-xs text-primary">%</th>
+            <th className="text-xs text-primary">Anm</th>
+            <th className="text-xs text-primary">VS66</th>
+            <th className="text-xs text-primary">MKV</th>
+            <th className="text-xs text-primary">Blad</th>
           </tr>
         </thead>
         <tbody>
@@ -75,7 +75,7 @@ export const MiniList = ({ clickSearch, skurliste }) => {
                   <td className="">
                     <div className="flex items-center space-x-3">
                       <div>
-                        <div className="text-xs font-bold text-emerald-600">
+                        <div className="text-xs font-bold text-primary">
                           {list.post}x{list.bredde}
                         </div>
                       </div>
