@@ -12,10 +12,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   const [postId, setPostId] = useState("");
-  const [colorMode, setColorMode] = useState("darkmode");
+  const [colorMode, setColorMode] = useState("coffee");
   const [postInfoWriteChange, setPostInfoWriteChange] = useState("");
   const [postInfoWrite, setPostInfoWrite] = useState("");
   const [searchInputAll, setSearchInputAll] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   return (
     <SessionProvider session={session}>
       <PostInfoContext.Provider
@@ -26,6 +27,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
           setPostInfoWrite,
           searchInputAll,
           setSearchInputAll,
+          editMode,
+          setEditMode,
         }}
       >
         <Component

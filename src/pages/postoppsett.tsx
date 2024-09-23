@@ -6,7 +6,7 @@ const postoppsett = ({ postId, setPostId, colorMode }) => {
   const { data: postoppsett } = api.postoppsett.getById.useQuery({ postId });
 
   return (
-    <div>
+    <div data-theme={colorMode}>
       <PostoppsettComponent
         data={postoppsett}
         postId={postId}

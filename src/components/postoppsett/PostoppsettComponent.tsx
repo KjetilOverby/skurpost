@@ -50,6 +50,8 @@ const PostoppsettComponent = ({
     setPostInfoWriteChange,
     searchInputAll,
     setSearchInputAll,
+    editMode,
+    setEditMode,
   } = context;
 
   const [startringSum, setStartringSum] = useState(0);
@@ -119,7 +121,6 @@ const PostoppsettComponent = ({
   const rawRings = localData?.rawInput;
   const rawDivideParse = localData?.rawDivide;
 
-  const [editMode, setEditMode] = useState(false);
   const [headerText, setHeaderText] = useState("");
 
   const rawValues = rawRings?.map((item) => item);
@@ -678,407 +679,431 @@ const PostoppsettComponent = ({
   };
 
   return (
-    <div>
-      <EditHeader
-        setEditMode={setEditMode}
-        editMode={editMode}
-        handleUpdate={handleUpdate}
-        createData={createData}
-        handleDelete={handleDelete}
-        resetPostHandler={resetPostHandler}
-        resetUtfyllingHandler={resetUtfyllingHandler}
-        setAlertShown={setAlertShown}
-      />
-      {clickSearchOpen && (
-        <SearchResultComponent
-          results={posts}
-          setPostId={setPostId}
-          setClickSearchOpen={setClickSearchOpen}
-          postInfoWrite={postInfoWrite}
-          setPostInfoWriteChange={setPostInfoWriteChange}
-          setSearchInputAll={setSearchInputAll}
-          clickSearchAll={clickSearchAll}
+    <>
+      <div>
+        <EditHeader
+          setEditMode={setEditMode}
+          editMode={editMode}
+          handleUpdate={handleUpdate}
+          createData={createData}
+          handleDelete={handleDelete}
+          resetPostHandler={resetPostHandler}
+          resetUtfyllingHandler={resetUtfyllingHandler}
+          setAlertShown={setAlertShown}
         />
-      )}
-      {localData?.header && (
-        <div className="absolute bottom-5 left-5">
-          <p className="text-5xl font-thin">
-            {postInfoWriteChange && postInfoWriteChange}
-          </p>
-        </div>
-      )}
+        {clickSearchOpen && (
+          <SearchResultComponent
+            results={posts}
+            setPostId={setPostId}
+            setClickSearchOpen={setClickSearchOpen}
+            postInfoWrite={postInfoWrite}
+            setPostInfoWriteChange={setPostInfoWriteChange}
+            setSearchInputAll={setSearchInputAll}
+            clickSearchAll={clickSearchAll}
+          />
+        )}
+        {localData?.header && (
+          <div className="absolute bottom-5 left-5">
+            <p className="text-5xl font-thin">
+              {postInfoWriteChange && postInfoWriteChange}
+            </p>
+          </div>
+        )}
+        {/* 
+className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0d243c] via-[#599c53] to-[#e09a18]" */}
 
-      <div className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0d243c] via-[#789abc] to-[#123456]">
-        {!editMode && (
+        <div className="flex h-screen flex-col items-center justify-center bg-base-100">
+          {!editMode && (
+            <div className="animations">
+              {startRingsAlt && startRingsAlt.length > 0 && (
+                <button
+                  onClick={() => setstartRingsAltShow(!startRingsAltShow)}
+                  className="btn btn-xs bg-primary text-secondary"
+                >
+                  ALT
+                </button>
+              )}
+              {localData?.header ? (
+                <div key={data?.id}>
+                  <div className="absolute left-1/2 top-40 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
+                    <p className="text-3xl text-neutral">{localData?.header}</p>
+                    <p className="italic text-secondary">
+                      Oprettet:{" "}
+                      {dateFormat(localData?.createdAt, "dd.mm.yyyy, HH:MM")}
+                    </p>
+                  </div>
+                  <div className="flex ">
+                    <div className="flex gap-1">
+                      {!startRingsAltShow
+                        ? startRings?.map((ringItem: { value: string }) => (
+                            <Ring
+                              mode={editMode}
+                              key={ringItem.id}
+                              value={ringItem.value}
+                            />
+                          ))
+                        : startRingsAlt?.map((ringItem: { value: string }) => (
+                            <Ring
+                              mode={editMode}
+                              key={ringItem.id}
+                              value={ringItem.value}
+                            />
+                          ))}
+                    </div>
+
+                    <Blade blade={data?.blade} />
+                    <div className="flex">
+                      {rawRings?.map((ringItem: { value: string }) => (
+                        <RawRing
+                          mode={editMode}
+                          key={ringItem.id}
+                          value={ringItem.value}
+                          blade={localData.blade}
+                          rawDivide={rawDivideParse}
+                          ringItem={ringItem}
+                        />
+                      ))}
+                    </div>
+
+                    <div className="flex gap-1">
+                      {!endRingsAltShow
+                        ? endRings?.map((ringItem: { value: string }) => (
+                            <Ring
+                              mode={editMode}
+                              key={ringItem.id}
+                              value={ringItem.value}
+                            />
+                          ))
+                        : endRingsAlt?.map((ringItem: { value: string }) => (
+                            <Ring
+                              mode={editMode}
+                              key={ringItem.id}
+                              value={ringItem.value}
+                            />
+                          ))}
+
+                      {endRingsAlt && endRingsAlt.length > 0 && (
+                        <button
+                          onClick={() => setEndRingsAltShow(!endRingsAltShow)}
+                          className="btn btn-xs bg-primary text-secondary"
+                        >
+                          ALT
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-2xl text-primary">Ingen data valgt</p>
+              )}
+            </div>
+          )}
+
           <div>
-            <button
-              onClick={() => setstartRingsAltShow(!startRingsAltShow)}
-              className="btn btn-xs bg-primary text-secondary"
-            >
-              ALT
-            </button>
-            {localData?.header ? (
-              <div key={data?.id}>
-                <div className="absolute left-1/2 top-40 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
-                  <p className="text-3xl text-neutral">{localData?.header}</p>
+            <EditMode editMode={editMode}>
+              {openRawDivide && (
+                <RawDivideComponent
+                  setOpenRawDivide={setOpenRawDivide}
+                  rawData={localData && localData?.rawInput}
+                  getRawValues={getRawValues}
+                  localData={localData}
+                  setLocalData={setLocalData}
+                  rawValues={rawValues}
+                  firstRingVal={firstRingVal}
+                  setFirstRingVal={setFirstRingVal}
+                  shimsVal={shimsVal}
+                  setShimsVal={setShimsVal}
+                  shimsVal2={shimsVal2}
+                  setShimsVal2={setShimsVal2}
+                  calculationResult={calculationResult}
+                  setCalculationResult={setCalculationResult}
+                />
+              )}
+              <EditMode editMode={editMode}>
+                {!startRingsAltShow ? (
+                  <RingPicker
+                    values={ringlist}
+                    position="left-48"
+                    title="Utfylling foran"
+                    onChange={handleRingPickerChange}
+                  />
+                ) : (
+                  <RingPicker
+                    values={ringlist}
+                    position="left-48"
+                    title="Utfylling foran Alternativ"
+                    onChange={handleRingPickerChangeAlt}
+                  />
+                )}
+              </EditMode>
+
+              <div key={localData?.id}>
+                <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
+                  <p>Opprinnelig post: {localData?.header}</p>
                   <p className="italic text-secondary">
                     Oprettet:{" "}
-                    {dateFormat(localData?.createdAt, "dd.mm.yyyy, HH:MM")}
+                    {dateFormat(localData?.createdAt, "dd.mm.yyyy, MM:HH")}
+                  </p>
+                  <p className="text-3xl">
+                    {rawRings?.length}x{localData?.plankeTy}-
+                    {localData?.prosent}
+                    %-{(localData?.blade + 1.4).toFixed(1)}
+                    {localData?.spes}
                   </p>
                 </div>
                 <div className="flex">
                   <div className="flex gap-1">
+                    <EditMode editMode={editMode}>
+                      <div>
+                        <p>
+                          Distanse:{" "}
+                          {(
+                            calc.mkv.toMiddle -
+                            rawinputSum / 2 -
+                            bladeSum / 2 -
+                            localData?.blade / 2
+                          ).toFixed(2)}
+                        </p>
+                        <p>utfylling: {startringSum?.toFixed(2)}</p>
+                        <p
+                          className={`${
+                            differenceStart >= -0.05 && differenceStart <= 0.05
+                              ? "text-green-500"
+                              : "text-red-400"
+                          }`}
+                        >
+                          Differanse: {differenceStart}
+                        </p>
+                        <button
+                          onClick={() =>
+                            setstartRingsAltShow(!startRingsAltShow)
+                          }
+                          className="btn btn-xs bg-primary"
+                        >
+                          {!startRingsAltShow
+                            ? "Vis standard"
+                            : "Vis alternativ"}
+                        </button>
+                      </div>
+                    </EditMode>
                     {!startRingsAltShow
                       ? startRings?.map((ringItem: { value: string }) => (
                           <Ring
+                            edit={true}
                             mode={editMode}
                             key={ringItem.id}
                             value={ringItem.value}
+                            deleteRing={deleteStartring}
+                            id={ringItem.id}
+                            moveLeft={moveLeft}
+                            moveRight={moveRight}
                           />
                         ))
                       : startRingsAlt?.map((ringItem: { value: string }) => (
                           <Ring
+                            edit={true}
                             mode={editMode}
                             key={ringItem.id}
                             value={ringItem.value}
+                            deleteRing={deleteStartringAlt}
+                            id={ringItem.id}
+                            moveLeft={moveLeft}
+                            moveRight={moveRight}
                           />
                         ))}
                   </div>
+                  <Blade blade={localData?.blade} />
 
-                  <Blade blade={data?.blade} />
                   <div className="flex">
-                    {rawRings?.map((ringItem: { value: string }) => (
-                      <RawRing
-                        mode={editMode}
-                        key={ringItem.id}
-                        value={ringItem.value}
-                        blade={localData.blade}
-                        rawDivide={rawDivideParse}
-                        ringItem={ringItem}
-                      />
-                    ))}
+                    {rawRings?.map((ringItem: { value: string }) => {
+                      return (
+                        <RawRing
+                          edit={true}
+                          mode={editMode}
+                          key={ringItem.id}
+                          value={ringItem.value}
+                          blade={localData?.blade}
+                          deleteRing={deleteRawInput}
+                          id={ringItem.id}
+                          moveLeft={moveLeftRaw}
+                          moveRight={moveRightRaw}
+                          rawDivide={rawDivideParse}
+                          openRawDivideHandler={() =>
+                            openRawDivideHandler(ringItem.value)
+                          }
+                          getRawValues={getRawValues}
+                          ringItem={ringItem}
+                          setRawInputValue={setRawInputValue}
+                          rawInputValue={rawInputValue}
+                          rawData={localData && localData?.rawInput}
+                          localData={localData}
+                          setLocalData={setLocalData}
+                        />
+                      );
+                    })}
                   </div>
-
                   <div className="flex gap-1">
                     {!endRingsAltShow
                       ? endRings?.map((ringItem: { value: string }) => (
                           <Ring
+                            edit={true}
                             mode={editMode}
                             key={ringItem.id}
                             value={ringItem.value}
+                            deleteRing={deleteEndring}
+                            id={ringItem.id}
+                            moveLeft={moveLeftEnd}
+                            moveRight={moveRightEnd}
                           />
                         ))
                       : endRingsAlt?.map((ringItem: { value: string }) => (
                           <Ring
+                            edit={true}
                             mode={editMode}
                             key={ringItem.id}
                             value={ringItem.value}
+                            deleteRing={deleteEndringAlt}
+                            id={ringItem.id}
+                            moveLeft={moveLeftEnd}
+                            moveRight={moveRightEnd}
                           />
                         ))}
-                    <button
-                      onClick={() => setEndRingsAltShow(!endRingsAltShow)}
-                      className="btn btn-xs bg-primary text-secondary"
-                    >
-                      ALT
-                    </button>
                   </div>
-                </div>
-              </div>
-            ) : (
-              <p className="text-2xl text-primary">Ingen data valgt</p>
-            )}
-          </div>
-        )}
 
-        <div>
-          <EditMode editMode={editMode}>
-            {openRawDivide && (
-              <RawDivideComponent
-                setOpenRawDivide={setOpenRawDivide}
-                rawData={localData && localData?.rawInput}
-                getRawValues={getRawValues}
-                localData={localData}
-                setLocalData={setLocalData}
-                rawValues={rawValues}
-                firstRingVal={firstRingVal}
-                setFirstRingVal={setFirstRingVal}
-                shimsVal={shimsVal}
-                setShimsVal={setShimsVal}
-                shimsVal2={shimsVal2}
-                setShimsVal2={setShimsVal2}
-                calculationResult={calculationResult}
-                setCalculationResult={setCalculationResult}
-              />
-            )}
-            <EditMode editMode={editMode}>
-              {!startRingsAltShow ? (
-                <RingPicker
-                  values={ringlist}
-                  position="left-48"
-                  title="Utfylling foran"
-                  onChange={handleRingPickerChange}
-                />
-              ) : (
-                <RingPicker
-                  values={ringlist}
-                  position="left-48"
-                  title="Utfylling foran Alternativ"
-                  onChange={handleRingPickerChangeAlt}
-                />
-              )}
-            </EditMode>
-
-            <div key={localData?.id}>
-              <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
-                <p>Opprinnelig post: {localData?.header}</p>
-                <p className="italic text-secondary">
-                  Oprettet:{" "}
-                  {dateFormat(localData?.createdAt, "dd.mm.yyyy, MM:HH")}
-                </p>
-                <p className="text-3xl">
-                  {rawRings?.length}x{localData?.plankeTy}-{localData?.prosent}
-                  %-{(localData?.blade + 1.4).toFixed(1)}
-                  {localData?.spes}
-                </p>
-              </div>
-              <div className="flex">
-                <div className="flex gap-1">
                   <EditMode editMode={editMode}>
                     <div>
                       <p>
                         Distanse:{" "}
                         {(
-                          calc.mkv.toMiddle -
+                          calc.mkv.middleEnd -
                           rawinputSum / 2 -
                           bladeSum / 2 -
                           localData?.blade / 2
                         ).toFixed(2)}
                       </p>
-                      <p>utfylling: {startringSum?.toFixed(2)}</p>
+                      <p>utfylling: {endringSum?.toFixed(2)}</p>
                       <p
                         className={`${
-                          differenceStart >= -0.05 && differenceStart <= 0.05
+                          differenceEnd >= -0.05 && differenceEnd <= 0.05
                             ? "text-green-500"
                             : "text-red-400"
                         }`}
                       >
-                        Differanse: {differenceStart}
+                        Differanse: {differenceEnd}
                       </p>
                       <button
-                        onClick={() => setstartRingsAltShow(!startRingsAltShow)}
+                        onClick={() => setEndRingsAltShow(!endRingsAltShow)}
                         className="btn btn-xs bg-primary"
                       >
-                        {!startRingsAltShow ? "Vis standard" : "Vis alternativ"}
+                        {!endRingsAltShow ? "Vis standard" : "Vis alternativ"}
                       </button>
                     </div>
                   </EditMode>
-                  {!startRingsAltShow
-                    ? startRings?.map((ringItem: { value: string }) => (
-                        <Ring
-                          edit={true}
-                          mode={editMode}
-                          key={ringItem.id}
-                          value={ringItem.value}
-                          deleteRing={deleteStartring}
-                          id={ringItem.id}
-                          moveLeft={moveLeft}
-                          moveRight={moveRight}
-                        />
-                      ))
-                    : startRingsAlt?.map((ringItem: { value: string }) => (
-                        <Ring
-                          edit={true}
-                          mode={editMode}
-                          key={ringItem.id}
-                          value={ringItem.value}
-                          deleteRing={deleteStartringAlt}
-                          id={ringItem.id}
-                          moveLeft={moveLeft}
-                          moveRight={moveRight}
-                        />
-                      ))}
                 </div>
-                <Blade blade={localData?.blade} />
-
-                <div className="flex">
-                  {rawRings?.map((ringItem: { value: string }) => {
-                    return (
-                      <RawRing
-                        edit={true}
-                        mode={editMode}
-                        key={ringItem.id}
-                        value={ringItem.value}
-                        blade={localData?.blade}
-                        deleteRing={deleteRawInput}
-                        id={ringItem.id}
-                        moveLeft={moveLeftRaw}
-                        moveRight={moveRightRaw}
-                        rawDivide={rawDivideParse}
-                        openRawDivideHandler={() =>
-                          openRawDivideHandler(ringItem.value)
-                        }
-                        getRawValues={getRawValues}
-                        ringItem={ringItem}
-                        setRawInputValue={setRawInputValue}
-                        rawInputValue={rawInputValue}
-                        rawData={localData && localData?.rawInput}
-                        localData={localData}
-                        setLocalData={setLocalData}
-                      />
-                    );
-                  })}
-                </div>
-                <div className="flex gap-1">
-                  {!endRingsAltShow
-                    ? endRings?.map((ringItem: { value: string }) => (
-                        <Ring
-                          edit={true}
-                          mode={editMode}
-                          key={ringItem.id}
-                          value={ringItem.value}
-                          deleteRing={deleteEndring}
-                          id={ringItem.id}
-                          moveLeft={moveLeftEnd}
-                          moveRight={moveRightEnd}
-                        />
-                      ))
-                    : endRingsAlt?.map((ringItem: { value: string }) => (
-                        <Ring
-                          edit={true}
-                          mode={editMode}
-                          key={ringItem.id}
-                          value={ringItem.value}
-                          deleteRing={deleteEndringAlt}
-                          id={ringItem.id}
-                          moveLeft={moveLeftEnd}
-                          moveRight={moveRightEnd}
-                        />
-                      ))}
-                </div>
-
                 <EditMode editMode={editMode}>
-                  <div>
-                    <p>
-                      Distanse:{" "}
-                      {(
-                        calc.mkv.middleEnd -
-                        rawinputSum / 2 -
-                        bladeSum / 2 -
-                        localData?.blade / 2
-                      ).toFixed(2)}
-                    </p>
-                    <p>utfylling: {endringSum?.toFixed(2)}</p>
-                    <p
-                      className={`${
-                        differenceEnd >= -0.05 && differenceEnd <= 0.05
-                          ? "text-green-500"
-                          : "text-red-400"
-                      }`}
-                    >
-                      Differanse: {differenceEnd}
-                    </p>
-                    <button
-                      onClick={() => setEndRingsAltShow(!endRingsAltShow)}
-                      className="btn btn-xs bg-primary"
-                    >
-                      {!endRingsAltShow ? "Vis standard" : "Vis alternativ"}
-                    </button>
-                  </div>
+                  {!endRingsAltShow ? (
+                    <RingPicker
+                      values={ringlist}
+                      position="right-48"
+                      title="Utfylling bak"
+                      onChange={handleEndRingPickerChange}
+                    />
+                  ) : (
+                    <RingPicker
+                      values={ringlist}
+                      position="right-48"
+                      title="Utfylling bak alternativ"
+                      onChange={handleEndRingPickerChangeAlt}
+                    />
+                  )}
                 </EditMode>
               </div>
-              <EditMode editMode={editMode}>
-                {!endRingsAltShow ? (
-                  <RingPicker
-                    values={ringlist}
-                    position="right-48"
-                    title="Utfylling bak"
-                    onChange={handleEndRingPickerChange}
+            </EditMode>
+          </div>
+          <EditMode editMode={editMode}>
+            <div className="mt-20 flex flex-col">
+              <form
+                className="mb-5"
+                action=""
+                type="submit"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleRawRingPickerChange();
+                }}
+              >
+                <label>Råmål</label>
+                <div className="flex">
+                  <input
+                    step="0.01"
+                    type="number"
+                    className="focus:shadow-outline w-full appearance-none rounded border bg-primary px-3 py-2 leading-tight text-neutral shadow focus:outline-none"
+                    onChange={(e) =>
+                      setRawValueFromInput(parseFloat(e.target.value))
+                    }
                   />
-                ) : (
-                  <RingPicker
-                    values={ringlist}
-                    position="right-48"
-                    title="Utfylling bak alternativ"
-                    onChange={handleEndRingPickerChangeAlt}
-                  />
-                )}
-              </EditMode>
+                  <button className="btn btn-primary">Legg til</button>
+                </div>
+              </form>
+              <div className="mb-5">
+                <label>planketykkelse i overskrift</label>
+                <input
+                  className="w-full appearance-none rounded border bg-primary px-3 py-2 leading-tight text-neutral shadow focus:outline-none"
+                  onChange={handlePlankeTy}
+                  placeholder="eks: 50/38"
+                  type="text"
+                  value={localData?.plankeTy}
+                />
+              </div>
+              <select
+                className="mb-5 h-full rounded-md border-0 bg-primary py-0 pl-2 pr-7 text-neutral focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                onChange={prosentSelectHandler}
+                value={localData?.prosent}
+              >
+                <option className="option" value="" selected disabled hidden>
+                  Velg prosent
+                </option>
+                <option className="option" value="18">
+                  18
+                </option>
+                <option className="option" value="12">
+                  12
+                </option>
+              </select>
+
+              <BladeSelector
+                sawbladeSelectHandler={sawbladeSelectHandler}
+                val={localData?.blade}
+              />
+              <div>
+                <label>Legg til text i parantes</label>
+                <input
+                  className="focus:shadow-outline w-full appearance-none rounded border bg-primary px-3 py-2 leading-tight text-neutral shadow focus:outline-none"
+                  onChange={handleSpes}
+                  value={localData?.spes}
+                />
+              </div>
             </div>
           </EditMode>
         </div>
-        <EditMode editMode={editMode}>
-          <div className="mt-20 flex flex-col">
-            <form
-              className="mb-5"
-              action=""
-              type="submit"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleRawRingPickerChange();
-              }}
-            >
-              <label>Råmål</label>
-              <div className="flex">
-                <input
-                  step="0.01"
-                  type="number"
-                  className="focus:shadow-outline w-full appearance-none rounded border bg-lime-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                  onChange={(e) =>
-                    setRawValueFromInput(parseFloat(e.target.value))
-                  }
-                />
-                <button className="btn btn-primary">Legg til</button>
-              </div>
-            </form>
-            <div className="mb-5">
-              <label>planketykkelse i overskrift</label>
-              <input
-                className="w-full appearance-none rounded border bg-lime-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                onChange={handlePlankeTy}
-                placeholder="eks: 50/38"
-                type="text"
-                value={localData?.plankeTy}
-              />
-            </div>
-            <select
-              className="mb-5 h-full rounded-md border-0 bg-lime-400 py-0 pl-2 pr-7 text-gray-800 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-              onChange={prosentSelectHandler}
-              value={localData?.prosent}
-            >
-              <option className="option" value="" selected disabled hidden>
-                Velg prosent
-              </option>
-              <option className="option" value="18">
-                18
-              </option>
-              <option className="option" value="12">
-                12
-              </option>
-            </select>
-
-            <BladeSelector
-              sawbladeSelectHandler={sawbladeSelectHandler}
-              val={localData?.blade}
-            />
-            <div>
-              <label>Legg til text i parantes</label>
-              <input
-                className="focus:shadow-outline w-full appearance-none rounded border bg-lime-400 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                onChange={handleSpes}
-                value={localData?.spes}
-              />
-            </div>
-          </div>
-        </EditMode>
+        {!editMode && (
+          <MiniList
+            clickSearch={clickSearch}
+            kundeID={kundeID}
+            skurliste={skurliste}
+          />
+        )}
       </div>
-      {!editMode && (
-        <MiniList
-          clickSearch={clickSearch}
-          kundeID={kundeID}
-          skurliste={skurliste}
-        />
-      )}
-    </div>
+      <style>{`
+    
+@keyframes tada { 0% { -webkit-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1); } 10%, 20% { -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg); transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg); } 30%, 50%, 70%, 90% { -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg); transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg); } 40%, 60%, 80% { -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg); transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg); } 100% { -webkit-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1); } }
+
+.animations {
+  animation: tada 1s;
+}
+
+
+    `}</style>
+    </>
   );
 };
 

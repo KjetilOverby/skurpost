@@ -1,5 +1,4 @@
 info om posten
-animering på clicksearchbox
 sette type sag i utregning postoppsett (MKV) account instillinger?
 Lagre id på post i nettleseren? (localStorage)
 validering på skurliste
@@ -7,9 +6,8 @@ lage ny post
 legge til progress post som går og som har gått
 spes is undefined on create new post
 legg til et blad som standard når nye poster skal lages
-legge rediger liste som en undermeny i skuliste på header
-Lage NY POST i header
 Finne løsning på rawDivide
+nullstille ID på post når man velger lag ny post
 
 
 

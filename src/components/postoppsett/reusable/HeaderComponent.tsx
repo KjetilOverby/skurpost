@@ -13,20 +13,29 @@ import { FaClipboardList } from "react-icons/fa";
 import { IoIosHome } from "react-icons/io";
 import { BiSolidCalendarEdit } from "react-icons/bi";
 import { FaUserLarge } from "react-icons/fa6";
+import { PostInfoContext } from "../../context";
+
 interface headerProps {
   setTheme: Dispatch<SetStateAction<string>>;
 }
 
 const HeaderComponent = ({ colorMode }) => {
   const router = useRouter();
-  //   const { setTheme, theme, setDarkMode } = useContext(AppDataContext);
+  const context = useContext(PostInfoContext);
 
   const text = "text-slate-500";
   const logo = "text-slate-400";
 
+  const { editMode, setEditMode } = context;
+
   const [actualPage, setActualPage] = useState({
     search: "",
     statistikk: "",
+  });
+
+  const [submenuVisibility, setSubmenuVisibility] = useState({
+    skurliste: false,
+    post: false,
   });
 
   const classText = "font-bold underline";
@@ -64,6 +73,14 @@ const HeaderComponent = ({ colorMode }) => {
   }, [router]);
 
   const { data: sessionData } = useSession();
+
+  const toggleSubmenu = (menu) => {
+    setSubmenuVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [menu]: !prevVisibility[menu],
+    }));
+  };
+
   return (
     <header data-theme={colorMode}>
       <nav className="border border-x-0 border-t-0 border-gray-200 border-b-secondary bg-primary px-4  py-2.5 ">
@@ -83,26 +100,36 @@ const HeaderComponent = ({ colorMode }) => {
                   </li>
                 </div>
               </Link>
-              <Link href="/list">
-                <div className="grid place-items-center ">
+              <div className="relative">
+                <div
+                  className="grid cursor-pointer place-items-center"
+                  onClick={() => toggleSubmenu("skurliste")}
+                >
                   <FaClipboardList className={`text-2xl ${logo}`} />
                   <li>
                     <p className={`text-xs ${text} ${actualPage.list}`}>
-                      Skurliste
-                    </p>
-                  </li>
-                </div>
-              </Link>
-              <Link href="/create/listcreator">
-                <div className="grid place-items-center ">
-                  <BiSolidCalendarEdit className={`text-2xl ${logo}`} />
-                  <li>
-                    <p className={`text-xs ${text} ${actualPage.listcreator}`}>
                       Rediger
                     </p>
                   </li>
                 </div>
-              </Link>
+                {submenuVisibility.skurliste && (
+                  <ul className="absolute left-0 mt-2 w-48 bg-primary shadow-lg">
+                    <li className="px-4 py-2 hover:bg-secondary">
+                      <Link href="/list">Skurliste</Link>
+                    </li>
+                    <li className="px-4 py-2 hover:bg-secondary">
+                      <Link href="/create/listcreator">Rediger skurliste</Link>
+                    </li>
+                    <li
+                      onClick={setEditMode(true)}
+                      className="px-4 py-2 hover:bg-secondary"
+                    >
+                      <Link href="/postoppsett">Lag ny post</Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+
               <Link href="/create/listcreator">
                 <div className="grid place-items-center ">
                   <FaUserLarge className={`text-2xl ${logo}`} />
