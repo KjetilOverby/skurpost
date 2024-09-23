@@ -83,6 +83,8 @@ const PostoppsettComponent = ({
 
   const router = useRouter();
 
+  const ctx = api.useContext();
+
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
     kundeID: kundeID,
@@ -153,60 +155,65 @@ const PostoppsettComponent = ({
 
   const [alertShown, setAlertShown] = useState(false);
 
-  console.log("alertShown", alertShown);
-
   const updateData = async (event, id) => {
     if (differenceStart >= 0.05 || differenceStart <= -0.05) {
       alert("Ufylling foran er ikke korrekt");
       setAlertShown(true); // Set the alertShown flag
-      return null;
     } else if (differenceEnd >= 0.05 || differenceEnd <= -0.05) {
       alert("Ufylling bak er ikke korrekt");
       setAlertShown(true); // Set the alertShown flag
-      return null;
-    }
-
-    try {
-      const id = postId;
-      const header = headerText;
-      const plankeTy = String(localData?.plankeTy);
-      const startRings = localData?.startRings;
-      const startRingsAlt = localData?.startRingsAlt;
-      const endRings = localData?.endRings;
-      const endRingsAlt = localData?.endRingsAlt;
-      const rawInput = localData?.rawInput;
-      const blade = localData?.blade;
-      const prosent = String(localData?.prosent);
-      const spes = localData?.spes;
-      const xlog = String(rawRings?.length);
-      const sawType = String("mkv");
-      const response = await updatePost.mutateAsync({
-        id,
-        header,
-        plankeTy,
-        startRings,
-        startRingsAlt,
-        endRingsAlt,
-        endRings,
-        rawInput,
-        blade,
-        prosent,
-        spes,
-        xlog,
-        sawType,
-      });
-      console.log(response);
-      setEditMode(false);
-    } catch (error) {
-      console.error(error);
+    } else if (localData?.blade === 0) {
+      alert("Bladtykkelse er ikke valgt");
+      setAlertShown(true); // Set the alertShown flag
+    } else if (localData?.prosent === 0) {
+      alert("Prosent er ikke valgt");
+      setAlertShown(true); // Set the alertShown flag
+    } else if (localData?.plankeTy === "") {
+      alert("Planke tykkelse er ikke valgt");
+      setAlertShown(true); // Set the alertShown flag
+    } else {
+      try {
+        const id = postId;
+        const header = headerText;
+        const plankeTy = String(localData?.plankeTy);
+        const startRings = localData?.startRings;
+        const startRingsAlt = localData?.startRingsAlt;
+        const endRings = localData?.endRings;
+        const endRingsAlt = localData?.endRingsAlt;
+        const rawInput = localData?.rawInput;
+        const blade = localData?.blade;
+        const prosent = String(localData?.prosent);
+        const spes = localData?.spes;
+        const xlog = String(rawRings?.length);
+        const sawType = String("mkv");
+        const response = await updatePost.mutateAsync({
+          id,
+          header,
+          plankeTy,
+          startRings,
+          startRingsAlt,
+          endRingsAlt,
+          endRings,
+          rawInput,
+          blade,
+          prosent,
+          spes,
+          xlog,
+          sawType,
+        });
+        /*  console.log(response); */
+        setAlertShown(false);
+        setEditMode(false);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   useEffect(() => {
     if (alertShown) {
       console.log("Alert was shown, skipping useEffect logic.");
-      return null;
-    } else if (!alertShown) {
+    } else {
       if (localData) {
         setLocalData((prevData) => {
           const updatedRawInput = prevData.rawInput.map((item) => {
@@ -228,50 +235,68 @@ const PostoppsettComponent = ({
           };
         });
       }
-      console.log("The function is running" + new Date());
     }
   }, [firstRingVal, shimsVal, getRawValues, calculationResult, alertShown]);
 
   const createPost = api.postoppsett.createPost.useMutation({
     onSuccess: () => {
       void ctx.postoppsett.getById.invalidate();
+      router.push(`/list`);
     },
   });
 
   const createData = async () => {
-    try {
-      const header = headerText;
-      const plankeTy = String(localData?.plankeTy);
-      const startRings = localData?.startRings;
-      const endRings = localData?.endRings;
-      const startRingsAlt = localData?.startRingsAlt;
-      const endRingsAlt = localData?.endRingsAlt;
-      const rawInput = localData?.rawInput;
-      const blade = localData?.blade;
-      const prosent = String(localData?.prosent);
-      const spes = localData?.spes;
-      const xlog = String(rawRings?.length);
-      const sawType = "mkv";
-      const kunde = kundeID;
-      const response = await createPost.mutateAsync({
-        header,
-        plankeTy,
-        startRings,
-        endRings,
-        startRingsAlt,
-        endRingsAlt,
-        rawInput,
-        blade,
-        prosent,
-        spes,
-        xlog,
-        sawType,
-        kunde,
-      });
-      console.log(response);
-      setEditMode(false);
-    } catch (error) {
-      console.error(error);
+    if (differenceStart >= 0.05 || differenceStart <= -0.05) {
+      alert("Ufylling foran er ikke korrekt");
+      setAlertShown(true); // Set the alertShown flag
+    } else if (differenceEnd >= 0.05 || differenceEnd <= -0.05) {
+      alert("Ufylling bak er ikke korrekt");
+      setAlertShown(true); // Set the alertShown flag
+    } else if (localData?.blade === 0) {
+      alert("Bladtykkelse er ikke valgt");
+      setAlertShown(true); // Set the alertShown flag
+    } else if (localData?.prosent === 0) {
+      alert("Prosent er ikke valgt");
+      setAlertShown(true); // Set the alertShown flag
+    } else if (localData?.plankeTy === "") {
+      alert("Planke tykkelse er ikke valgt");
+      setAlertShown(true); // Set the alertShown flag
+    } else {
+      try {
+        const header = headerText;
+        const plankeTy = String(localData?.plankeTy);
+        const startRings = localData?.startRings;
+        const endRings = localData?.endRings;
+        const startRingsAlt = localData?.startRingsAlt;
+        const endRingsAlt = localData?.endRingsAlt;
+        const rawInput = localData?.rawInput;
+        const blade = localData?.blade;
+        const prosent = String(localData?.prosent);
+        const spes = localData?.spes;
+        const xlog = String(rawRings?.length);
+        const sawType = "mkv";
+        const kunde = kundeID;
+        const response = await createPost.mutateAsync({
+          header,
+          plankeTy,
+          startRings,
+          endRings,
+          startRingsAlt,
+          endRingsAlt,
+          rawInput,
+          blade,
+          prosent,
+          spes,
+          xlog,
+          sawType,
+          kunde,
+        });
+        /*  console.log(response); */
+        setEditMode(false);
+        setAlertShown(false);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -324,10 +349,14 @@ const PostoppsettComponent = ({
   }, [localData, rawinputSum, startRingsAltShow, endRingsAltShow]);
 
   useEffect(() => {
-    if (data) {
-      setLocalData(data);
+    if (alertShown) {
+      console.log("Alert was shown, skipping useEffect logic.");
+    } else {
+      if (data) {
+        setLocalData(data);
+      }
     }
-  }, [data]);
+  }, [data, alertShown]);
 
   const deleteStartring = (id) => {
     setLocalData((prevData) => {
@@ -658,6 +687,7 @@ const PostoppsettComponent = ({
         handleDelete={handleDelete}
         resetPostHandler={resetPostHandler}
         resetUtfyllingHandler={resetUtfyllingHandler}
+        setAlertShown={setAlertShown}
       />
       {clickSearchOpen && (
         <SearchResultComponent

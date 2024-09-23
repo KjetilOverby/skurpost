@@ -10,8 +10,14 @@ const EditHeader = ({
   handleDelete,
   resetPostHandler,
   resetUtfyllingHandler,
+  setAlertShown,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const cancelBtn = () => {
+    setAlertShown(false);
+    setEditMode(false);
+  };
 
   return (
     <nav className="bg-gray-700 p-4">
@@ -42,7 +48,7 @@ const EditHeader = ({
               )}
               <EditMode editMode={editMode}>
                 <a
-                  onClick={() => setEditMode(false)}
+                  onClick={cancelBtn}
                   className="block cursor-pointer px-4 py-2 text-gray-400 hover:bg-gray-600 hover:text-white"
                 >
                   Avbryt
