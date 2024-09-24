@@ -4,58 +4,47 @@ import ColorTheme from "~/components/innstillinger/ColorTheme";
 import { api } from "~/utils/api";
 import ShowSelector from "~/components/innstillinger/ShowSelector";
 import AccountComponent from "~/components/innstillinger/AccountComponent";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { PostInfoContext } from "~/components/context";
 
 const Innstillinger = ({ colorMode }) => {
+  const { data: users } = api.users.getUsers.useQuery({});
+  const context = useContext(PostInfoContext);
+
+  const { setGetUserInfo } = context;
   const [currentTheme, setCurrentTheme] = useState(""); // Add state for theme
+
+  useEffect(() => {
+    setGetUserInfo(users && users[0]);
+  }, [users]);
 
   const {
     data: posts,
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
-    user: "Kjetil Øverby",
+    user: users?.[0].name,
+    userId: users?.[0].id,
   });
   const ctx = api.useContext();
   useEffect(() => {
     if (posts) {
       void ctx.settings.getByUser.invalidate();
     }
-  }, [currentTheme]);
+  }, [currentTheme, colorMode]);
 
   const createSettings = api.settings.createPost.useMutation({
     onSuccess: () => {
       void ctx.settings.update.invalidate();
       void ctx.settings.getByUser.invalidate();
-      console.log("success");
     },
   });
-
-  const handleCreate = async () => {
-    try {
-      const theme = "darkmode";
-      const sawType = "mkv";
-      const fonts = "";
-      const visPakking = true;
-      const visMiniListe = true;
-      const response = await createSettings.mutateAsync({
-        theme,
-        fonts,
-        sawType,
-        visPakking,
-        visMiniListe,
-      });
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const updateTheme = api.settings.updateTheme.useMutation({
     onSuccess: (data) => {
       setCurrentTheme(data.theme); // Update state with new theme
       void ctx.settings.updateTheme.invalidate();
       void ctx.settings.getByUser.invalidate();
-      console.log("Theme updated successfully");
     },
   });
 

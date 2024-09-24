@@ -132,33 +132,20 @@ const HeaderComponent = ({ colorMode }) => {
                 )}
               </div>
               <div className="relative">
-              <Link href='/innstillinger'>
-                <div
-                  className="grid cursor-pointer place-items-center"
-                  onClick={() => toggleSubmenu("innstillinger")}
-                >
-                  <IoSettingsOutline 
-                  className={`text-2xl ${logo} mb-2`} />
-                  <li>
-                    <p className={`text-xs ${text} ${actualPage.list}`}>
-                      Instillinger
-                    </p>
-                  </li>
-                </div>
+                <Link href="/innstillinger">
+                  <div
+                    className="grid cursor-pointer place-items-center"
+                    onClick={() => toggleSubmenu("innstillinger")}
+                  >
+                    <IoSettingsOutline className={`text-2xl ${logo} mb-2`} />
+                    <li>
+                      <p className={`text-xs ${text} ${actualPage.list}`}>
+                        Instillinger
+                      </p>
+                    </li>
+                  </div>
                 </Link>
-            
               </div>
-
-              <Link href="/create/listcreator">
-                <div className="grid place-items-center ">
-                  <FaUserLarge className={`text-2xl ${logo} mb-2`} />
-                  <li>
-                    <p className={`text-xs ${text} ${actualPage.listcreator}`}>
-                      Account
-                    </p>
-                  </li>
-                </div>
-              </Link>
             </ul>
           </div>
           <div className="flex items-center  lg:order-2">

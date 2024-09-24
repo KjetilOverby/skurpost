@@ -1,12 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import React, { useState, useEffect, useContext } from "react";
+import { PostInfoContext } from "~/components/context";
 import ListcreatorMain from "~/components/listcreator/ListcreatorMain";
 import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import { api } from "~/utils/api";
 
 const listcreator = ({ colorMode }: { colorMode: string }) => {
   const { data: users } = api.users.getUsers.useQuery({});
+  const context = useContext(PostInfoContext);
   const [kundeID, setKundeID] = useState("");
+  const { data: sessionData } = useSession();
+  const { setGetUserInfo } = context;
+  useEffect(() => {
+    setGetUserInfo(sessionData && sessionData.user);
+  }, [sessionData, setGetUserInfo]);
   useEffect(() => {
     users?.forEach((user) => {
       if (user.role === "MV_ADMIN") {

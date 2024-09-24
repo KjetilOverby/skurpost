@@ -8,10 +8,11 @@ import SkurlistePakkingComponent from "~/components/postoppsett/reusable/Skurlis
 import { api } from "~/utils/api";
 import { useContext } from "react";
 import { PostInfoContext } from "../components/context";
-import { set } from "zod";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const list = ({ setPostId, colorMode }) => {
   const { data: users } = api.users.getUsers.useQuery({});
+  const { data: sessionData } = useSession();
   const [kundeID, setKundeID] = useState();
   const [openManualSearch, setOpenManualSearch] = useState(false);
   const { data: skurliste } = api.skurliste.getAll.useQuery({
@@ -29,7 +30,12 @@ const list = ({ setPostId, colorMode }) => {
     setPostInfoWrite,
     setSearchInputAll,
     searchInputAll,
+    setGetUserInfo,
   } = context;
+
+  useEffect(() => {
+    setGetUserInfo(sessionData && sessionData.user);
+  }, [sessionData, setGetUserInfo]);
 
   useEffect(() => {
     users?.forEach((user) => {

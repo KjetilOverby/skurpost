@@ -6,9 +6,45 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import RoleAdmin from "~/components/roles/RoleAdmin";
+import { PostInfoContext } from "~/components/context";
+import { useContext, useEffect } from "react";
 
 export default function Home({ colorMode }) {
   const { data: sessionData } = useSession();
+  const context = useContext(PostInfoContext);
+  const ctx = api.useContext();
+
+  const { setGetUserInfo } = context;
+  useEffect(() => {
+    setGetUserInfo(sessionData && sessionData.user);
+  }, [sessionData, setGetUserInfo]);
+
+  const createSettings = api.settings.createPost.useMutation({
+    onSuccess: () => {
+      void api.settings.update.invalidate();
+      void api.settings.getByUser.invalidate();
+    },
+  });
+
+  const handleCreate = async () => {
+    try {
+      const theme = "darkmode";
+      const sawType = "mkv";
+      const fonts = "";
+      const visPakking = true;
+      const visMiniListe = true;
+      const response = await createSettings.mutateAsync({
+        theme,
+        fonts,
+        sawType,
+        visPakking,
+        visMiniListe,
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -28,6 +64,9 @@ export default function Home({ colorMode }) {
             >
               {sessionData ? "Sign out" : "Sign in"}
             </Link>
+            <button onClick={handleCreate} className="btn btn-primary">
+              save settings
+            </button>
           </div>
           <div className="w-96">
             <img
