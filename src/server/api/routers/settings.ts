@@ -44,4 +44,28 @@ export const settingsRouter = createTRPCRouter({
         }),
 
 
+    updateTheme: protectedProcedure
+        .input(
+            z.object({
+                theme: z.string(),
+
+            })
+        )
+        .mutation(({ ctx, input }) => {
+            const creatorName: string = ctx.session.user.name ?? "DefaultCreator";
+            const creatorImg: string = ctx.session.user.image ?? "DefaultCreator";
+
+            return ctx.db.settings.update({
+                where: {
+                    userId: 'cm0tmerie0000anrhu5k7tz6u',
+                },
+                data: {
+                    theme: input.theme,
+                },
+            });
+
+
+
+        }),
+
 });
