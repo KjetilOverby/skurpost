@@ -9,13 +9,13 @@ import {
 export const settingsRouter = createTRPCRouter({
 
     getByUser: publicProcedure.input(z.object({
-        user: z.string(),
+        user: z.string(), userId: z.string()
     }))
         .query(({ input, ctx }) => {
             return ctx.db.settings.findUnique({
                 where: {
                     creator: input.user,
-                    userId: 'cm0tmerie0000anrhu5k7tz6u',
+                    userId: input.userId,
                 },
             })
         }),

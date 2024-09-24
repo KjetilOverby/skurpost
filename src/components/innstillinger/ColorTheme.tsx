@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const ColorTheme = ({ update, theme }) => {
   // Initialize activeButton with "Darkmode" as the default value
-  const [activeButton, setActiveButton] = useState<string>('');
+  const [activeButton, setActiveButton] = useState<string>("");
 
   useEffect(() => {
     setActiveButton(theme);
@@ -14,10 +14,24 @@ const ColorTheme = ({ update, theme }) => {
   };
 
   return (
-    <div className="bg-base-100">
-      <h1 className="text-primary mb-5">Fargetema</h1>
-      <div className="flex flex-col border border-secondary rounded-xl p-3">
-        {['darkmode', 'lightmode', 'coffee'].map((label) => (
+    <div className=" my-5 rounded-xl border border-primary p-5">
+      <h1 className="mb-5 text-primary">Fargetema</h1>
+      <div className="flex flex-col rounded-xl p-3">
+        {[
+          "darkmode",
+          "lightmode",
+          "coffee",
+          "halloween",
+          "pastel",
+          "fantasy",
+          "luxury",
+          "autumn",
+          "acid",
+          "lemonade",
+          "corporate",
+          "synthwave",
+          "cyberpunk",
+        ].map((label) => (
           <div key={label} className="form-control w-52">
             <label className="label cursor-pointer">
               <span className="label-text">{label}</span>
@@ -31,7 +45,6 @@ const ColorTheme = ({ update, theme }) => {
           </div>
         ))}
       </div>
-      {activeButton && <p>Selected Value: {activeButton}</p>}
     </div>
   );
 };

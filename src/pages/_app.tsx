@@ -6,15 +6,19 @@ import { PostInfoContext } from "../components/context";
 
 import "~/styles/globals.css";
 import { useState, useEffect } from "react";
-
-
+import { set } from "zod";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  const { data: posts, isLoading, error } = api.settings.getByUser.useQuery({
-    user: 'Kjetil Øverby'
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = api.settings.getByUser.useQuery({
+    user: "Kjetil Øverby",
+    userId: "cm0tmerie0000anrhu5k7tz6u",
   });
   const [postId, setPostId] = useState("");
   const [colorMode, setColorMode] = useState();
@@ -23,10 +27,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [searchInputAll, setSearchInputAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-useEffect(() => {
-  setColorMode(posts?.theme)
-}, [posts])
-  
+  useEffect(() => {
+    setColorMode(posts?.theme);
+  }, [posts]);
+
   return (
     <SessionProvider session={session}>
       <PostInfoContext.Provider
