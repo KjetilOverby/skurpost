@@ -6,7 +6,6 @@ import { PostInfoContext } from "../components/context";
 
 import "~/styles/globals.css";
 import { useState, useEffect } from "react";
-import { set } from "zod";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -30,6 +29,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
   useEffect(() => {
     setColorMode(posts?.theme);
   }, [posts]);
+
+  console.log(posts);
 
   return (
     <SessionProvider session={session}>

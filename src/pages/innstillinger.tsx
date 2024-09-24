@@ -54,6 +54,7 @@ const Innstillinger = ({ colorMode }) => {
     onSuccess: (data) => {
       setCurrentTheme(data.theme); // Update state with new theme
       void ctx.settings.updateTheme.invalidate();
+      void ctx.settings.getByUser.invalidate();
       console.log("Theme updated successfully");
     },
   });
