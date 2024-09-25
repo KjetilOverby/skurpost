@@ -15,7 +15,7 @@ const Innstillinger = ({ colorMode }) => {
   const [currentTheme, setCurrentTheme] = useState(""); // Add state for theme
 
   useEffect(() => {
-    setGetUserInfo(users && users[0]);
+    setGetUserInfo(users && users);
   }, [users]);
 
   const {
@@ -23,9 +23,10 @@ const Innstillinger = ({ colorMode }) => {
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
-    user: users?.[0].name,
-    userId: users?.[0].id,
+    userId: users[1]?.id,
   });
+  console.log(users);
+
   const ctx = api.useContext();
   useEffect(() => {
     if (posts) {
@@ -52,7 +53,7 @@ const Innstillinger = ({ colorMode }) => {
     try {
       const userId = "user-id"; // Replace with actual user ID
       const response = await updateTheme.mutateAsync({
-        userId,
+        userId: "cm1hxbt7i0000herqgnfz2kgq",
         theme: newTheme,
       });
       console.log(response);

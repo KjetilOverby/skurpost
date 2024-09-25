@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import PostoppsettComponent from "~/components/postoppsett/PostoppsettComponent";
 import { signIn, signOut, useSession } from "next-auth/react";
 import RoleAdminMV from "~/components/roles/RoleAdminMV";
+import RoleAdminVS from "~/components/roles/RoleAdminVS";
 
 import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import RoleAdmin from "~/components/roles/RoleAdmin";
@@ -13,6 +14,7 @@ import LOGIN from "~/components/roles/Login";
 import LoginPageNoRole from "~/components/index/LoginPageNoRole";
 import StartPageRole from "~/components/index/StartPageRole";
 import SaveSettingsWelcome from "~/components/index/SaveSettingsWelcome";
+import { log } from "console";
 
 export default function Home({ colorMode }) {
   const { data: sessionData } = useSession();
@@ -37,8 +39,7 @@ export default function Home({ colorMode }) {
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
-    user: users?.[0].name,
-    userId: users?.[0].id,
+    userId: users?.id,
   });
 
   const handleCreate = async () => {
@@ -69,16 +70,15 @@ export default function Home({ colorMode }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {sessionData ? (
+      {sessionData && sessionData ? (
         ""
       ) : (
-        <div className="min-h-screen bg-white">
-          <Link
-            href={sessionData ? "/api/auth/signout" : "/api/auth/signin"}
-            className="w-96 rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-          >
-            {sessionData ? "Sign out" : "Sign in"}
-          </Link>
+        <div className="grid min-h-screen items-center justify-center bg-white">
+          <div>
+            <button className="text-gray-500" onClick={() => signIn("google")}>
+              Sign in with Google
+            </button>
+          </div>
         </div>
       )}
       <RoleAdminMV>
@@ -88,6 +88,13 @@ export default function Home({ colorMode }) {
           <SaveSettingsWelcome handler={handleCreate} />
         )}
       </RoleAdminMV>
+      <RoleAdminVS>
+        {posts && posts.userId === sessionData.user.id ? (
+          <StartPageRole colorMode={colorMode} sessionData={sessionData} />
+        ) : (
+          <SaveSettingsWelcome handler={handleCreate} />
+        )}
+      </RoleAdminVS>
       <LOGIN>
         <LoginPageNoRole />
       </LOGIN>

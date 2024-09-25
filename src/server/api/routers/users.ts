@@ -16,6 +16,16 @@ export const userRouter = createTRPCRouter({
     return ctx.db.user.findMany({  });
   }),
 
+  getUser: protectedProcedure
+  .input(z.object({ id: z.string() }))
+  .query(({ ctx, input }) => {
+    return ctx.db.user.findMany({
+      where: {
+        id: input.id,
+      },
+    });
+  }),
+
   updateRole: protectedProcedure.input(z.object({id: z.string(), role: z.nativeEnum(UserRole)}))
   .mutation(async ({ctx, input}) => {
     const userId: string = ctx.session.user.id ?? "DefaultCreator";
