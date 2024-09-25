@@ -14,22 +14,27 @@ import LOGIN from "~/components/roles/Login";
 import LoginPageNoRole from "~/components/index/LoginPageNoRole";
 import StartPageRole from "~/components/index/StartPageRole";
 import SaveSettingsWelcome from "~/components/index/SaveSettingsWelcome";
-import { log } from "console";
 
-export default function Home({ colorMode }) {
+interface HomeProps {
+  colorMode: string;
+}
+
+export default function Home({ colorMode }: HomeProps) {
   const { data: sessionData } = useSession();
   const { data: users } = api.users.getUsers.useQuery({});
   const context = useContext(PostInfoContext);
   const ctx = api.useContext();
 
-  const { setGetUserInfo } = context;
+  const { setGetUserInfo } = context ?? {};
+
   useEffect(() => {
-    setGetUserInfo(sessionData && sessionData.user);
+    if (setGetUserInfo) {
+      setGetUserInfo(sessionData && sessionData.user);
+    }
   }, [sessionData, setGetUserInfo]);
 
   const createSettings = api.settings.createPost.useMutation({
     onSuccess: () => {
-      void ctx.settings.update.invalidate();
       void ctx.settings.getByUser.invalidate();
     },
   });
@@ -39,7 +44,7 @@ export default function Home({ colorMode }) {
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
-    userId: sessionData?.user.id,
+    userId: sessionData?.user.id ?? "",
   });
 
   const handleCreate = async () => {
@@ -82,14 +87,14 @@ export default function Home({ colorMode }) {
         </div>
       )}
       <RoleAdminMV>
-        {posts && posts.userId === sessionData.user.id ? (
+        {posts && sessionData && posts.userId === sessionData.user.id ? (
           <StartPageRole colorMode={colorMode} sessionData={sessionData} />
         ) : (
           <SaveSettingsWelcome handler={handleCreate} />
         )}
       </RoleAdminMV>
       <RoleAdminVS>
-        {posts && posts.userId === sessionData.user.id ? (
+        {posts && posts.userId === sessionData?.user?.id ? (
           <StartPageRole colorMode={colorMode} sessionData={sessionData} />
         ) : (
           <SaveSettingsWelcome handler={handleCreate} />

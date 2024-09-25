@@ -1,6 +1,5 @@
-import React from "react";
+import React, { createContext, useState, useContext } from "react";
 
-// In your context.tsx file
 interface ContextType {
   postInfoWriteChange: string;
   setPostInfoWriteChange: React.Dispatch<React.SetStateAction<string>>;
@@ -8,8 +7,45 @@ interface ContextType {
   setPostInfoWrite: React.Dispatch<React.SetStateAction<string>>;
   searchInputAll: boolean;
   setSearchInputAll: React.Dispatch<React.SetStateAction<boolean>>;
+  setGetUserInfo: (info: any) => void; // Add this line
 }
 
-export const PostInfoContext = React.createContext<ContextType | undefined>(
+export const PostInfoContext = createContext<ContextType | undefined>(
   undefined,
 );
+
+export const PostInfoProvider: React.FC = ({ children }) => {
+  const [postInfoWriteChange, setPostInfoWriteChange] = useState("");
+  const [postInfoWrite, setPostInfoWrite] = useState("");
+  const [searchInputAll, setSearchInputAll] = useState(false);
+
+  const setGetUserInfo = (info: any) => {
+    // Implement your logic here
+  };
+
+  return (
+    <PostInfoContext.Provider
+      value={{
+        postInfoWriteChange,
+        setPostInfoWriteChange,
+        postInfoWrite,
+        setPostInfoWrite,
+        searchInputAll,
+        setSearchInputAll,
+        setGetUserInfo, // Provide the function here
+      }}
+    >
+      {children}
+    </PostInfoContext.Provider>
+  );
+};
+
+export const usePostInfoContext = () => {
+  const context = useContext(PostInfoContext);
+  if (context === undefined) {
+    throw new Error(
+      "usePostInfoContext must be used within a PostInfoProvider",
+    );
+  }
+  return context;
+};
