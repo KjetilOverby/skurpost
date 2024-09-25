@@ -839,7 +839,9 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
 
               <div key={localData?.id}>
                 <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
-                  <p className="text-primary">Opprinnelig post: {localData?.header}</p>
+                  <p className="text-primary">
+                    Opprinnelig post: {localData?.header}
+                  </p>
                   <p className="italic text-primary">
                     Oprettet:{" "}
                     {dateFormat(localData?.createdAt, "dd.mm.yyyy, MM:HH")}
@@ -864,7 +866,9 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                             localData?.blade / 2
                           ).toFixed(2)}
                         </p>
-                        <p className="text-primary">utfylling: {startringSum?.toFixed(2)}</p>
+                        <p className="text-primary">
+                          utfylling: {startringSum?.toFixed(2)}
+                        </p>
                         <p
                           className={`${
                             differenceStart >= -0.05 && differenceStart <= 0.05
@@ -878,9 +882,9 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                           onClick={() =>
                             setstartRingsAltShow(!startRingsAltShow)
                           }
-                          className="btn btn-xs bg-primary text-neutral"
+                          className="btn btn-xs bg-accent text-primary hover:bg-neutral"
                         >
-                          {!startRingsAltShow
+                          {startRingsAltShow
                             ? "Vis standard"
                             : "Vis alternativ"}
                         </button>
@@ -981,7 +985,9 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                           localData?.blade / 2
                         ).toFixed(2)}
                       </p>
-                      <p className="text-primary">utfylling: {endringSum?.toFixed(2)}</p>
+                      <p className="text-primary">
+                        utfylling: {endringSum?.toFixed(2)}
+                      </p>
                       <p
                         className={`${
                           differenceEnd >= -0.05 && differenceEnd <= 0.05
@@ -993,9 +999,9 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                       </p>
                       <button
                         onClick={() => setEndRingsAltShow(!endRingsAltShow)}
-                        className="btn btn-xs bg-primary text-neutral"
+                        className="btn btn-xs bg-accent text-primary hover:bg-neutral"
                       >
-                        {!endRingsAltShow ? "Vis standard" : "Vis alternativ"}
+                        {endRingsAltShow ? "Vis standard" : "Vis alternativ"}
                       </button>
                     </div>
                   </EditMode>
