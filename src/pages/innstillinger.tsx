@@ -8,24 +8,30 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { PostInfoContext } from "~/components/context";
 
 const Innstillinger = ({ colorMode }) => {
-  const { data: users } = api.users.getUsers.useQuery({});
   const context = useContext(PostInfoContext);
+  const { data: sessionData } = useSession();
 
   const { setGetUserInfo } = context;
   const [currentTheme, setCurrentTheme] = useState(""); // Add state for theme
 
   useEffect(() => {
-    setGetUserInfo(users && users);
-  }, [users]);
+    setGetUserInfo(sessionData && sessionData.user);
+  }, [sessionData]);
 
-  const {
+  /*   const {
     data: posts,
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
     userId: users[1]?.id,
+  }); */
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = api.settings.getByUser.useQuery({
+    userId: sessionData?.user.id,
   });
-  console.log(users);
 
   const ctx = api.useContext();
   useEffect(() => {
@@ -53,7 +59,7 @@ const Innstillinger = ({ colorMode }) => {
     try {
       const userId = "user-id"; // Replace with actual user ID
       const response = await updateTheme.mutateAsync({
-        userId: "cm1hxbt7i0000herqgnfz2kgq",
+        userId: sessionData?.user.id,
         theme: newTheme,
       });
       console.log(response);

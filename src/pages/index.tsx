@@ -39,7 +39,7 @@ export default function Home({ colorMode }) {
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
-    userId: users?.id,
+    userId: sessionData?.user.id,
   });
 
   const handleCreate = async () => {

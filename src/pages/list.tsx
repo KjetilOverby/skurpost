@@ -11,8 +11,10 @@ import { PostInfoContext } from "../components/context";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const list = ({ setPostId, colorMode }) => {
-  const { data: users } = api.users.getUsers.useQuery({});
   const { data: sessionData } = useSession();
+  const { data: user } = api.users.getUser.useQuery({
+    id: sessionData?.user.id,
+  });
   const [kundeID, setKundeID] = useState();
   const [openManualSearch, setOpenManualSearch] = useState(false);
   const { data: skurliste } = api.skurliste.getAll.useQuery({
@@ -38,14 +40,17 @@ const list = ({ setPostId, colorMode }) => {
   }, [sessionData, setGetUserInfo]);
 
   useEffect(() => {
-    users?.forEach((user) => {
-      if (user.role === "MV_ADMIN") {
+    if (user && user.length > 0) {
+      const firstUser = user[0];
+      if (firstUser.role === "MV_ADMIN") {
         setKundeID("MV");
-      } else if (user.role === "VS_ADMIN") {
+      } else if (firstUser.role === "VS_ADMIN") {
         setKundeID("VS");
       }
-    });
-  }, [users]);
+    }
+  }, [user]);
+  console.log("kundeID", kundeID);
+  console.log(user);
 
   const [searchInput, setSearchInput] = useState("");
 
