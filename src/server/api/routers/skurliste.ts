@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+
 import { z } from "zod";
 
 import {
@@ -92,7 +91,6 @@ export const skurlisteRouter = createTRPCRouter({
             antall: input.antall,
             m3: input.m3,
             status: input.status,
-            post: input.post,
             bredde: input.bredde,
             xLog: input.xLog,
             prosent: input.prosent,
@@ -111,7 +109,6 @@ export const skurlisteRouter = createTRPCRouter({
             anmerk: input.anmerk,
             destinasjon: input.destinasjon,
             text: input.text,
-            blad: input.blad,
             buffer : input.buffer,
             order: input.order,
             progress: input.progress,
@@ -178,7 +175,6 @@ export const skurlisteRouter = createTRPCRouter({
             antall: input.antall,
             m3: input.m3,
             status: input.status,
-            post: input.post,
             bredde: input.bredde,
             xLog: input.xLog,
             prosent: input.prosent,
@@ -197,7 +193,6 @@ export const skurlisteRouter = createTRPCRouter({
             anmerk: input.anmerk,
             destinasjon: input.destinasjon,
             text: input.text,
-            blad: input.blad,
             buffer : input.buffer,
             order: input.order,
           },

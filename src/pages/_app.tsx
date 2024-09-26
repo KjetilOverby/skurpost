@@ -50,7 +50,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
           setSearchInputAll,
           editMode,
           setEditMode,
-          setGetUserInfo,
+          setGetUserInfo: (info) =>
+            setGetUserInfo(info as UserInfo | undefined),
         }}
       >
         <Component

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import InputListComponent from "./InputListComponent";
@@ -13,11 +13,58 @@ import SkurlisteComponentInput from "./SkurlisteComponentInput";
 import SkurlistePakkingInput from "./SkurlistePakkingInput";
 import { api } from "~/utils/api";
 
-const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
-  const { data: users } = api.users.getUsers.useQuery({});
+interface SkurlisteItem {
+  id: string;
+  order: number;
+  treslag: string;
+  klGrense: string;
+  klType: string;
+  klasse: string;
+  postNr: string;
+  antall: number;
+  m3: number;
+  status: string;
+  post: string;
+  bredde: number;
+  xLog: string;
+  prosent: string;
+  anm: string;
+  anm2: string;
+  VS66Blad: number;
+  vs66: string;
+  vs66Br: string;
+  mkvBord: string;
+  mkvBordBr: string;
+  dimensjon: string;
+  sortering: string;
+  kode: string;
+  torke: string;
+  anmerk: string;
+  destinasjon: string;
+  text: string;
+  blad: number;
+  progress: string;
+  createdAt: Date;
+  updatedAt: Date;
+  buffer: boolean;
+}
+
+interface ListcreatorMainProps {
+  skurliste: SkurlisteItem[]; // Use the defined interface
+  bufferStatus: boolean;
+  setBufferStatus: (status: boolean) => void;
+  colorMode: string;
+}
+
+const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
+  skurliste,
+  bufferStatus,
+  setBufferStatus,
+}) => {
+  const { data: users } = api.users.getUsers.useQuery();
   const [maxOrder, setMaxOrder] = useState(1);
 
-  const [kundeID, setKundeID] = useState();
+  const [kundeID, setKundeID] = useState<string>("");
 
   useEffect(() => {
     if (skurliste && skurliste.length > 0) {
@@ -55,7 +102,8 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
     });
   }, [users]);
 
-  const [listProps, setListProps] = useState({
+  const [listProps, setListProps] = useState<SkurlisteItem>({
+    id: "", // Add the id property here
     treslag: "",
     klGrense: "",
     klType: "",
@@ -88,11 +136,10 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
     updatedAt: new Date(),
     buffer: false,
     order: maxOrder,
-    kunde: "",
   });
 
   useEffect(() => {
-    setListProps((prevProps) => ({ ...prevProps, kunde: kundeID }));
+    setListProps((prevProps) => ({ ...prevProps, kunde: kundeID || "" }));
   }, [kundeID, skurliste]);
 
   const updateItemOrder = api.skurliste.updateOrder.useMutation({
@@ -106,14 +153,14 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
     },
   });
 
-  const updateBufferHandler = (id) => {
+  const updateBufferHandler = (id: string) => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     updateBuffer.mutateAsync({
       id: id,
       buffer: true,
     });
   };
-  const updateBufferHandlerFalse = (id) => {
+  const updateBufferHandlerFalse = (id: string) => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     updateBuffer.mutateAsync({
       id: id,
@@ -121,7 +168,7 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
     });
   };
 
-  const updates = (id, order) => {
+  const updates = (id: string, order: number) => {
     console.log(`Updating item with id ${id} to order ${order}`);
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     updateItemOrder.mutateAsync({
@@ -129,8 +176,9 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
       order: order,
     });
   };
-  const [listItems, setListItems] = useState([]);
-  const moveUp = async (id) => {
+
+  const [listItems, setListItems] = useState<SkurlisteItem[]>([]);
+  const moveUp = async (id: string) => {
     const index = listItems.findIndex((item) => item.id === id);
     console.log(`Index of item with id ${id} is ${index}`);
     if (index > 0) {
@@ -149,7 +197,7 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
       ]);
     }
   };
-  const moveDown = async (id) => {
+  const moveDown = async (id: string) => {
     const index = listItems.findIndex((item) => item.id === id);
     console.log(`Index of item with id ${id} is ${index}`);
     if (index < listItems.length - 1) {
@@ -187,7 +235,7 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
         <InputListComponent listProps={listProps} setListProps={setListProps} />
       </div>
       <div className="bg-base-100 pt-20">
-        <div classNprimaryame="mb-10">
+        <div className="mb-10">
           <SkurlisteComponent
             skurliste={skurliste}
             edit={true}
@@ -202,6 +250,10 @@ const ListcreatorMain = ({ skurliste, bufferStatus, setBufferStatus }) => {
             setBufferStatus={setBufferStatus}
             bufferStatus={bufferStatus}
             updateBufferHandlerFalse={updateBufferHandlerFalse}
+            setSearchInput={undefined}
+            setClickSearchOpen={undefined}
+            setPostInfoWrite={undefined}
+            searchInputAll={false}
           />
         </div>
         <div>

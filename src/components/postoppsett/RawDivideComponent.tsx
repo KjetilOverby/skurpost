@@ -2,16 +2,29 @@ import React, { useState, useEffect } from "react";
 
 import ringlist from "~/utils/ringlist";
 import RingPickerRaw from "./reusable/RingPickerRaw";
-export const RawDivideComponent = ({
+type RawDataType = {
+  id: number;
+  name: string;
+};
+
+interface RawDivideComponentProps {
+  setOpenRawDivide: (open: boolean) => void;
+  getRawValues: number;
+  firstRingVal: number;
+  shimsVal: number;
+  shimsVal2: number;
+  setFirstRingVal: (val: number) => void;
+  setShimsVal: (val: number) => void;
+  setShimsVal2: (val: number) => void;
+  calculationResult: number;
+  setCalculationResult: (result: number) => void;
+}
+
+export const RawDivideComponent: React.FC<RawDivideComponentProps> = ({
   setOpenRawDivide,
-  rawData,
-  localData,
-  setLocalData,
   getRawValues,
-  rawValues,
   firstRingVal,
   shimsVal,
-  shimsVal2,
   setFirstRingVal,
   setShimsVal,
   setShimsVal2,
@@ -22,7 +35,9 @@ export const RawDivideComponent = ({
 
   useEffect(() => {
     setCalculationResult(
-      (Number(getRawValues) + 1.4 - firstRingVal - shimsVal).toFixed(1),
+      parseFloat(
+        (Number(getRawValues) + 1.4 - firstRingVal - shimsVal).toFixed(1),
+      ),
     );
     console.log("calc runs");
   }, [getRing, shimsVal, firstRingVal]);
@@ -34,7 +49,9 @@ export const RawDivideComponent = ({
   const skimsHandler = () => {
     setShimsVal(getRing);
     setShimsVal2(
-      (Number(getRawValues) + 1.4 - firstRingVal - shimsVal).toFixed(1),
+      parseFloat(
+        (Number(getRawValues) + 1.4 - firstRingVal - shimsVal).toFixed(1),
+      ),
     );
   };
 
@@ -50,7 +67,7 @@ export const RawDivideComponent = ({
           values={ringlist}
           position="right-0"
           title="Utfylling bak"
-          onChange={(value) => setGetRing(value)}
+          onChange={(value: number) => setGetRing(value)}
         />
         <div className="flex">
           <button onClick={() => setOpenRawDivide(false)}>Lukk</button>

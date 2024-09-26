@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import React, { useState, useEffect, use } from "react";
 import Ring from "./reusable/rings/Ring";
@@ -37,8 +41,10 @@ const PostoppsettComponent = ({
   setPostId,
 }: {
   data: Item[];
+  postId: string;
+  setPostId: (id: string) => void;
 }) => {
-  const { data: users } = api.users.getUsers.useQuery({});
+  const { data: users } = api.users.getUsers.useQuery();
   const context = useContext(PostInfoContext);
   if (!context) {
     throw new Error(
@@ -78,10 +84,6 @@ const PostoppsettComponent = ({
 
   const [differenceStart, setDifferenceStart] = useState(null);
   const [differenceEnd, setDifferenceEnd] = useState(null);
-
-  // LOCAL STORAGE
-  const [localStorgeItem, setLocalStorgeItem] = useState();
-  const [parsedStorageItem, setParsedStorageItem] = useState();
 
   const router = useRouter();
 
@@ -125,19 +127,6 @@ const PostoppsettComponent = ({
 
   const rawValues = rawRings?.map((item) => item);
 
-  // *************** LOCAL STORAGE ***************
-  useEffect(() => {
-    if (localData) {
-      // Parse the data (assuming localData is already parsed)
-      const parsedData = JSON.stringify(localData);
-
-      // Save the parsed data to localStorage
-      localStorage.setItem("localDataKey", parsedData);
-    }
-  }, [localData]);
-
-  // *************** LOCAL STORAGE ***************
-
   useEffect(() => {
     users?.forEach((user) => {
       if (user.role === "MV_ADMIN") {
@@ -159,19 +148,19 @@ const PostoppsettComponent = ({
   const updateData = async (event, id) => {
     if (differenceStart >= 0.05 || differenceStart <= -0.05) {
       alert("Ufylling foran er ikke korrekt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else if (differenceEnd >= 0.05 || differenceEnd <= -0.05) {
       alert("Ufylling bak er ikke korrekt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else if (localData?.blade === 0) {
       alert("Bladtykkelse er ikke valgt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else if (localData?.prosent === 0) {
       alert("Prosent er ikke valgt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else if (localData?.plankeTy === "") {
       alert("Planke tykkelse er ikke valgt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else {
       try {
         const id = postId;
@@ -187,6 +176,7 @@ const PostoppsettComponent = ({
         const spes = localData?.spes;
         const xlog = String(rawRings?.length);
         const sawType = String("mkv");
+
         const response = await updatePost.mutateAsync({
           id,
           header,
@@ -202,9 +192,9 @@ const PostoppsettComponent = ({
           xlog,
           sawType,
         });
-        /*  console.log(response); */
-        setAlertShown(false);
+
         setEditMode(false);
+        setAlertShown(false);
       } catch (error) {
         console.error(error);
       }
@@ -249,19 +239,19 @@ const PostoppsettComponent = ({
   const createData = async () => {
     if (differenceStart >= 0.05 || differenceStart <= -0.05) {
       alert("Ufylling foran er ikke korrekt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else if (differenceEnd >= 0.05 || differenceEnd <= -0.05) {
       alert("Ufylling bak er ikke korrekt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else if (localData?.blade === 0) {
       alert("Bladtykkelse er ikke valgt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else if (localData?.prosent === 0) {
       alert("Prosent er ikke valgt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else if (localData?.plankeTy === "") {
       alert("Planke tykkelse er ikke valgt");
-      setAlertShown(true); // Set the alertShown flag
+      setAlertShown(true);
     } else {
       try {
         const header = headerText;
@@ -277,6 +267,7 @@ const PostoppsettComponent = ({
         const xlog = String(rawRings?.length);
         const sawType = "mkv";
         const kunde = kundeID;
+
         const response = await createPost.mutateAsync({
           header,
           plankeTy,
@@ -292,7 +283,7 @@ const PostoppsettComponent = ({
           sawType,
           kunde,
         });
-        /*  console.log(response); */
+
         setEditMode(false);
         setAlertShown(false);
       } catch (error) {
@@ -305,7 +296,6 @@ const PostoppsettComponent = ({
     setOpenRawDivide(true);
     setGetRawValues(value);
   };
-
   const handleUpdate = async () => {
     // get the id and data you want to update
     const id = "your-post-id";
@@ -313,7 +303,11 @@ const PostoppsettComponent = ({
       // your updated data...
     };
 
-    await updateData(id, data);
+    try {
+      await updateData(id, data);
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
   };
   useEffect(() => {
     if (localData) {
@@ -459,10 +453,8 @@ const PostoppsettComponent = ({
   };
 
   const handleRawRingPickerChange = (value) => {
-    // Copy rawInput into a new array
-    const rawRings = [...(localData?.rawInput || [])];
+    const rawRings = [...(localData?.rawInput ?? [])];
 
-    // Add the new item to the array
     rawRings.push({
       id: uuidv4(),
       value: Number(rawValueFromInput),
@@ -539,7 +531,7 @@ const PostoppsettComponent = ({
     localData?.blade,
     startringSum,
   ]);
-  const moveLeft = async (id) => {
+  const moveLeft = (id) => {
     const ringsKey = startRingsAltShow ? "startRingsAlt" : "startRings";
     const rings = localData[ringsKey];
     const index = rings.findIndex((item) => item.id === id);
@@ -550,7 +542,6 @@ const PostoppsettComponent = ({
       newItems[index] = newItems[index - 1];
       newItems[index - 1] = tempItem;
 
-      // Update the localData state
       setLocalData({
         ...localData,
         [ringsKey]: newItems,
@@ -576,7 +567,7 @@ const PostoppsettComponent = ({
     }
   };
 
-  const moveRightEnd = async (id) => {
+  const moveRightEnd = (id) => {
     const ringsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
     const rings = localData[ringsKey];
     const index = rings.findIndex((item) => item.id === id);
@@ -594,7 +585,7 @@ const PostoppsettComponent = ({
     }
   };
 
-  const moveLeftEnd = async (id) => {
+  const moveLeftEnd = (id) => {
     const ringsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
     const rings = localData[ringsKey];
     const index = rings.findIndex((item) => item.id === id);
@@ -612,7 +603,7 @@ const PostoppsettComponent = ({
     }
   };
 
-  const moveLeftRaw = async (id) => {
+  const moveLeftRaw = (id) => {
     const index = rawRings.findIndex((item) => item.id === id);
 
     if (index > 0) {
@@ -627,7 +618,7 @@ const PostoppsettComponent = ({
       });
     }
   };
-  const moveRightRaw = async (id) => {
+  const moveRightRaw = (id) => {
     const index = rawRings.findIndex((item) => item.id === id);
 
     if (index < rawRings?.length - 1) {
@@ -782,7 +773,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                             />
                           ))}
 
-                      {endRingsAlt && endRingsAlt.length > 0 && (
+                      {endRingsAlt?.length > 0 && (
                         <button
                           onClick={() => setEndRingsAltShow(!endRingsAltShow)}
                           className="btn btn-xs bg-primary text-secondary"

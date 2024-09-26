@@ -1,12 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React from "react";
 import dateFormat from "dateformat";
 
-const SkurlistePakkingInput = ({ list }) => {
+interface List {
+  sortering?: string;
+  dimensjon?: string;
+  kode?: string;
+  torke?: string;
+  anmerk?: string;
+  destinasjon?: string;
+  text?: string;
+  treslag: string;
+  createdAt: string;
+  klasse: string;
+  klGrense: string;
+}
+
+const SkurlistePakkingInput: React.FC<{ list: List }> = ({ list }) => {
   const sorteringArray = list.sortering ? list.sortering.split(", ") : [];
   const dim = list.dimensjon ? list.dimensjon.split(", ") : [];
   const kvKode = list.kode ? list.kode.split(", ") : [];

@@ -28,7 +28,7 @@ export const settingsRouter = createTRPCRouter({
             await new Promise((resolve) => setTimeout(resolve, 1000));
             const creatorName: string = ctx.session.user.name ?? "DefaultCreator";
             const creatorImg: string = ctx.session.user.image ?? "DefaultCreator";
-            const creatorId: number = ctx.session.user.id;
+            const creatorId: string = ctx.session.user.id;
             return ctx.db.settings.create({
                 data: {
                     theme: input.theme,

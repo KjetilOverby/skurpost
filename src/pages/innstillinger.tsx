@@ -6,6 +6,7 @@ import ShowSelector from "~/components/innstillinger/ShowSelector";
 import AccountComponent from "~/components/innstillinger/AccountComponent";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { PostInfoContext } from "~/components/context";
+import { boolean } from "zod";
 
 interface InnstillingerProps {
   colorMode: string;
@@ -16,7 +17,7 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
   const { data: sessionData } = useSession();
 
   const setGetUserInfo = context?.setGetUserInfo;
-  const [currentTheme, setCurrentTheme] = useState(""); // Add state for theme
+  const [currentTheme, setCurrentTheme] = useState("");
 
   useEffect(() => {
     if (setGetUserInfo) {
@@ -24,19 +25,12 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
     }
   }, [sessionData]);
 
-  /*   const {
-    data: posts,
-    isLoading,
-    error,
-  } = api.settings.getByUser.useQuery({
-    userId: users[1]?.id,
-  }); */
   const {
     data: posts,
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
-    userId: sessionData?.user.id || "",
+    userId: sessionData?.user.id ?? "",
   });
 
   const ctx = api.useContext();
@@ -61,9 +55,9 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
 
   const handleUpdateTheme = async (newTheme: string) => {
     try {
-      const userId = "user-id"; // Replace with actual user ID
+      const userId = "user-id";
       const response = await updateTheme.mutateAsync({
-        userId: sessionData?.user.id || "",
+        userId: sessionData?.user.id ?? "",
         theme: newTheme,
       });
       console.log(response);
@@ -80,11 +74,11 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
         <AccountComponent />
         <ColorTheme
           update={handleUpdateTheme}
-          theme={posts?.theme || "default-theme"}
+          theme={posts?.theme ?? "default-theme"}
         />
         <ShowSelector
           update={(toggles) => {
-            // Add your logic here to handle the toggles
+            console.log(toggles);
           }}
         />
       </div>

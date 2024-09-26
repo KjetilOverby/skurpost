@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 
-const RingPicker = ({ values, position, title, onChange }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+interface RingPickerProps {
+  values: string[];
+  position: string;
+  title: string;
+  onChange?: (value: string) => void;
+}
 
-  const handleClick = (value) => {
+const RingPicker: React.FC<RingPickerProps> = ({
+  values,
+  position,
+  title,
+  onChange,
+}) => {
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+
+  const handleClick = (value: string) => {
     setSelectedValue(value);
     if (onChange) {
       onChange(value);

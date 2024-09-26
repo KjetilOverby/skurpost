@@ -2,12 +2,9 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, useEffect, useContext } from "react";
-// import { getServerAuthSession } from "~/server/auth";
-// import RoleChange from "./users/RoleChange";
+
 import { FaClipboardList } from "react-icons/fa";
 import { IoIosHome } from "react-icons/io";
-import { BiSolidCalendarEdit } from "react-icons/bi";
-import { FaUserLarge } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 import { PostInfoContext } from "../../context";
 
@@ -22,7 +19,7 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
   const text = "text-primary";
   const logo = "text-primary";
 
-  const { editMode, setEditMode } = context || {};
+  const { editMode, setEditMode } = context ?? {};
 
   const [actualPage, setActualPage] = useState({
     search: "",

@@ -1,13 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { UserRole } from "@prisma/client";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
-import GOOGLEProvider from "next-auth/providers/GOOGLE";
+import GOOGLEProvider from "next-auth/providers/google";
 
 import { env } from "~/env";
 import { db } from "~/server/db";

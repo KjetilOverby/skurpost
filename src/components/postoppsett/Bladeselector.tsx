@@ -1,6 +1,14 @@
 import React from "react";
 
-const Bladeselector = ({ sawbladeSelectHandler, val }) => {
+interface BladeselectorProps {
+  sawbladeSelectHandler: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  val: number | string;
+}
+
+const Bladeselector: React.FC<BladeselectorProps> = ({
+  sawbladeSelectHandler,
+  val,
+}) => {
   return (
     <div>
       {" "}

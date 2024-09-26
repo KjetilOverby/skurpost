@@ -8,60 +8,21 @@ import { RiAddBoxLine } from "react-icons/ri";
 
 interface RawRingProps {
   value: number;
-  blade: string;
-  mode: any;
-  edit: any;
-  deleteRing: any;
-  id: any;
-  moveLeft: any;
-  moveRight: any;
-  rawDivide: any[];
-  local: any;
-}
-
-interface RawRingProps {
-  value: number;
-  blade: string;
-  mode: any;
-  edit: any;
-  deleteRing: any;
-  id: any;
-  moveLeft: any;
-  moveRight: any;
-  rawDivide: any[];
-  local: any;
-  openRawDivideHandler: any; // Add the missing property
-}
-
-interface RawRingProps {
-  value: number;
-  blade: string;
-  mode: any;
-  edit: any;
-  deleteRing: any;
-  id: any;
-  moveLeft: any;
-  moveRight: any;
-  rawDivide: any[];
-  local: any;
-  openRawDivideHandler: any;
-  getRawValues: any; // Add the missing property
-}
-
-interface RawRingProps {
-  value: number;
-  blade: string;
-  mode: any;
-  edit: any;
-  deleteRing: any;
-  id: any;
-  moveLeft: any;
-  moveRight: any;
-  rawDivide: any[];
-  local: any;
-  openRawDivideHandler: any;
-  getRawValues: any;
-  ringItem: any; // Add the missing property
+  blade: number;
+  mode: boolean;
+  edit: boolean;
+  deleteRing: (id: number) => void;
+  id: number;
+  moveLeft: (id: number) => void;
+  moveRight: (id: number) => void;
+  openRawDivideHandler: () => void;
+  getRawValues: number;
+  ringItem: {
+    ring?: number;
+    shims?: number;
+    shimsVal2?: number;
+    shimsVal?: number;
+  };
 }
 
 const RawRing = ({
@@ -73,25 +34,20 @@ const RawRing = ({
   id,
   moveLeft,
   moveRight,
-  rawDivide,
   openRawDivideHandler,
   getRawValues,
-  setRawInputValue,
-  rawInputValue,
+
   ringItem,
-  rawData,
-  localData,
-  setLocalData,
 }: RawRingProps) => {
   const [calculationResult, setCalculationResult] = useState("");
 
   useEffect(() => {
-    if (ringItem?.ring !== undefined || ringItem?.shims !== undefined) {
+    if (ringItem?.ring !== undefined ?? ringItem?.shims !== undefined) {
       const result = (
         Number(getRawValues) +
         1.4 -
-        (ringItem?.ring || 0) -
-        (ringItem?.shims || 0)
+        (ringItem?.ring ?? 0) -
+        (ringItem?.shims ?? 0)
       ).toFixed(1);
       setCalculationResult(result);
     } else {
@@ -129,10 +85,9 @@ const RawRing = ({
           <p> {ringItem?.shimsVal2 === 0 ? "" : ringItem.shimsVal2}</p>
           <p> {ringItem?.shimsVal === 0 ? "" : ringItem?.shimsVal}</p>
         </div>
-        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs md:top-[202px] md:text-sm">
-          {/* <p>{calculationResult}</p> */}
-        </div>
+        <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-blue-900 sm:bottom-28 sm:text-xs md:top-[202px] md:text-sm"></div>
       </div>
+
       <Blade blade={blade} />
     </div>
   );

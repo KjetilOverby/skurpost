@@ -41,20 +41,20 @@ interface SkurlisteItem {
 interface SkurlisteComponentProps {
   skurliste: SkurlisteItem[];
   edit: boolean;
-  deletePost: any;
-  editPost: any;
-  listProps: any;
-  setListProps: any;
-  moveUp: any;
-  moveDown: any;
+  deletePost: { mutate: (data: { id: string }) => void };
+  editPost: { mutate: (data: SkurlisteItem) => void };
+  listProps: SkurlisteItem;
+  setListProps: React.Dispatch<React.SetStateAction<SkurlisteItem>>;
+  moveUp: (id: string) => void;
+  moveDown: (id: string) => void;
   maxOrder: number;
-  updateBufferHandler: any;
+  updateBufferHandler: (id: string) => void;
   bufferStatus: boolean;
-  setBufferStatus: any;
-  updateBufferHandlerFalse: any;
-  setSearchInput: any;
-  setClickSearchOpen: any;
-  setPostInfoWrite: any;
+  setBufferStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  updateBufferHandlerFalse: (id: string) => void;
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+  setClickSearchOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setPostInfoWrite: React.Dispatch<React.SetStateAction<string>>;
   searchInputAll: boolean;
 }
 
@@ -115,6 +115,9 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
       text: listProps.text,
       buffer: listProps.buffer,
       progress: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      order: 0,
     });
     setEditingId(null);
   };
@@ -124,6 +127,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
     const list = skurliste.find((list) => list.id === id);
     if (list) {
       setListProps({
+        id: list.id,
         treslag: list.treslag,
         klasse: list.klasse,
         klGrense: list.klGrense,

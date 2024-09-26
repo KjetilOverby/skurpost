@@ -1,6 +1,30 @@
 import React from "react";
 
-export const MiniList = ({ clickSearch, skurliste }) => {
+interface SkurlisteItem {
+  treslag: string;
+  klasse: string;
+  antall: number;
+  m3: number;
+  status: string;
+  post: number;
+  bredde: number;
+  xLog: string;
+  prosent: number;
+  anm: string;
+  vs66: string;
+  mkvBord: string;
+  blad: number;
+}
+
+interface MiniListProps {
+  clickSearch: (item: SkurlisteItem) => void;
+  skurliste: SkurlisteItem[];
+}
+
+export const MiniList: React.FC<MiniListProps> = ({
+  clickSearch,
+  skurliste,
+}) => {
   return (
     <div className="absolute right-2 top-20">
       <table className="table table-xs w-full  bg-accent">

@@ -2,7 +2,18 @@ import React, { useState } from "react";
 import { EditMode } from "../modes/editMode";
 import Link from "next/link";
 
-const EditHeader = ({
+interface EditHeaderProps {
+  setEditMode: (mode: boolean) => void;
+  editMode: boolean;
+  handleUpdate: () => void;
+  createData: () => void;
+  handleDelete: () => void;
+  resetPostHandler: () => void;
+  resetUtfyllingHandler: () => void;
+  setAlertShown: (shown: boolean) => void;
+}
+
+const EditHeader: React.FC<EditHeaderProps> = ({
   setEditMode,
   editMode,
   handleUpdate,

@@ -1,6 +1,12 @@
 import React from "react";
 
-const SaveSettingsWelcome = ({ handler }) => {
+interface SaveSettingsWelcomeProps {
+  handler: () => void;
+}
+
+const SaveSettingsWelcome: React.FC<SaveSettingsWelcomeProps> = ({
+  handler,
+}) => {
   return (
     <div className="grid min-h-screen items-center justify-center bg-white">
       <div className="flex flex-col items-center gap-5">

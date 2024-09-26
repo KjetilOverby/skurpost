@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+
 import { UserRole } from "@prisma/client";
 import { z } from "zod";
 

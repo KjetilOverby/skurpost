@@ -1,5 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-export const EditMode = ({ children, editMode }) => {
+interface EditModeProps {
+  children: ReactNode;
+  editMode: boolean;
+}
+
+export const EditMode: React.FC<EditModeProps> = ({ children, editMode }) => {
   return <div>{editMode && children}</div>;
 };

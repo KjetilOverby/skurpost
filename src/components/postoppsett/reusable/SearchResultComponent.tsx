@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 interface Result {
-  id: string; // Change this to number
+  id: string;
   createdAt: Date;
   updatedAt: Date;
   updater: string;
@@ -17,15 +17,14 @@ interface Result {
   startRings: { value: number }[] | null;
   rawInput: { value: number }[] | null;
   endRings: { value: number }[] | null;
-  // Add other properties as needed
 }
 
 interface SearchResultComponentProps {
   results: Result[];
   setPostId: (id: string) => void;
   setClickSearchOpen: (open: boolean) => void;
-  setPostInfoWriteChange: (info: any) => void;
-  postInfoWrite: any;
+  setPostInfoWriteChange: (info: string) => void;
+  postInfoWrite: string;
   clickSearchAll: () => void;
   setSearchInputAll: (input: boolean) => void;
   colorMode: string;
@@ -44,9 +43,9 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
   const ringStyle = "flex h-20 w-10 items-center justify-center rounded-md";
   const router = useRouter();
 
-  const openPostHandler = (postId: string) => {
+  const openPostHandler = async (postId: string) => {
     setPostId(postId);
-    router.push(`/postoppsett`);
+    await router.push(`/postoppsett`);
     setPostInfoWriteChange(postInfoWrite);
     setClickSearchOpen(false);
   };
@@ -55,7 +54,6 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
     setSearchInputAll(false);
     setClickSearchOpen(false);
   };
-  console.log(results);
 
   return (
     <>
@@ -68,6 +66,7 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
           {results?.map((result) => {
             return (
               <div
+                key={result.id}
                 onClick={() => openPostHandler(result.id)}
                 className="mb-5 rounded bg-base-100 p-5"
               >
@@ -77,6 +76,7 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
                     {result.startRings?.map((ring) => {
                       return (
                         <div
+                          key={ring.value}
                           className={`${ringStyle} border border-primary bg-gradient-to-b from-accent via-primary to-accent text-accent`}
                         >
                           <p className="text-xs">{ring.value}</p>
@@ -88,6 +88,7 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
                     {result.rawInput?.map((ring) => {
                       return (
                         <div
+                          key={ring.value}
                           className={`${ringStyle} relative border border-primary bg-gradient-to-b from-neutral via-primary to-neutral text-accent`}
                         >
                           <p className="absolute bottom-20 text-xs text-gray-200">
@@ -104,6 +105,7 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
                     {result.endRings?.map((ring) => {
                       return (
                         <div
+                          key={ring.value}
                           className={`${ringStyle}  border border-primary bg-gradient-to-b from-accent via-primary to-accent text-accent`}
                         >
                           <p className="text-xs">{ring.value}</p>

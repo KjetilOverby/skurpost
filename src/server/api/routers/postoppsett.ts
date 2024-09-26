@@ -1,6 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+
 import { z } from "zod";
+import creator from "~/pages/create/creator";
 
 import {
   createTRPCRouter,
@@ -46,17 +46,80 @@ export const postoppsettRouter = createTRPCRouter({
 
 
     savePost: protectedProcedure
-    .mutation(async ({ data, ctx }) => {
+    .input(z.object({
+      header: z.string(),
+      plankeTy: z.string(),
+      sawType: z.string(),
+      startRings: z.array(z.object({
+        id: z.string(),
+        value: z.number(),
+      })),
+      endRings: z.array(z.object({
+        id: z.string(),
+        value: z.number(),
+      })),
+      startRingsAlt: z.array(z.object({
+        id: z.string(),
+        value: z.number(),
+      })),
+      endRingsAlt: z.array(z.object({
+        id: z.string(),
+        value: z.number(),
+      })),
+      rawInput: z.array(z.object({
+        id: z.string(),
+        value: z.number(),
+        ring: z.number().optional(),
+        shimsVal: z.number().optional(),
+        shimsVal2: z.number().optional(),
+      })),
+      blade: z.number(),
+      prosent: z.string(),
+      spes: z.string(),
+      xlog: z.string(),
+      kunde: z.string(),
+      updater: z.string(),
+      updaterImg: z.string(),
+      creator: z.string(),
+      creatorImg: z.string(),
+    }))
+    .mutation(async ({ input, ctx }) => {
       const savedData = await ctx.db.postningsoppsett.create({
+      
         data: {
-          ...data,
-          startrings: {
-            create: data.startrings,
+          header: input.header,
+          plankeTy: input.plankeTy,
+          sawType: input.sawType,
+          startRings: {
+            create: input.startRings,
           },
-          endrings: {
-            create: data.endrings,
+          endRings: {
+          
+            create: input.endRings,
           },
-          // add other related data as needed
+          startRingsAlt: {
+            create: input.startRingsAlt,
+          },
+          endRingsAlt: {
+            create: input.endRingsAlt,
+          },
+          rawInput: {
+            create: input.rawInput,
+          },
+          blade: input.blade,
+          prosent: input.prosent,
+          spes: input.spes,
+          xlog: input.xlog,
+          kunde: input.kunde,
+          updater: '',
+          updaterImg: '',
+          creator: '',
+          creatorImg: '',
+          deleted: false,
+          note: '',
+          deleter: '',
+          rawDivide: '',
+          createdBy: { connect: { id: ctx.session.user.id } },
         },
       });
       return savedData;
