@@ -8,16 +8,21 @@ interface ContextType {
   searchInputAll: boolean;
   setSearchInputAll: React.Dispatch<React.SetStateAction<boolean>>;
   setGetUserInfo: (info: any) => void; // Add this line
+  editMode: boolean;
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const PostInfoContext = createContext<ContextType | undefined>(
   undefined,
 );
 
-export const PostInfoProvider: React.FC = ({ children }) => {
+export const PostInfoProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [postInfoWriteChange, setPostInfoWriteChange] = useState("");
   const [postInfoWrite, setPostInfoWrite] = useState("");
   const [searchInputAll, setSearchInputAll] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   const setGetUserInfo = (info: any) => {
     // Implement your logic here
@@ -33,6 +38,8 @@ export const PostInfoProvider: React.FC = ({ children }) => {
         searchInputAll,
         setSearchInputAll,
         setGetUserInfo, // Provide the function here
+        editMode,
+        setEditMode,
       }}
     >
       {children}

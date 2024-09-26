@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import { SearchResultComponent } from "~/components/postoppsett/reusable/SearchResultComponent";
@@ -10,21 +8,27 @@ import { useContext } from "react";
 import { PostInfoContext } from "../components/context";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-const list = ({ setPostId, colorMode }) => {
+interface ListProps {
+  setPostId: (id: string) => void;
+  colorMode: string;
+}
+
+const list: React.FC<ListProps> = ({ setPostId, colorMode }) => {
   const { data: sessionData } = useSession();
   const { data: user } = api.users.getUser.useQuery({
-    id: sessionData?.user.id,
+    id: sessionData?.user.id ?? "",
   });
-  const [kundeID, setKundeID] = useState();
+  const [kundeID, setKundeID] = useState<string | undefined>(undefined);
   const [openManualSearch, setOpenManualSearch] = useState(false);
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
-    kunde: kundeID,
+    kunde: kundeID ?? "",
   });
   const context = useContext(PostInfoContext);
   if (!context) {
     throw new Error();
   }
+
   const {
     postInfoWriteChange,
     setPostInfoWriteChange,
@@ -42,15 +46,13 @@ const list = ({ setPostId, colorMode }) => {
   useEffect(() => {
     if (user && user.length > 0) {
       const firstUser = user[0];
-      if (firstUser.role === "MV_ADMIN") {
+      if (firstUser && firstUser.role === "MV_ADMIN") {
         setKundeID("MV");
-      } else if (firstUser.role === "VS_ADMIN") {
+      } else if (firstUser && firstUser.role === "VS_ADMIN") {
         setKundeID("VS");
       }
     }
   }, [user]);
-  console.log("kundeID", kundeID);
-  console.log(user);
 
   const [searchInput, setSearchInput] = useState("");
 
@@ -58,7 +60,7 @@ const list = ({ setPostId, colorMode }) => {
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
-    kundeID: kundeID,
+    kundeID: kundeID ?? "",
   });
 
   const clickSearchAll = () => {
@@ -70,7 +72,8 @@ const list = ({ setPostId, colorMode }) => {
       <HeaderComponent colorMode={colorMode} />
       {clickSearchOpen && (
         <SearchResultComponent
-          results={posts}
+          // @ts-ignore
+          results={posts ?? []}
           setPostId={setPostId}
           setClickSearchOpen={setClickSearchOpen}
           setSearchInputAll={setSearchInputAll}
@@ -105,16 +108,26 @@ const list = ({ setPostId, colorMode }) => {
         )}
         <h1 className="py-10 text-xl">Skurplan</h1>
         <SkurlisteComponent
-          skurliste={skurliste}
+          skurliste={skurliste ?? []}
           edit={false}
           setSearchInput={setSearchInput}
           searchInputAll={searchInputAll}
-          setPostId={setPostId}
           setClickSearchOpen={setClickSearchOpen}
           setPostInfoWrite={setPostInfoWrite}
+          deletePost={undefined}
+          editPost={undefined}
+          listProps={undefined}
+          setListProps={undefined}
+          moveUp={undefined}
+          moveDown={undefined}
+          maxOrder={0}
+          updateBufferHandler={undefined}
+          bufferStatus={false}
+          setBufferStatus={undefined}
+          updateBufferHandlerFalse={undefined}
         />
         <h1 className="mb-3 mt-10 text-xl">Pakking</h1>
-        <SkurlistePakkingComponent skurliste={skurliste} edit={false} />
+        <SkurlistePakkingComponent skurliste={skurliste ?? []} />
       </div>
     </div>
   );

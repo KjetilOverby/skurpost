@@ -16,7 +16,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [postInfoWriteChange, setPostInfoWriteChange] = useState("");
   const [postInfoWrite, setPostInfoWrite] = useState("");
   const [searchInputAll, setSearchInputAll] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   interface UserInfo {
     id: string;
@@ -31,14 +31,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
-    userId: getUserInfo?.id,
+    userId: getUserInfo?.id ?? "",
   });
 
   useEffect(() => {
     setColorMode(posts?.theme);
   }, [posts]);
-
-  console.log(getUserInfo);
 
   return (
     <SessionProvider session={session}>

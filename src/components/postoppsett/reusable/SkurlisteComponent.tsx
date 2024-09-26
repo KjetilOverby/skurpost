@@ -1,15 +1,64 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
 
-const SkurlisteComponent = ({
+interface SkurlisteItem {
+  id: string;
+  treslag: string;
+  klasse: string;
+  klGrense: string;
+  klType: string;
+  postNr: string;
+  antall: number;
+  m3: number;
+  status: string;
+  post: string;
+  xLog: string;
+  bredde: number;
+  prosent: string;
+  anm: string;
+  anm2: string;
+  VS66Blad: number;
+  vs66: string;
+  vs66Br: string;
+  mkvBord: string;
+  mkvBordBr: string;
+  blad: number;
+  sortering: string;
+  kode: string;
+  dimensjon: string;
+  torke: string;
+  anmerk: string;
+  destinasjon: string;
+  text: string;
+  buffer: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  order: number;
+  progress: string;
+}
+
+interface SkurlisteComponentProps {
+  skurliste: SkurlisteItem[];
+  edit: boolean;
+  deletePost: any;
+  editPost: any;
+  listProps: any;
+  setListProps: any;
+  moveUp: any;
+  moveDown: any;
+  maxOrder: number;
+  updateBufferHandler: any;
+  bufferStatus: boolean;
+  setBufferStatus: any;
+  updateBufferHandlerFalse: any;
+  setSearchInput: any;
+  setClickSearchOpen: any;
+  setPostInfoWrite: any;
+  searchInputAll: boolean;
+}
+
+const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
   skurliste,
   edit,
   deletePost,
@@ -32,7 +81,7 @@ const SkurlisteComponent = ({
     deletePost.mutate({ id: id });
   };
 
-  const [editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const handleEditExecute = (id: string) => {
     editPost.mutate({
@@ -73,45 +122,47 @@ const SkurlisteComponent = ({
   const handleEdit = (id: string) => {
     setEditingId(id);
     const list = skurliste.find((list) => list.id === id);
-    setListProps({
-      treslag: list.treslag,
-      klasse: list.klasse,
-      klGrense: list.klGrense,
-      klType: list.klType,
-      postNr: list.postNr,
-      antall: list.antall,
-      m3: list.m3,
-      status: list.status,
-      post: list.post,
-      xLog: list.xLog,
-      bredde: list.bredde,
-      prosent: list.prosent,
-      anm: list.anm,
-      anm2: list.anm2,
-      VS66Blad: list.VS66Blad,
-      vs66: list.vs66,
-      vs66Br: list.vs66Br,
-      mkvBord: list.mkvBord,
-      mkvBordBr: list.mkvBordBr,
-      blad: list.blad,
-      sortering: list.sortering,
-      kode: list.kode,
-      dimensjon: list.dimensjon,
-      torke: list.torke,
-      anmerk: list.anmerk,
-      destinasjon: list.destinasjon,
-      text: list.text,
-      buffer: list.buffer,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      order: maxOrder,
-      progress: "",
-    });
+    if (list) {
+      setListProps({
+        treslag: list.treslag,
+        klasse: list.klasse,
+        klGrense: list.klGrense,
+        klType: list.klType,
+        postNr: list.postNr,
+        antall: list.antall,
+        m3: list.m3,
+        status: list.status,
+        post: list.post,
+        xLog: list.xLog,
+        bredde: list.bredde,
+        prosent: list.prosent,
+        anm: list.anm,
+        anm2: list.anm2,
+        VS66Blad: list.VS66Blad,
+        vs66: list.vs66,
+        vs66Br: list.vs66Br,
+        mkvBord: list.mkvBord,
+        mkvBordBr: list.mkvBordBr,
+        blad: list.blad,
+        sortering: list.sortering,
+        kode: list.kode,
+        dimensjon: list.dimensjon,
+        torke: list.torke,
+        anmerk: list.anmerk,
+        destinasjon: list.destinasjon,
+        text: list.text,
+        buffer: list.buffer,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        order: maxOrder,
+        progress: "",
+      });
+    }
   };
 
   const [getAllBlades, setGetAllBlades] = useState("");
 
-  const clickSearch = (post) => {
+  const clickSearch = (post: SkurlisteItem) => {
     setSearchInput(`${post.post}-${post.prosent}%-${post.blad.toFixed(1)}`);
     setClickSearchOpen(true);
     setPostInfoWrite(`${post.post}x${post.bredde} ${post.blad.toFixed(1)}`);
@@ -125,7 +176,10 @@ const SkurlisteComponent = ({
 
   useEffect(() => {
     if (edit) {
-      setListProps((prevProps) => ({ ...prevProps, order: maxOrder }));
+      setListProps((prevProps: SkurlisteItem) => ({
+        ...prevProps,
+        order: maxOrder,
+      }));
     }
   }, [maxOrder]);
 

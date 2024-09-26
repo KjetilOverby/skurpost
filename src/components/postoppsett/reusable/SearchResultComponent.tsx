@@ -1,7 +1,37 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-export const SearchResultComponent = ({
+interface Result {
+  id: string; // Change this to number
+  createdAt: Date;
+  updatedAt: Date;
+  updater: string;
+  updaterImg: string;
+  header: string;
+  blade: number;
+  plankeTy: string;
+  prosent: string;
+  spes: string;
+  xlog: string;
+  createdById: string;
+  startRings: { value: number }[] | null;
+  rawInput: { value: number }[] | null;
+  endRings: { value: number }[] | null;
+  // Add other properties as needed
+}
+
+interface SearchResultComponentProps {
+  results: Result[];
+  setPostId: (id: string) => void;
+  setClickSearchOpen: (open: boolean) => void;
+  setPostInfoWriteChange: (info: any) => void;
+  postInfoWrite: any;
+  clickSearchAll: () => void;
+  setSearchInputAll: (input: boolean) => void;
+  colorMode: string;
+}
+
+export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
   results,
   setPostId,
   setClickSearchOpen,
@@ -9,12 +39,12 @@ export const SearchResultComponent = ({
   postInfoWrite,
   clickSearchAll,
   setSearchInputAll,
-  colorMode
+  colorMode,
 }) => {
   const ringStyle = "flex h-20 w-10 items-center justify-center rounded-md";
   const router = useRouter();
 
-  const openPostHandler = (postId) => {
+  const openPostHandler = (postId: string) => {
     setPostId(postId);
     router.push(`/postoppsett`);
     setPostInfoWriteChange(postInfoWrite);
@@ -25,10 +55,14 @@ export const SearchResultComponent = ({
     setSearchInputAll(false);
     setClickSearchOpen(false);
   };
+  console.log(results);
 
   return (
     <>
-      <div data-theme={colorMode} className="animationsv absolute z-40 ml-5 rounded-xl bg-accent p-5">
+      <div
+        data-theme={colorMode}
+        className="animationsv absolute z-40 ml-5 rounded-xl bg-accent p-5"
+      >
         <div className="">
           <button onClick={closeSearchResult}>Lukk</button>
           {results?.map((result) => {
@@ -40,7 +74,7 @@ export const SearchResultComponent = ({
                 <p className="mb-10">{result.header}</p>
                 <div className="flex gap-1">
                   <div className="flex gap-1">
-                    {result.startRings.map((ring) => {
+                    {result.startRings?.map((ring) => {
                       return (
                         <div
                           className={`${ringStyle} border border-primary bg-gradient-to-b from-accent via-primary to-accent text-accent`}
@@ -51,7 +85,7 @@ export const SearchResultComponent = ({
                     })}
                   </div>
                   <div className="flex gap-1">
-                    {result.rawInput.map((ring) => {
+                    {result.rawInput?.map((ring) => {
                       return (
                         <div
                           className={`${ringStyle} relative border border-primary bg-gradient-to-b from-neutral via-primary to-neutral text-accent`}
@@ -67,10 +101,10 @@ export const SearchResultComponent = ({
                     })}
                   </div>
                   <div className="flex gap-1">
-                    {result.endRings.map((ring) => {
+                    {result.endRings?.map((ring) => {
                       return (
                         <div
-                          className={`${ringStyle}  border-primary border bg-gradient-to-b from-accent via-primary to-accent text-accent`}
+                          className={`${ringStyle}  border border-primary bg-gradient-to-b from-accent via-primary to-accent text-accent`}
                         >
                           <p className="text-xs">{ring.value}</p>
                         </div>

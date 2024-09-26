@@ -1,18 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React from "react";
 import dateFormat from "dateformat";
 
-const SkurlistePakkingComponent = ({ skurliste }) => {
+interface SkurlisteItem {
+  treslag: string;
+  klasse: string;
+  klGrense: string;
+  dimensjon: string;
+  sortering: string;
+  kode: string;
+  torke: string;
+  anmerk: string;
+  destinasjon: string;
+  text: string;
+  createdAt: Date;
+}
+
+interface SkurlistePakkingComponentProps {
+  skurliste: SkurlisteItem[];
+}
+
+const SkurlistePakkingComponent: React.FC<SkurlistePakkingComponentProps> = ({
+  skurliste,
+}) => {
   return (
     <div className="overflow-scroll">
       {" "}
       <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-primary ">
         <thead>
-          <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left bg-secondary hover:bg-secondary">
+          <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 bg-secondary text-left hover:bg-secondary">
             <th className="text-sm text-primary">Treslag</th>
             <th className="text-sm text-primary">Kl</th>
             <th className="text-sm text-primary">KlGrense</th>
