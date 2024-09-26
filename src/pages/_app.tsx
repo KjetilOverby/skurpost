@@ -6,26 +6,31 @@ import { PostInfoContext } from "../components/context";
 
 import "~/styles/globals.css";
 import { useState, useEffect } from "react";
-import { get } from "http";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   const [postId, setPostId] = useState("");
-  const [colorMode, setColorMode] = useState();
+  const [colorMode, setColorMode] = useState<string | undefined>(undefined);
   const [postInfoWriteChange, setPostInfoWriteChange] = useState("");
   const [postInfoWrite, setPostInfoWrite] = useState("");
   const [searchInputAll, setSearchInputAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const [getUserInfo, setGetUserInfo] = useState();
+  interface UserInfo {
+    id: string;
+    // Add other properties if needed
+  }
+
+  const [getUserInfo, setGetUserInfo] = useState<UserInfo | undefined>(
+    undefined,
+  );
   const {
     data: posts,
     isLoading,
     error,
   } = api.settings.getByUser.useQuery({
-    user: getUserInfo?.name,
     userId: getUserInfo?.id,
   });
 

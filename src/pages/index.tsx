@@ -21,7 +21,7 @@ interface HomeProps {
 
 export default function Home({ colorMode }: HomeProps) {
   const { data: sessionData } = useSession();
-  const { data: users } = api.users.getUsers.useQuery({});
+  const { data: users } = api.users.getUsers.useQuery();
   const context = useContext(PostInfoContext);
   const ctx = api.useContext();
 
@@ -88,14 +88,14 @@ export default function Home({ colorMode }: HomeProps) {
       )}
       <RoleAdminMV>
         {posts && sessionData && posts.userId === sessionData.user.id ? (
-          <StartPageRole colorMode={colorMode} sessionData={sessionData} />
+          <StartPageRole colorMode={colorMode} />
         ) : (
           <SaveSettingsWelcome handler={handleCreate} />
         )}
       </RoleAdminMV>
       <RoleAdminVS>
         {posts && posts.userId === sessionData?.user?.id ? (
-          <StartPageRole colorMode={colorMode} sessionData={sessionData} />
+          <StartPageRole colorMode={colorMode} />
         ) : (
           <SaveSettingsWelcome handler={handleCreate} />
         )}
