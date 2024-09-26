@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-const ColorTheme = ({ update, theme }) => {
+interface ColorThemeProps {
+  update: (value: string) => void;
+  theme: string;
+}
+
+const ColorTheme: React.FC<ColorThemeProps> = ({ update, theme }) => {
   // Initialize activeButton with "Darkmode" as the default value
   const [activeButton, setActiveButton] = useState<string>("");
 

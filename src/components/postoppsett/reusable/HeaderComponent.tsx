@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -16,22 +11,26 @@ import { FaUserLarge } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 import { PostInfoContext } from "../../context";
 
-interface headerProps {
-  setTheme: Dispatch<SetStateAction<string>>;
+interface HeaderComponentProps {
+  colorMode: string;
 }
 
-const HeaderComponent = ({ colorMode }) => {
+const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
   const router = useRouter();
   const context = useContext(PostInfoContext);
 
   const text = "text-primary";
   const logo = "text-primary";
 
-  const { editMode, setEditMode } = context;
+  const { editMode, setEditMode } = context || {};
 
   const [actualPage, setActualPage] = useState({
     search: "",
     statistikk: "",
+    oversikt: "",
+    opprett: "",
+    listcreator: "",
+    list: "",
   });
 
   const [submenuVisibility, setSubmenuVisibility] = useState({
@@ -41,41 +40,9 @@ const HeaderComponent = ({ colorMode }) => {
 
   const classText = "font-bold underline";
 
-  useEffect(() => {
-    if (router.pathname === "/search") {
-      setActualPage({
-        search: classText,
-        statistikk: "",
-        oversikt: "",
-        opprett: "",
-      });
-    } else if (router.pathname === "/statistikk") {
-      setActualPage({
-        search: "",
-        statistikk: classText,
-        oversikt: "",
-        opprett: "",
-      });
-    } else if (router.pathname === "/oversikt") {
-      setActualPage({
-        search: "",
-        statistikk: "",
-        oversikt: classText,
-        opprett: "",
-      });
-    } else if (router.pathname === "/newtools") {
-      setActualPage({
-        search: "",
-        statistikk: "",
-        oversikt: "",
-        opprett: classText,
-      });
-    }
-  }, [router]);
-
   const { data: sessionData } = useSession();
 
-  const toggleSubmenu = (menu) => {
+  const toggleSubmenu = (menu: "skurliste" | "innstillinger") => {
     setSubmenuVisibility((prevVisibility) => {
       const newVisibility = { skurliste: false, innstillinger: false };
       newVisibility[menu] = !prevVisibility[menu];
@@ -109,7 +76,7 @@ const HeaderComponent = ({ colorMode }) => {
                 >
                   <FaClipboardList className={`text-2xl ${logo} mb-2`} />
                   <li>
-                    <p className={`text-xs ${text} ${actualPage.list}`}>
+                    <p className={`text-xs ${text} ${actualPage.listcreator}`}>
                       Rediger
                     </p>
                   </li>
@@ -123,7 +90,7 @@ const HeaderComponent = ({ colorMode }) => {
                       <Link href="/create/listcreator">Rediger skurliste</Link>
                     </li>
                     <li
-                      onClick={() => setEditMode(true)}
+                      onClick={() => setEditMode && setEditMode(true)}
                       className="px-4 py-2 hover:bg-secondary"
                     >
                       <Link href="/postoppsett">Lag ny post</Link>
@@ -153,7 +120,7 @@ const HeaderComponent = ({ colorMode }) => {
               <div className="h-10 w-10">
                 <img
                   className="w-full  rounded-full"
-                  src={sessionData?.user.image}
+                  src={sessionData?.user.image ?? ""}
                   alt=""
                 />
               </div>

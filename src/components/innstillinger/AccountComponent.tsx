@@ -14,7 +14,11 @@ const AccountComponent = () => {
       </div>
       <div className="flex gap-5">
         <div>
-          <img className="rounded-xl" src={sessionData?.user.image} alt="" />
+          <img
+            className="rounded-xl"
+            src={sessionData?.user.image ?? ""}
+            alt=""
+          />
         </div>
         <div>
           <p className="text-primary">Email: {sessionData?.user.email}</p>

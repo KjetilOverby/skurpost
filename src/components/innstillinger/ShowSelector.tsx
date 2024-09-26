@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 
-const ShowSelector = ({ update }) => {
+interface ShowSelectorProps {
+  update: (toggles: {
+    toggle1: boolean;
+    toggle2: boolean;
+    toggle3: boolean;
+  }) => void;
+}
+
+const ShowSelector: React.FC<ShowSelectorProps> = ({ update }) => {
   const [toggles, setToggles] = useState({
     toggle1: false,
     toggle2: false,
