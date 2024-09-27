@@ -1,10 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// @ts-nocheck
 import React, { useState, useEffect, use } from "react";
 import Ring from "./reusable/rings/Ring";
 import RawRing from "./reusable/rings/RawRing";
@@ -28,6 +21,8 @@ import { useContext } from "react";
 import { PostInfoContext } from "../context";
 
 interface Item {
+  value: any;
+  id: any;
   header: string;
   startrings: { input: string }[];
   blade: string;
@@ -63,10 +58,24 @@ const PostoppsettComponent = ({
   const [startringSum, setStartringSum] = useState(0);
   const [endringSum, setEndringSum] = useState(0);
   const [rawinputSum, setRawinputSum] = useState(0);
-  const [localData, setLocalData] = useState();
+  interface LocalData {
+    startRings: { id: string; value: string }[];
+    startRingsAlt: { id: string; value: string }[];
+    endRings: { id: string; value: string }[];
+    endRingsAlt: { id: string; value: string }[];
+    rawInput: { id: string; value: string }[];
+    blade: number;
+    prosent: number;
+    plankeTy: string;
+    spes: string;
+    header: string;
+    createdAt: Date;
+  }
+
+  const [localData, setLocalData] = useState<LocalData | null>(null);
   const [rawInputValue, setRawInputValue] = useState(0);
   const [rawValueFromInput, setRawValueFromInput] = useState(0);
-  const [bladeSum, setBladeSum] = useState();
+  const [bladeSum, setBladeSum] = useState<number>(0);
   const [openRawDivide, setOpenRawDivide] = useState(false);
   const [getRawValues, setGetRawValues] = useState();
 
@@ -82,8 +91,8 @@ const PostoppsettComponent = ({
   const [startRingsAltShow, setstartRingsAltShow] = useState(false);
   const [endRingsAltShow, setEndRingsAltShow] = useState(false);
 
-  const [differenceStart, setDifferenceStart] = useState(null);
-  const [differenceEnd, setDifferenceEnd] = useState(null);
+  const [differenceStart, setDifferenceStart] = useState<string | null>(null);
+  const [differenceEnd, setDifferenceEnd] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -116,12 +125,16 @@ const PostoppsettComponent = ({
     deletePost.mutate({ id: postId });
   };
 
-  const startRings = localData?.startRings;
+  const startRings =
+    localData?.startRings?.map((ring) => ({
+      ...ring,
+      value: Number(ring.value),
+    })) || [];
   const startRingsAlt = localData?.startRingsAlt;
   const endRings = localData?.endRings;
   const endRingsAlt = localData?.endRingsAlt;
   const rawRings = localData?.rawInput;
-  const rawDivideParse = localData?.rawDivide;
+  // const rawDivideParse = localData?.rawDivide;
 
   const [headerText, setHeaderText] = useState("");
 
@@ -139,13 +152,14 @@ const PostoppsettComponent = ({
 
   useEffect(() => {
     setHeaderText(
-      `${rawRings?.length}x${localData?.plankeTy}-${localData?.prosent}%-${(localData?.blade + 1.4).toFixed(1)}${localData?.spes}`,
+      `${rawRings?.length}x${localData?.plankeTy}-${localData?.prosent}%-${((localData?.blade ?? 0) + 1.4).toFixed(1)}${localData?.spes}`,
     );
   }, [data, localData]);
 
   const [alertShown, setAlertShown] = useState(false);
 
-  const updateData = async (event, id) => {
+  const updateData = async (id: string, data: {}) => {
+    //@ts-expect-error
     if (differenceStart >= 0.05 || differenceStart <= -0.05) {
       alert("Ufylling foran er ikke korrekt");
       setAlertShown(true);
@@ -181,14 +195,34 @@ const PostoppsettComponent = ({
           id,
           header,
           plankeTy,
-          startRings,
-          startRingsAlt,
-          endRingsAlt,
-          endRings,
-          rawInput,
-          blade,
+          startRings:
+            localData?.startRings?.map((ring) => ({
+              ...ring,
+              value: Number(ring.value),
+            })) || [],
+          startRingsAlt:
+            localData?.startRingsAlt?.map((ring) => ({
+              ...ring,
+              value: Number(ring.value),
+            })) || [],
+          endRingsAlt:
+            localData?.endRingsAlt?.map((ring) => ({
+              ...ring,
+              value: Number(ring.value),
+            })) || [],
+          endRings:
+            localData?.endRings?.map((ring) => ({
+              ...ring,
+              value: Number(ring.value),
+            })) || [],
+          rawInput:
+            localData?.rawInput?.map((item) => ({
+              ...item,
+              value: Number(item.value),
+            })) || [],
+          blade: blade ?? 0,
           prosent,
-          spes,
+          spes: spes ?? "",
           xlog,
           sawType,
         });
@@ -207,6 +241,8 @@ const PostoppsettComponent = ({
     } else {
       if (localData) {
         setLocalData((prevData) => {
+          if (!prevData) return null;
+
           const updatedRawInput = prevData.rawInput.map((item) => {
             if (item.value === getRawValues) {
               return {
@@ -223,6 +259,9 @@ const PostoppsettComponent = ({
           return {
             ...prevData,
             rawInput: updatedRawInput,
+            startRingsAlt: prevData.startRingsAlt ?? [],
+            endRings: prevData.endRings ?? [],
+            endRingsAlt: prevData.endRingsAlt ?? [],
           };
         });
       }
@@ -271,14 +310,34 @@ const PostoppsettComponent = ({
         const response = await createPost.mutateAsync({
           header,
           plankeTy,
-          startRings,
-          endRings,
-          startRingsAlt,
-          endRingsAlt,
-          rawInput,
-          blade,
+          startRings:
+            localData?.startRings?.map((ring) => ({
+              ...ring,
+              value: Number(ring.value),
+            })) || [],
+          endRings:
+            localData?.endRings?.map((ring) => ({
+              ...ring,
+              value: Number(ring.value),
+            })) || [],
+          startRingsAlt:
+            localData?.startRingsAlt?.map((ring) => ({
+              ...ring,
+              value: Number(ring.value),
+            })) || [],
+          endRingsAlt:
+            localData?.endRingsAlt?.map((ring) => ({
+              ...ring,
+              value: Number(ring.value),
+            })) || [],
+          rawInput:
+            localData?.rawInput?.map((item) => ({
+              ...item,
+              value: Number(item.value),
+            })) || [],
+          blade: blade ?? 0,
           prosent,
-          spes,
+          spes: spes ?? "",
           xlog,
           sawType,
           kunde,
@@ -292,7 +351,7 @@ const PostoppsettComponent = ({
     }
   };
 
-  const openRawDivideHandler = (value) => {
+  const openRawDivideHandler = (value: React.SetStateAction<undefined>) => {
     setOpenRawDivide(true);
     setGetRawValues(value);
   };
@@ -334,11 +393,11 @@ const PostoppsettComponent = ({
         0,
       );
 
-      const bladeTotal = localData.blade * rawRings?.length;
+      const bladeTotal = localData.blade * (rawRings?.length ?? 0);
 
       setStartringSum(startringTotal);
       setEndringSum(endringTotal);
-      setRawinputSum(rawinputTotal);
+      setRawinputSum(rawinputTotal ?? 0);
       setBladeSum(bladeTotal);
     }
   }, [localData, rawinputSum, startRingsAltShow, endRingsAltShow]);
@@ -348,24 +407,45 @@ const PostoppsettComponent = ({
       console.log("Alert was shown, skipping useEffect logic.");
     } else {
       if (data) {
-        setLocalData(data);
+        const mappedData: LocalData = {
+          startRings: data.map((item) => ({ id: item.id, value: item.value })),
+          startRingsAlt: data.map((item) => ({
+            id: item.id,
+            value: item.value,
+          })),
+          endRings: data.map((item) => ({ id: item.id, value: item.value })),
+          endRingsAlt: data.map((item) => ({ id: item.id, value: item.value })),
+          rawInput: data.map((item) => ({ id: item.id, value: item.value })),
+          blade: 0,
+          prosent: 0,
+          plankeTy: "",
+          spes: "",
+          header: "",
+          createdAt: new Date(),
+        };
+        setLocalData(mappedData);
       }
     }
   }, [data, alertShown]);
 
-  const deleteStartring = (id) => {
+  const deleteStartring = (id: string) => {
     setLocalData((prevData) => {
+      if (!prevData) return null;
       const updatedStartRings = prevData.startRings.filter(
         (ringItem) => ringItem.id !== id,
       );
       return {
         ...prevData,
         startRings: updatedStartRings,
+        startRingsAlt: prevData.startRingsAlt ?? [],
+        endRings: prevData.endRings ?? [],
+        endRingsAlt: prevData.endRingsAlt ?? [],
       };
     });
   };
-  const deleteStartringAlt = (id) => {
+  const deleteStartringAlt = (id: string) => {
     setLocalData((prevData) => {
+      if (!prevData) return null;
       const updatedStartRings = prevData.startRingsAlt.filter(
         (ringItem) => ringItem.id !== id,
       );
@@ -376,8 +456,9 @@ const PostoppsettComponent = ({
     });
   };
 
-  const deleteEndring = (id) => {
+  const deleteEndring = (id: string) => {
     setLocalData((prevData) => {
+      if (!prevData) return null;
       const updatedEndRings = prevData.endRings.filter(
         (ringItem) => ringItem.id !== id,
       );
@@ -388,8 +469,9 @@ const PostoppsettComponent = ({
     });
   };
 
-  const deleteEndringAlt = (id) => {
+  const deleteEndringAlt = (id: string) => {
     setLocalData((prevData) => {
+      if (!prevData) return null;
       const updatedEndRings = prevData.endRingsAlt.filter(
         (ringItem) => ringItem.id !== id,
       );
@@ -400,8 +482,9 @@ const PostoppsettComponent = ({
     });
   };
 
-  const deleteRawInput = (id) => {
+  const deleteRawInput = (id: string) => {
     setLocalData((prevData) => {
+      if (!prevData) return null;
       const updatedRawRings = prevData.rawInput.filter(
         (ringItem) => ringItem.id !== id,
       );
@@ -412,85 +495,163 @@ const PostoppsettComponent = ({
     });
   };
 
-  const handleRingPickerChange = (value) => {
+  const handleRingPickerChange = (value: string) => {
     const startRingsCopy = [...(localData?.startRings || [])];
     startRingsCopy.push({ id: uuidv4(), value: value });
 
     setLocalData({
       ...localData,
       startRings: startRingsCopy,
+      startRingsAlt: localData?.startRingsAlt ?? [],
+      endRings: localData?.endRings ?? [],
+      endRingsAlt: localData?.endRingsAlt ?? [],
+      rawInput: localData?.rawInput ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
     });
   };
 
-  const handleRingPickerChangeAlt = (value) => {
+  const handleRingPickerChangeAlt = (value: string) => {
     const startRingsCopy = [...(localData?.startRingsAlt || [])];
     startRingsCopy.push({ id: uuidv4(), value: value });
 
     setLocalData({
       ...localData,
       startRingsAlt: startRingsCopy,
+      startRings: localData?.startRings ?? [],
+      endRings: localData?.endRings ?? [],
+      endRingsAlt: localData?.endRingsAlt ?? [],
+      rawInput: localData?.rawInput ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
     });
   };
 
-  const handleEndRingPickerChange = (value) => {
+  const handleEndRingPickerChange = (value: string) => {
     const endRingsCopy = [...(localData?.endRings || [])];
     endRingsCopy.push({ id: uuidv4(), value: value });
 
     setLocalData({
       ...localData,
       endRings: endRingsCopy,
+      startRings: localData?.startRings ?? [],
+      startRingsAlt: localData?.startRingsAlt ?? [],
+      endRingsAlt: localData?.endRingsAlt ?? [],
+      rawInput: localData?.rawInput ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
     });
   };
 
-  const handleEndRingPickerChangeAlt = (value) => {
+  const handleEndRingPickerChangeAlt = (value: string) => {
     const endRingsCopy = [...(localData?.endRingsAlt || [])];
     endRingsCopy.push({ id: uuidv4(), value: value });
 
     setLocalData({
       ...localData,
       endRingsAlt: endRingsCopy,
+      startRings: localData?.startRings ?? [],
+      startRingsAlt: localData?.startRingsAlt ?? [],
+      endRings: localData?.endRings ?? [],
+      rawInput: localData?.rawInput ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
     });
   };
 
-  const handleRawRingPickerChange = (value) => {
+  const handleRawRingPickerChange = (value: string) => {
     const rawRings = [...(localData?.rawInput ?? [])];
 
     rawRings.push({
       id: uuidv4(),
-      value: Number(rawValueFromInput),
+      value: rawValueFromInput.toString(),
     });
 
     setLocalData({
       ...localData,
       rawInput: rawRings,
+      startRings: localData?.startRings ?? [],
+      startRingsAlt: localData?.startRingsAlt ?? [],
+      endRings: localData?.endRings ?? [],
+      endRingsAlt: localData?.endRingsAlt ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
     });
   };
 
-  const sawbladeSelectHandler = (event) => {
-    setLocalData({
-      ...localData,
-      blade: parseFloat(event.target.value),
-    });
+  const sawbladeSelectHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (localData) {
+      setLocalData({
+        ...localData,
+        blade: parseFloat(event.target.value),
+      });
+    }
   };
 
-  const prosentSelectHandler = (event) => {
-    setLocalData({
-      ...localData,
+  const prosentSelectHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalData((prevData) => ({
+      ...prevData,
       prosent: parseFloat(event.target.value),
-    });
+      startRings: prevData?.startRings ?? [],
+      startRingsAlt: prevData?.startRingsAlt ?? [],
+      endRings: prevData?.endRings ?? [],
+      endRingsAlt: prevData?.endRingsAlt ?? [],
+      rawInput: prevData?.rawInput ?? [],
+      blade: prevData?.blade ?? 0,
+      plankeTy: prevData?.plankeTy ?? "",
+      spes: prevData?.spes ?? "",
+      header: prevData?.header ?? "",
+      createdAt: prevData?.createdAt ?? new Date(),
+    }));
   };
 
-  const handlePlankeTy = (event) => {
-    setLocalData({
-      ...localData,
-      plankeTy: String(event.target.value),
-    });
+  const handlePlankeTy = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (localData) {
+      setLocalData({
+        ...localData,
+        plankeTy: event.target.value,
+        startRings: localData.startRings ?? [],
+        startRingsAlt: localData.startRingsAlt ?? [],
+        endRings: localData.endRings ?? [],
+        endRingsAlt: localData.endRingsAlt ?? [],
+        rawInput: localData.rawInput ?? [],
+        blade: localData.blade ?? 0,
+        prosent: localData.prosent ?? 0,
+        spes: localData.spes ?? "",
+        header: localData.header ?? "",
+        createdAt: localData.createdAt ?? new Date(),
+      });
+    }
   };
-  const handleSpes = (event) => {
-    setLocalData({
-      ...localData,
-      spes: event.target.value,
-    });
+  const handleSpes = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (localData) {
+      setLocalData({
+        ...localData,
+        spes: event.target.value,
+      });
+    }
   };
 
   useEffect(() => {
@@ -498,7 +659,7 @@ const PostoppsettComponent = ({
       calc.mkv.middleEnd -
       rawinputSum / 2 -
       bladeSum / 2 -
-      localData?.blade / 2 -
+      (localData?.blade ?? 0) / 2 -
       endringSum
     ).toFixed(2);
     setDifferenceEnd(calculatedDifferenceEnd);
@@ -517,7 +678,7 @@ const PostoppsettComponent = ({
       calc.mkv.toMiddle -
       rawinputSum / 2 -
       bladeSum / 2 -
-      localData?.blade / 2 -
+      (localData?.blade ?? 0) / 2 -
       startringSum
     ).toFixed(2);
 
@@ -531,8 +692,9 @@ const PostoppsettComponent = ({
     localData?.blade,
     startringSum,
   ]);
-  const moveLeft = (id) => {
+  const moveLeft = (id: string) => {
     const ringsKey = startRingsAltShow ? "startRingsAlt" : "startRings";
+    if (!localData) return;
     const rings = localData[ringsKey];
     const index = rings.findIndex((item) => item.id === id);
 
@@ -549,7 +711,7 @@ const PostoppsettComponent = ({
     }
   };
 
-  const moveRight = (id) => {
+  const moveRight = (id: string) => {
     const ringsKey = startRingsAltShow ? "startRingsAlt" : "startRings";
     const rings = localData[ringsKey];
     const index = rings.findIndex((item) => item.id === id);
@@ -585,7 +747,7 @@ const PostoppsettComponent = ({
     }
   };
 
-  const moveLeftEnd = (id) => {
+  const moveLeftEnd = (id: string) => {
     const ringsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
     const rings = localData[ringsKey];
     const index = rings.findIndex((item) => item.id === id);
@@ -603,7 +765,7 @@ const PostoppsettComponent = ({
     }
   };
 
-  const moveLeftRaw = (id) => {
+  const moveLeftRaw = (id: string) => {
     const index = rawRings.findIndex((item) => item.id === id);
 
     if (index > 0) {
@@ -618,7 +780,7 @@ const PostoppsettComponent = ({
       });
     }
   };
-  const moveRightRaw = (id) => {
+  const moveRightRaw = (id: string) => {
     const index = rawRings.findIndex((item) => item.id === id);
 
     if (index < rawRings?.length - 1) {
@@ -638,21 +800,43 @@ const PostoppsettComponent = ({
     setLocalData({
       header: "",
       startRings: [],
+      startRingsAlt: [],
       endRings: [],
+      endRingsAlt: [],
       rawInput: [],
       blade: 0,
       prosent: 0,
+      plankeTy: "",
       spes: "",
+      createdAt: new Date(),
     });
   };
 
   const resetUtfyllingHandler = () => {
-    setLocalData({ ...localData, startRings: [], endRings: [] });
+    setLocalData({
+      ...localData,
+      startRings: [],
+      endRings: [],
+      startRingsAlt: localData?.startRingsAlt ?? [],
+      endRingsAlt: localData?.endRingsAlt ?? [],
+      rawInput: localData?.rawInput ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
+    });
   };
 
   const [searchGetAll, setSearchGetAll] = useState("");
 
-  const clickSearch = (post) => {
+  const clickSearch = (post: {
+    post: any;
+    prosent: any;
+    blad: number;
+    bredde: any;
+  }) => {
     setSearchInput(`${post.post}-${post.prosent}%-${post.blad.toFixed(1)}`);
     setPostInfoWrite(`${post.post}x${post.bredde} ${post.blad.toFixed(1)}`);
     setClickSearchOpen(true);
@@ -840,7 +1024,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   <p className="text-3xl text-primary">
                     {rawRings?.length}x{localData?.plankeTy}-
                     {localData?.prosent}
-                    %-{(localData?.blade + 1.4).toFixed(1)}
+                    %-{((localData?.blade ?? 0) + 1.4).toFixed(1)}
                     {localData?.spes}
                   </p>
                 </div>
@@ -854,7 +1038,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                             calc.mkv.toMiddle -
                             rawinputSum / 2 -
                             bladeSum / 2 -
-                            localData?.blade / 2
+                            (localData?.blade ?? 0) / 2
                           ).toFixed(2)}
                         </p>
                         <p className="text-primary">
@@ -862,7 +1046,8 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                         </p>
                         <p
                           className={`${
-                            differenceStart >= -0.05 && differenceStart <= 0.05
+                            Number(differenceStart ?? 0) >= -0.05 &&
+                            Number(differenceStart ?? 0) <= 0.05
                               ? "text-green-500"
                               : "text-red-400"
                           }`}
