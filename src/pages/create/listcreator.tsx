@@ -23,13 +23,14 @@ const Listcreator = ({ colorMode }: { colorMode: string }) => {
     setGetUserInfo(sessionData && sessionData.user);
   }, [sessionData, setGetUserInfo]);
   useEffect(() => {
-    users?.forEach((user) => {
-      if (user.role === "MV_ADMIN") {
+    if (users && users.length > 0) {
+      const firstUser = users[0];
+      if (firstUser && firstUser.role === "MV_ADMIN") {
         setKundeID("MV");
-      } else if (user.role === "VS_ADMIN") {
+      } else if (firstUser && firstUser.role === "VS_ADMIN") {
         setKundeID("VS");
       }
-    });
+    }
   }, [users]);
   const [bufferStatus, setBufferStatus] = useState(false);
   const { data: skurliste } = api.skurliste.getAll.useQuery({

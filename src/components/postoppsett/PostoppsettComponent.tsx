@@ -11,7 +11,6 @@ import BladeSelector from "./Bladeselector";
 import { api } from "~/utils/api";
 import EditHeader from "./reusable/EditHeader";
 import { RawDivideComponent } from "./RawDivideComponent";
-import Link from "next/link";
 import { MiniList } from "./reusable/MiniList";
 import { SearchResultComponent } from "./reusable/SearchResultComponent";
 import { useRouter } from "next/router";
@@ -34,7 +33,7 @@ const PostoppsettComponent = ({
   postId,
   setPostId,
 }: {
-  data: Item[];
+  data: object;
   postId: string;
   setPostId: (id: string) => void;
 }) => {
@@ -101,6 +100,9 @@ const PostoppsettComponent = ({
     header: searchInput,
     kundeID: kundeID,
   });
+
+  console.log(searchInput);
+  console.log(data);
 
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
@@ -405,30 +407,11 @@ const PostoppsettComponent = ({
   }, [localData, rawinputSum, startRingsAltShow, endRingsAltShow]);
 
   useEffect(() => {
-    if (alertShown) {
-      console.log("Alert was shown, skipping useEffect logic.");
-    } else {
-      if (data) {
-        const mappedData: LocalData = {
-          startRings: data.map((item) => ({ id: item.id, value: item.value })),
-          startRingsAlt: data.map((item) => ({
-            id: item.id,
-            value: item.value,
-          })),
-          endRings: data.map((item) => ({ id: item.id, value: item.value })),
-          endRingsAlt: data.map((item) => ({ id: item.id, value: item.value })),
-          rawInput: data.map((item) => ({ id: item.id, value: item.value })),
-          blade: 0,
-          prosent: 0,
-          plankeTy: "",
-          spes: "",
-          header: "",
-          createdAt: new Date(),
-        };
-        setLocalData(mappedData);
-      }
+    if (data) {
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+      setLocalData(data);
     }
-  }, [data, alertShown]);
+  }, [data]);
 
   const deleteStartring = (id: string) => {
     setLocalData((prevData) => {

@@ -10,6 +10,11 @@ Finne løsning på rawDivide
 nullstille ID på post når man velger lag ny post
 edit mode henter ikke opprinnelig post ved avbryt
 
+Miniliste finner ikke poster når jeg klikker
+kan ikke slette ringer 
+kan ikke flytte ringer
+ringpicker rawdivide virker ikke 
+
 
 
 

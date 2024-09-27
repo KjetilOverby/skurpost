@@ -61,6 +61,8 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
     }
   }, [user]);
 
+  console.log(kundeID);
+
   const [searchInput, setSearchInput] = useState("");
 
   const [clickSearchOpen, setClickSearchOpen] = useState(false);
