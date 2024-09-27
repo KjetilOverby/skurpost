@@ -9,8 +9,6 @@ import React, { useEffect } from "react";
 import { api } from "~/utils/api";
 
 const InputListComponent = ({ listProps, setListProps }) => {
-  console.log(listProps);
-
   const klassetype = [
     "Spesial",
     "Panel",

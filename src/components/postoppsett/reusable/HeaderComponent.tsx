@@ -53,7 +53,9 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
         <div
           className={` z-10 mx-auto flex max-w-screen-xl flex-wrap items-center justify-between`}
         >
-          <div className="flex"></div>
+          <div className="text-xl font-bold italic text-green-600">
+            LUMBER <span className="text-blue-500">LOGIC</span>
+          </div>
           <div className="flex">
             <ul className="mt-4 flex flex-row  space-x-8 font-medium lg:mt-0">
               <Link href="/">

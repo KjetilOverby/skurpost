@@ -65,6 +65,7 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   const [maxOrder, setMaxOrder] = useState(1);
 
   const [kundeID, setKundeID] = useState<string>("");
+  const currentUserId = sessionData?.user?.id;
 
   useEffect(() => {
     if (skurliste && skurliste.length > 0) {
@@ -93,15 +94,18 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   }, [maxOrder]);
 
   useEffect(() => {
-    if (users && users.length > 0) {
-      const firstUser = users[0];
-      if (firstUser && firstUser.role === "MV_ADMIN") {
-        setKundeID("MV");
-      } else if (firstUser && firstUser.role === "VS_ADMIN") {
-        setKundeID("VS");
+    if (user && user.length > 0 && currentUserId) {
+      const currentUser = user.find((use) => use.id === currentUserId);
+
+      if (currentUser) {
+        if (currentUser.role === "MV_ADMIN") {
+          setKundeID("MV");
+        } else if (currentUser.role === "VS_ADMIN") {
+          setKundeID("VS");
+        }
       }
     }
-  }, [users]);
+  }, [user, currentUserId]);
 
   const [listProps, setListProps] = useState<SkurlisteItem>({
     id: "", // Add the id property here

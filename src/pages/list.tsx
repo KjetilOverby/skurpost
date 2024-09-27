@@ -27,10 +27,12 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
   });
   const [kundeID, setKundeID] = useState<string | undefined>(undefined);
   const [openManualSearch, setOpenManualSearch] = useState(false);
+  const currentUserId = sessionData?.user?.id;
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
     kunde: kundeID ?? "",
   });
+
   const context = useContext(PostInfoContext);
   if (!context) {
     throw new Error();
@@ -51,17 +53,18 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
   }, [sessionData, setGetUserInfo]);
 
   useEffect(() => {
-    if (user && user.length > 0) {
-      const firstUser = user[0];
-      if (firstUser && firstUser.role === "MV_ADMIN") {
-        setKundeID("MV");
-      } else if (firstUser && firstUser.role === "VS_ADMIN") {
-        setKundeID("VS");
+    if (user && user.length > 0 && currentUserId) {
+      const currentUser = user.find((use) => use.id === currentUserId);
+
+      if (currentUser) {
+        if (currentUser.role === "MV_ADMIN") {
+          setKundeID("MV");
+        } else if (currentUser.role === "VS_ADMIN") {
+          setKundeID("VS");
+        }
       }
     }
-  }, [user]);
-
-  console.log(kundeID);
+  }, [user, currentUserId]);
 
   const [searchInput, setSearchInput] = useState("");
 

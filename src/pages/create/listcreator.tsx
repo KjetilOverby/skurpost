@@ -17,26 +17,33 @@ const Listcreator = ({ colorMode }: { colorMode: string }) => {
   const context = useContext(PostInfoContext);
   const [kundeID, setKundeID] = useState("");
   const { data: sessionData } = useSession();
+  const currentUserId = sessionData?.user?.id;
 
   const { setGetUserInfo } = context;
   useEffect(() => {
     setGetUserInfo(sessionData && sessionData.user);
   }, [sessionData, setGetUserInfo]);
+
   useEffect(() => {
-    if (users && users.length > 0) {
-      const firstUser = users[0];
-      if (firstUser && firstUser.role === "MV_ADMIN") {
-        setKundeID("MV");
-      } else if (firstUser && firstUser.role === "VS_ADMIN") {
-        setKundeID("VS");
+    if (users && users.length > 0 && currentUserId) {
+      const currentUser = users.find((user) => user.id === currentUserId);
+
+      if (currentUser) {
+        if (currentUser.role === "MV_ADMIN") {
+          setKundeID("MV");
+        } else if (currentUser.role === "VS_ADMIN") {
+          setKundeID("VS");
+        }
       }
     }
-  }, [users]);
+  }, [users, currentUserId]);
+
   const [bufferStatus, setBufferStatus] = useState(false);
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: bufferStatus,
     kunde: kundeID,
   });
+
   return (
     <div data-theme={colorMode} className="min-h-screen bg-base-100">
       <HeaderComponent colorMode={colorMode} />

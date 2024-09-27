@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use, SetStateAction } from "react";
+import React, { useState, useEffect, use, SetStateAction, Key } from "react";
 import Ring from "./reusable/rings/Ring";
 import RawRing from "./reusable/rings/RawRing";
 import Blade from "./reusable/rings/Blade";
@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import dateFormat from "dateformat";
 import { useContext } from "react";
 import { PostInfoContext } from "../context";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 interface Item {
   value: string;
@@ -52,7 +53,7 @@ const PostoppsettComponent = ({
     editMode,
     setEditMode,
   } = context;
-
+  const { data: sessionData } = useSession();
   const [startringSum, setStartringSum] = useState(0);
   const [endringSum, setEndringSum] = useState(0);
   const [rawinputSum, setRawinputSum] = useState(0);
@@ -91,6 +92,8 @@ const PostoppsettComponent = ({
 
   const [differenceStart, setDifferenceStart] = useState<string | null>(null);
   const [differenceEnd, setDifferenceEnd] = useState<string | null>(null);
+
+  const currentUserId = sessionData?.user?.id;
 
   const router = useRouter();
 
@@ -142,14 +145,18 @@ const PostoppsettComponent = ({
   const rawValues = rawRings?.map((item) => item);
 
   useEffect(() => {
-    users?.forEach((user) => {
-      if (user.role === "MV_ADMIN") {
-        setKundeID("MV");
-      } else if (user.role === "VS_ADMIN") {
-        setKundeID("VS");
+    if (users && users.length > 0 && currentUserId) {
+      const currentUser = users.find((user) => user.id === currentUserId);
+
+      if (currentUser) {
+        if (currentUser.role === "MV_ADMIN") {
+          setKundeID("MV");
+        } else if (currentUser.role === "VS_ADMIN") {
+          setKundeID("VS");
+        }
       }
-    });
-  }, [users]);
+    }
+  }, [users, currentUserId]);
 
   useEffect(() => {
     setHeaderText(
@@ -677,139 +684,117 @@ const PostoppsettComponent = ({
     localData?.blade,
     startringSum,
   ]);
+  interface RingItem {
+    id: string;
+    value: string;
+  }
+
+  interface LocalData {
+    startRings: RingItem[];
+    startRingsAlt: RingItem[];
+    endRings: RingItem[];
+    endRingsAlt: RingItem[];
+    rawInput: { id: string; value: string }[];
+    blade: number;
+    prosent: number;
+    plankeTy: string;
+    spes: string;
+    header: string;
+    createdAt: Date;
+  }
+
   const moveLeft = (id: string) => {
     const ringsKey = startRingsAltShow ? "startRingsAlt" : "startRings";
     if (!localData) return;
-    if (!localData) return;
-    const rings = localData[ringsKey];
-    const index = rings.findIndex((item) => item.id === id);
+
+    const rings = localData[ringsKey as keyof LocalData];
+    const index = Array.isArray(rings)
+      ? rings.findIndex((item) => item.id === id)
+      : -1;
 
     if (index > 0) {
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       const newItems = [...rings];
       const tempItem = newItems[index];
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index - 1];
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index - 1] = tempItem;
-
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
         ...prevData,
         [ringsKey]: newItems,
-        startRings: prevData?.startRings ?? [],
-        startRingsAlt: prevData?.startRingsAlt ?? [],
-        endRings: prevData?.endRings ?? [],
-        endRingsAlt: prevData?.endRingsAlt ?? [],
-        rawInput: prevData?.rawInput ?? [],
-        blade: prevData?.blade ?? 0,
-        prosent: prevData?.prosent ?? 0,
-        plankeTy: prevData?.plankeTy ?? "",
-        spes: prevData?.spes ?? "",
-        header: prevData?.header ?? "",
-        createdAt: prevData?.createdAt ?? new Date(),
       }));
     }
   };
 
   const moveRight = (id: string) => {
     const ringsKey = startRingsAltShow ? "startRingsAlt" : "startRings";
-    // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-    const rings = localData[ringsKey];
-    const index = rings.findIndex((item) => item.id === id);
+    if (!localData) return;
 
-    if (index < rings.length - 1) {
+    const rings = localData[ringsKey as keyof LocalData];
+    const index = Array.isArray(rings)
+      ? rings.findIndex((item) => item.id === id)
+      : -1;
+
+    if (index > 0) {
       const newItems = [...rings];
       const tempItem = newItems[index];
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index + 1];
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index + 1] = tempItem;
-
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
         ...prevData,
         [ringsKey]: newItems,
-        startRings: prevData?.startRings ?? [],
-        startRingsAlt: prevData?.startRingsAlt ?? [],
-        endRings: prevData?.endRings ?? [],
-        endRingsAlt: prevData?.endRingsAlt ?? [],
-        rawInput: prevData?.rawInput ?? [],
-        blade: prevData?.blade ?? 0,
-        prosent: prevData?.prosent ?? 0,
-        plankeTy: prevData?.plankeTy ?? "",
-        spes: prevData?.spes ?? "",
-        header: prevData?.header ?? "",
-        createdAt: prevData?.createdAt ?? new Date(),
       }));
     }
   };
 
   const moveRightEnd = (id: string) => {
     const ringsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
-    // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-    const rings = localData[ringsKey];
-    const index = rings.findIndex((item) => item.id === id);
+    if (!localData) return;
 
-    if (index < rings.length - 1) {
+    const rings = localData[ringsKey as keyof LocalData];
+    const index = Array.isArray(rings)
+      ? rings.findIndex((item) => item.id === id)
+      : -1;
+
+    if (index > 0) {
       const newItems = [...rings];
       const tempItem = newItems[index];
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index + 1];
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index + 1] = tempItem;
-
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
         ...prevData,
         [ringsKey]: newItems,
-        startRings: prevData?.startRings ?? [],
-        startRingsAlt: prevData?.startRingsAlt ?? [],
-        endRings: prevData?.endRings ?? [],
-        endRingsAlt: prevData?.endRingsAlt ?? [],
-        rawInput: prevData?.rawInput ?? [],
-        blade: prevData?.blade ?? 0,
-        prosent: prevData?.prosent ?? 0,
-        plankeTy: prevData?.plankeTy ?? "",
-        spes: prevData?.spes ?? "",
-        header: prevData?.header ?? "",
-        createdAt: prevData?.createdAt ?? new Date(),
       }));
     }
   };
 
   const moveLeftEnd = (id: string) => {
     const ringsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
-    // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-    const rings = localData[ringsKey];
-    const index = rings.findIndex((item) => item.id === id);
+    if (!localData) return;
+
+    const rings = localData[ringsKey as keyof LocalData];
+    const index = Array.isArray(rings)
+      ? rings.findIndex((item) => item.id === id)
+      : -1;
 
     if (index > 0) {
       const newItems = [...rings];
       const tempItem = newItems[index];
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index - 1];
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index - 1] = tempItem;
-
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
         ...prevData,
         [ringsKey]: newItems,
-        startRings: prevData?.startRings ?? [],
-        startRingsAlt: prevData?.startRingsAlt ?? [],
-        endRings: prevData?.endRings ?? [],
-        endRingsAlt: prevData?.endRingsAlt ?? [],
-        rawInput: prevData?.rawInput ?? [],
-        blade: prevData?.blade ?? 0,
-        prosent: prevData?.prosent ?? 0,
-        plankeTy: prevData?.plankeTy ?? "",
-        spes: prevData?.spes ?? "",
-        header: prevData?.header ?? "",
-        createdAt: prevData?.createdAt ?? new Date(),
       }));
     }
   };
-
   const moveLeftRaw = (id: string) => {
     const index = (rawRings ?? []).findIndex((item) => item.id === id);
 
-    if (index > 0) {
+    if (index < (rawRings?.length ?? 0) + 1) {
       const newItems = [...(rawRings ?? [])];
       const tempItem = newItems[index];
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
@@ -1187,125 +1172,143 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                       </div>
                     </EditMode>
                     {!startRingsAltShow
-                      ? // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                      ? startRings?.map(
+                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                          (ringItem: {
+                            id: string | number;
+                            value: string;
+                          }) => (
+                            <Ring
+                              edit={true}
+                              mode={editMode}
+                              key={ringItem.id}
+                              value={ringItem.value}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                        startRings?.map((ringItem: { value: string }) => (
-                          <Ring
-                            edit={true}
-                            mode={editMode}
-                            key={ringItem.value}
-                            value={ringItem.value}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              deleteRing={deleteStartring}
+                              id={ringItem.id}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                            deleteRing={deleteStartring}
-                            id={ringItem.value}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              moveLeft={moveLeft}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                            moveLeft={moveLeft}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              moveRight={moveRight}
+                            />
+                          ),
+                        )
+                      : startRingsAlt?.map(
+                          (ringItem: { value: string; id: string }) => (
+                            <Ring
+                              edit={true}
+                              mode={editMode}
+                              key={ringItem.id}
+                              value={ringItem.value}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                            moveRight={moveRight}
-                          />
-                        ))
-                      : startRingsAlt?.map((ringItem: { value: string }) => (
-                          <Ring
-                            edit={true}
-                            mode={editMode}
-                            key={ringItem.value}
-                            value={ringItem.value}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              deleteRing={deleteStartringAlt}
+                              id={ringItem.id}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                            deleteRing={deleteStartringAlt}
-                            id={ringItem.value}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              moveLeft={moveLeft}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                            moveLeft={moveLeft}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-
-                            moveRight={moveRight}
-                          />
-                        ))}
+                              moveRight={moveRight}
+                            />
+                          ),
+                        )}
                   </div>
 
                   <Blade blade={localData?.blade ?? 0} />
 
                   <div className="flex">
-                    {rawRings?.map((ringItem: { value: string }) => {
-                      return (
-                        <RawRing
-                          edit={true}
-                          mode={editMode}
-                          key={ringItem.value}
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                    {rawRings?.map(
+                      (ringItem: { value: string; id: string }) => {
+                        return (
+                          <RawRing
+                            edit={true}
+                            mode={editMode}
+                            key={ringItem.id}
+                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                          value={ringItem.value}
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                            value={ringItem.value}
+                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                          blade={localData?.blade}
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                            blade={localData?.blade}
+                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                          deleteRing={deleteRawInput}
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                            deleteRing={deleteRawInput}
+                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                          id={ringItem.value}
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                            id={ringItem.id}
+                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                          moveLeft={moveLeftRaw}
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                            moveLeft={moveLeftRaw}
+                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                          moveRight={moveRightRaw}
-                          /*   rawDivide={rawDivideParse} */
-                          openRawDivideHandler={() =>
-                            openRawDivideHandler(
-                              ringItem.value as unknown as SetStateAction<undefined>,
-                            )
-                          }
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                          getRawValues={getRawValues}
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                            moveRight={moveRightRaw}
+                            /*   rawDivide={rawDivideParse} */
+                            openRawDivideHandler={() =>
+                              openRawDivideHandler(
+                                ringItem.value as unknown as SetStateAction<undefined>,
+                              )
+                            }
+                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                            getRawValues={getRawValues}
+                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
 
-                          ringItem={ringItem}
-                          setRawInputValue={setRawInputValue}
-                          rawInputValue={rawInputValue}
-                          rawData={localData?.rawInput}
-                          localData={localData}
-                          setLocalData={setLocalData}
-                        />
-                      );
-                    })}
+                            ringItem={ringItem}
+                            setRawInputValue={setRawInputValue}
+                            rawInputValue={rawInputValue}
+                            rawData={localData?.rawInput}
+                            localData={localData}
+                            setLocalData={setLocalData}
+                          />
+                        );
+                      },
+                    )}
                   </div>
                   <div className="flex gap-1">
                     {!endRingsAltShow
-                      ? endRings?.map((ringItem: { value: string }) => (
-                          <Ring
-                            edit={true}
-                            mode={editMode}
-                            key={ringItem.value}
-                            value={ringItem.value}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                            deleteRing={deleteEndring}
-                            id={ringItem.value}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                            moveLeft={moveLeftEnd}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                            moveRight={moveRightEnd}
-                          />
-                        ))
-                      : endRingsAlt?.map((ringItem: { value: string }) => (
-                          <Ring
-                            edit={true}
-                            mode={editMode}
-                            key={ringItem.value}
-                            value={ringItem.value}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                            deleteRing={deleteEndringAlt}
-                            id={ringItem.value}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                            moveLeft={moveLeftEnd}
-                            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                            moveRight={moveRightEnd}
-                          />
-                        ))}
+                      ? endRings?.map(
+                          (ringItem: {
+                            id: string | number;
+                            value: string;
+                          }) => (
+                            <Ring
+                              edit={true}
+                              mode={editMode}
+                              key={ringItem.id}
+                              value={ringItem.value}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              deleteRing={deleteEndring}
+                              id={ringItem.id}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              moveLeft={moveLeftEnd}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              moveRight={moveRightEnd}
+                            />
+                          ),
+                        )
+                      : endRingsAlt?.map(
+                          (ringItem: {
+                            id: string | number;
+                            value: string;
+                          }) => (
+                            <Ring
+                              edit={true}
+                              mode={editMode}
+                              key={ringItem.id}
+                              value={ringItem.value}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              deleteRing={deleteEndringAlt}
+                              id={ringItem.id}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              moveLeft={moveLeftEnd}
+                              // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                              moveRight={moveRightEnd}
+                            />
+                          ),
+                        )}
                   </div>
 
                   <EditMode editMode={editMode}>
@@ -1436,7 +1439,8 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
         </div>
         {!editMode && (
           <MiniList
-            clickSearch={clickSearchAll}
+            // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+            clickSearch={clickSearch}
             kundeID={kundeID}
             // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
             skurliste={skurliste}
