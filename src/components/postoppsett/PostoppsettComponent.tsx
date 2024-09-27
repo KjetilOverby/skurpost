@@ -104,9 +104,6 @@ const PostoppsettComponent = ({
     kundeID: kundeID,
   });
 
-  console.log(searchInput);
-  console.log(data);
-
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: false,
     kunde: kundeID,
@@ -713,10 +710,11 @@ const PostoppsettComponent = ({
       : -1;
 
     if (index > 0) {
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-      const newItems = [...rings];
+      const newItems = Array.isArray(rings) ? [...rings] : [];
       const tempItem = newItems[index];
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index - 1];
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index - 1] = tempItem;
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
@@ -735,11 +733,14 @@ const PostoppsettComponent = ({
       ? rings.findIndex((item) => item.id === id)
       : -1;
 
-    if (index > 0) {
-      const newItems = [...rings];
+    if (index >= 0) {
+      const newItems = Array.isArray(rings) ? [...rings] : []; // Oppretter en kopi av rings
       const tempItem = newItems[index];
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index + 1];
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index + 1] = tempItem;
+
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
         ...prevData,
@@ -757,11 +758,14 @@ const PostoppsettComponent = ({
       ? rings.findIndex((item) => item.id === id)
       : -1;
 
-    if (index > 0) {
-      const newItems = [...rings];
+    if (index >= 0) {
+      const newItems = Array.isArray(rings) ? [...rings] : []; // Oppretter en kopi av rings
       const tempItem = newItems[index];
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index + 1];
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index + 1] = tempItem;
+
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
         ...prevData,
@@ -773,16 +777,17 @@ const PostoppsettComponent = ({
   const moveLeftEnd = (id: string) => {
     const ringsKey = endRingsAltShow ? "endRingsAlt" : "endRings";
     if (!localData) return;
-
     const rings = localData[ringsKey as keyof LocalData];
     const index = Array.isArray(rings)
       ? rings.findIndex((item) => item.id === id)
       : -1;
 
     if (index > 0) {
-      const newItems = [...rings];
+      const newItems = Array.isArray(rings) ? [...rings] : [];
       const tempItem = newItems[index];
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index - 1];
+      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index - 1] = tempItem;
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({

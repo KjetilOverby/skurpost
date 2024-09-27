@@ -12,6 +12,7 @@ import SkurlistePakkingComponent from "../postoppsett/reusable/SkurlistePakkingC
 import SkurlisteComponentInput from "./SkurlisteComponentInput";
 import SkurlistePakkingInput from "./SkurlistePakkingInput";
 import { api } from "~/utils/api";
+import { useSession } from "next-auth/react";
 
 interface SkurlisteItem {
   id: string;
@@ -61,8 +62,10 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   bufferStatus,
   setBufferStatus,
 }) => {
-  const { data: users } = api.users.getUsers.useQuery();
+  const { data: user } = api.users.getUsers.useQuery();
+
   const [maxOrder, setMaxOrder] = useState(1);
+  const { data: sessionData } = useSession();
 
   const [kundeID, setKundeID] = useState<string>("");
   const currentUserId = sessionData?.user?.id;

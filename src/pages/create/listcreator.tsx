@@ -1,10 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// @ts-nocheck
 import { useSession } from "next-auth/react";
 import React, { useState, useEffect, useContext } from "react";
 import { PostInfoContext } from "~/components/context";
@@ -13,15 +6,17 @@ import HeaderComponent from "~/components/postoppsett/reusable/HeaderComponent";
 import { api } from "~/utils/api";
 
 const Listcreator = ({ colorMode }: { colorMode: string }) => {
+  const { data: sessionData } = useSession();
   const { data: users } = api.users.getUsers.useQuery();
   const context = useContext(PostInfoContext);
   const [kundeID, setKundeID] = useState("");
-  const { data: sessionData } = useSession();
   const currentUserId = sessionData?.user?.id;
 
-  const { setGetUserInfo } = context;
+  const { setGetUserInfo } = context ?? {};
   useEffect(() => {
-    setGetUserInfo(sessionData && sessionData.user);
+    if (setGetUserInfo) {
+      setGetUserInfo(sessionData && sessionData.user);
+    }
   }, [sessionData, setGetUserInfo]);
 
   useEffect(() => {
