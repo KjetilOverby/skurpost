@@ -10,6 +10,8 @@ interface ContextType {
   setGetUserInfo: (info: unknown) => void; // Use unknown instead of any
   editMode: boolean;
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+  sawType: string;
+  setSawType: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const PostInfoContext = createContext<ContextType | undefined>(
@@ -23,6 +25,7 @@ export const PostInfoProvider: React.FC<{ children: React.ReactNode }> = ({
   const [postInfoWrite, setPostInfoWrite] = useState("");
   const [searchInputAll, setSearchInputAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [sawType, setSawType] = useState("");
 
   const setGetUserInfo = (info: unknown) => {
     // Implement your logic here
@@ -34,12 +37,14 @@ export const PostInfoProvider: React.FC<{ children: React.ReactNode }> = ({
         postInfoWriteChange,
         setPostInfoWriteChange,
         postInfoWrite,
+        setSawType,
         setPostInfoWrite,
         searchInputAll,
         setSearchInputAll,
         setGetUserInfo, // Provide the function here
         editMode,
         setEditMode,
+        sawType: "",
       }}
     >
       {children}

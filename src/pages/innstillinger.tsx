@@ -6,7 +6,7 @@ import ShowSelector from "~/components/innstillinger/ShowSelector";
 import AccountComponent from "~/components/innstillinger/AccountComponent";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { PostInfoContext } from "~/components/context";
-import { boolean } from "zod";
+import SawTypeChoose from "~/components/innstillinger/SawTypeChoose";
 
 interface InnstillingerProps {
   colorMode: string;
@@ -81,6 +81,7 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
             console.log(toggles);
           }}
         />
+        <SawTypeChoose />
       </div>
     </div>
   );

@@ -3,6 +3,8 @@ import Ring from "./reusable/rings/Ring";
 import RawRing from "./reusable/rings/RawRing";
 import Blade from "./reusable/rings/Blade";
 import calc from "~/utils/calc";
+
+type SawType = keyof typeof calc;
 import { EditMode } from "./modes/editMode";
 import RingPicker from "./reusable/ringpicker";
 import ringlist from "~/utils/ringlist";
@@ -29,12 +31,17 @@ interface Item {
   endrings: { input: string }[];
 }
 
+interface Data {
+  sawType: string;
+  // Add other properties of the data object here if needed
+}
+
 const PostoppsettComponent = ({
   data,
   postId,
   setPostId,
 }: {
-  data: object;
+  data: Data;
   postId: string;
   setPostId: (id: string) => void;
 }) => {
@@ -109,6 +116,13 @@ const PostoppsettComponent = ({
     kunde: kundeID,
   });
 
+  const getCalcData = (sawTypeData: string) => {
+    if (sawTypeData === "mkv" || sawTypeData === "mkb") {
+      return calc[sawTypeData];
+    }
+    return null; // or handle invalid sawTypeData
+  };
+
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
       void ctx.postoppsett.getById.invalidate();
@@ -131,11 +145,21 @@ const PostoppsettComponent = ({
       ...ring,
       value: Number(ring.value),
     })) ?? [];
+
   const startRingsAlt = localData?.startRingsAlt;
   const endRings = localData?.endRings;
   const endRingsAlt = localData?.endRingsAlt;
   const rawRings = localData?.rawInput;
   // const rawDivideParse = localData?.rawDivide;
+
+  const [sawTypeData, setSawTypeData] = useState<string>("");
+
+  useEffect(() => {
+    if (data) {
+      setSawTypeData(data.sawType);
+    }
+  }, [data]);
+  console.log(sawTypeData);
 
   const [headerText, setHeaderText] = useState("");
 
@@ -644,18 +668,21 @@ const PostoppsettComponent = ({
   };
 
   useEffect(() => {
-    const calculatedDifferenceEnd = (
-      calc.mkv.middleEnd -
-      rawinputSum / 2 -
-      bladeSum / 2 -
-      (localData?.blade ?? 0) / 2 -
-      endringSum
-    ).toFixed(2);
-    setDifferenceEnd(calculatedDifferenceEnd);
+    const calcData = getCalcData(sawTypeData);
+    if (calcData) {
+      const calculatedDifferenceEnd = (
+        calcData.middleEnd -
+        rawinputSum / 2 -
+        bladeSum / 2 -
+        (localData?.blade ?? 0) / 2 -
+        endringSum
+      ).toFixed(2);
+      setDifferenceEnd(calculatedDifferenceEnd);
+    }
   }, [
+    sawTypeData,
     startRings,
     endRings,
-    calc.mkv.toMiddle,
     rawinputSum,
     bladeSum,
     localData?.blade,
@@ -663,24 +690,28 @@ const PostoppsettComponent = ({
   ]);
 
   useEffect(() => {
-    const calculatedDifferenceStart = (
-      calc.mkv.toMiddle -
-      rawinputSum / 2 -
-      bladeSum / 2 -
-      (localData?.blade ?? 0) / 2 -
-      startringSum
-    ).toFixed(2);
+    const calcData = getCalcData(sawTypeData);
+    if (calcData) {
+      const calculatedDifferenceStart = (
+        calcData.toMiddle -
+        rawinputSum / 2 -
+        bladeSum / 2 -
+        (localData?.blade ?? 0) / 2 -
+        startringSum
+      ).toFixed(2);
 
-    setDifferenceStart(calculatedDifferenceStart);
+      setDifferenceStart(calculatedDifferenceStart);
+    }
   }, [
+    sawTypeData,
     startRings,
     endRings,
-    calc.mkv.toMiddle,
     rawinputSum,
     bladeSum,
     localData?.blade,
     startringSum,
   ]);
+
   interface RingItem {
     id: string;
     value: string;
@@ -909,8 +940,6 @@ const PostoppsettComponent = ({
   const clickSearchAll = () => {
     setSearchInputAll(true);
   };
-
-  console.log(rawRings);
 
   return (
     <>
@@ -1146,13 +1175,16 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                       <div>
                         <p className="text-primary">
                           Distanse:{" "}
-                          {(
-                            calc.mkv.toMiddle -
-                            rawinputSum / 2 -
-                            bladeSum / 2 -
-                            (localData?.blade ?? 0) / 2
-                          ).toFixed(2)}
+                          {getCalcData(sawTypeData)
+                            ? (
+                                getCalcData(sawTypeData)!.toMiddle -
+                                rawinputSum / 2 -
+                                bladeSum / 2 -
+                                (localData?.blade ?? 0) / 2
+                              ).toFixed(2)
+                            : "N/A"}
                         </p>
+
                         <p className="text-primary">
                           utfylling: {startringSum?.toFixed(2)}
                         </p>
@@ -1322,13 +1354,14 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     <div>
                       <p className="text-primary">
                         Distanse:{" "}
-                        {(
-                          calc.mkv.middleEnd -
-                          rawinputSum / 2 -
-                          bladeSum / 2 -
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                          localData?.blade / 2
-                        ).toFixed(2)}
+                        {getCalcData(sawTypeData)
+                          ? (
+                              getCalcData(sawTypeData)!.middleEnd -
+                              rawinputSum / 2 -
+                              bladeSum / 2 -
+                              (localData?.blade ?? 0) / 2
+                            ).toFixed(2)
+                          : "N/A"}
                       </p>
                       <p className="text-primary">
                         utfylling: {endringSum?.toFixed(2)}

@@ -17,6 +17,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [postInfoWrite, setPostInfoWrite] = useState("");
   const [searchInputAll, setSearchInputAll] = useState(false);
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [sawType, setSawType] = useState("");
 
   interface UserInfo {
     id: string;
@@ -50,6 +51,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
           setSearchInputAll,
           editMode,
           setEditMode,
+          sawType,
+          setSawType,
           setGetUserInfo: (info) =>
             setGetUserInfo(info as UserInfo | undefined),
         }}

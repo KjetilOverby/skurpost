@@ -12,6 +12,7 @@ edit mode henter ikke opprinnelig post ved avbryt
 skurlisteredigering ved klikk på listen prøver den å hente clicksearch noe som ikke skal gjøres der.
 
 lukking av alert() i postredigering henter posten i databasen på ny og det bør ikke skje 
+Legge inn mulighet for å skifte sawType og hente riktig sawType i innstillinger
 
 
 
