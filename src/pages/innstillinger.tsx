@@ -48,7 +48,15 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
       void ctx.settings.getByUser.invalidate();
     },
   });
+
   const updateSawType = api.settings.updateSawType.useMutation({
+    onSuccess: (data) => {
+      setCurrentSawType(data.theme);
+      void ctx.settings.getByUser.invalidate();
+    },
+  });
+
+  const updateDisplay = api.settings.updateDisplay.useMutation({
     onSuccess: (data) => {
       setCurrentSawType(data.theme);
       void ctx.settings.getByUser.invalidate();
@@ -67,6 +75,7 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
       console.error("Error updating theme:", error);
     }
   };
+
   const handleUpdateSawType = async (newType: string) => {
     try {
       const userId = "user-id";
@@ -80,6 +89,21 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
     }
   };
 
+  const handleUpdateDisplay = async (toggles: {
+    visMiniListe: boolean;
+    visPakking: boolean;
+  }) => {
+    try {
+      const response = await updateDisplay.mutateAsync({
+        userId: sessionData?.user.id ?? "",
+        visMiniListe: toggles.visMiniListe,
+        visPakking: toggles.visPakking,
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Error updating display settings:", error);
+    }
+  };
   return (
     <div data-theme={colorMode} className="min-h-screen bg-base-100">
       <HeaderComponent colorMode={colorMode} />
@@ -91,9 +115,19 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
           theme={posts?.theme ?? "default-theme"}
         />
         <ShowSelector
-          update={(toggles) => {
-            console.log(toggles);
+          update={async (toggles) => {
+            try {
+              await handleUpdateDisplay({
+                visMiniListe: toggles.toggle2,
+                visPakking: toggles.toggle1,
+              });
+            } catch (error) {
+              console.error("Error updating display settings:", error);
+            }
           }}
+          displayList={posts?.visMiniListe ?? false}
+          displayPakking={posts?.visPakking ?? false}
+          displayPostInfo={false}
         />
         <SawTypeChoose
           // eslint-disable-next-line @typescript-eslint/no-empty-function

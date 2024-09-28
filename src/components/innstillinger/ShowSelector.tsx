@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface ShowSelectorProps {
-  update: (toggles: {
-    toggle1: boolean;
-    toggle2: boolean;
-    toggle3: boolean;
-  }) => void;
+  update: (toggles: { toggle1: boolean; toggle2: boolean }) => void;
+  displayList: boolean;
+  displayPakking: boolean;
+  displayPostInfo: boolean;
 }
 
-const ShowSelector: React.FC<ShowSelectorProps> = ({ update }) => {
+const ShowSelector: React.FC<ShowSelectorProps> = ({
+  update,
+  displayList,
+  displayPakking,
+  displayPostInfo,
+}) => {
   const [toggles, setToggles] = useState({
-    toggle1: false,
-    toggle2: false,
-    toggle3: false,
+    toggle1: displayPakking,
+    toggle2: displayList,
   });
 
+  useEffect(() => {
+    setToggles({
+      toggle1: displayPakking,
+      toggle2: displayList,
+    });
+  }, [displayList, displayPakking, displayPostInfo]);
+
   const handleToggleChange = (toggleName: string, value: boolean) => {
-    const newToggles = { ...toggles, [toggleName]: value };
+    const newToggles = {
+      ...toggles,
+      [toggleName]: value,
+    };
     setToggles(newToggles);
     update(newToggles);
   };
@@ -44,17 +57,6 @@ const ShowSelector: React.FC<ShowSelectorProps> = ({ update }) => {
               className="toggle toggle-accent"
               checked={toggles.toggle2}
               onChange={(e) => handleToggleChange("toggle2", e.target.checked)}
-            />
-          </label>
-        </div>
-        <div className="form-control w-52">
-          <label className="label cursor-pointer">
-            <span className="label-text">Post info</span>
-            <input
-              type="checkbox"
-              className="toggle toggle-accent"
-              checked={toggles.toggle3}
-              onChange={(e) => handleToggleChange("toggle3", e.target.checked)}
             />
           </label>
         </div>

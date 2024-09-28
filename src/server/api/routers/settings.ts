@@ -89,6 +89,28 @@ export const settingsRouter = createTRPCRouter({
                     sawType: input.sawType,
                 },
             });
+        }),
+
+
+    updateDisplay: protectedProcedure
+        .input(
+            z.object({
+                visPakking: z.boolean(),
+                visMiniListe: z.boolean(),
+                userId: z.string(),
+            })
+        )
+        .mutation(({ ctx, input }) => {
+
+            return ctx.db.settings.update({
+                where: {
+                    userId: input.userId,
+                },
+                data: {
+                    visMiniListe: input.visMiniListe,
+                    visPakking: input.visPakking,
+                },
+            });
 
 
 

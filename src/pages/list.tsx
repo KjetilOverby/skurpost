@@ -141,8 +141,12 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
           setClickSearchOpen={setClickSearchOpen}
           setPostInfoWrite={setPostInfoWrite}
         />
-        <h1 className="mb-3 mt-10 text-xl">Pakking</h1>
-        <SkurlistePakkingComponent skurliste={skurliste ?? []} />
+        {settings?.visPakking && (
+          <>
+            <h1 className="mb-3 mt-10 text-xl">Pakking</h1>
+            <SkurlistePakkingComponent skurliste={skurliste ?? []} />
+          </>
+        )}
       </div>
     </div>
   );
