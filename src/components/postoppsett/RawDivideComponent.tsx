@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import ringlist from "~/utils/ringlist";
 import RingPickerRaw from "./reusable/RingPickerRaw";
+import { get } from "http";
 type RawDataType = {
   id: number;
   name: string;
@@ -32,6 +33,8 @@ export const RawDivideComponent: React.FC<RawDivideComponentProps> = ({
   setCalculationResult,
 }) => {
   const [getRing, setGetRing] = useState(0);
+
+  console.log(getRing);
 
   useEffect(() => {
     setCalculationResult(

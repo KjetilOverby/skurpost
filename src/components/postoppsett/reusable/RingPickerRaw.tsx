@@ -13,14 +13,14 @@ const RingPickerRaw: React.FC<RingPickerRawProps> = ({
   title,
   onChange,
 }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState<number | null>(null);
 
-  /*  const handleClick = (value: number) => {
+  const handleClick = (value: number) => {
     setSelectedValue(value);
     if (onChange) {
       onChange(value);
     }
-  }; */
+  };
 
   return (
     <div className={` top-96 flex w-[800px] flex-wrap`}>
@@ -28,7 +28,7 @@ const RingPickerRaw: React.FC<RingPickerRawProps> = ({
         <button
           className="m-1 h-12 w-12 rounded-full bg-slate-500  p-1 text-xs text-white"
           key={value}
-          /* onClick={() => handleClick(value)} */
+          onClick={() => handleClick(value)}
         >
           {value}
         </button>
