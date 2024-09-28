@@ -733,14 +733,14 @@ const PostoppsettComponent = ({
       ? rings.findIndex((item) => item.id === id)
       : -1;
 
-    if (index >= 0) {
+    // Sjekker om elementet ikke er det siste i listen
+    if (Array.isArray(rings) && index >= 0 && index < rings.length - 1) {
       const newItems = Array.isArray(rings) ? [...rings] : []; // Oppretter en kopi av rings
       const tempItem = newItems[index];
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index + 1];
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index + 1] = tempItem;
-
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
         ...prevData,
@@ -758,14 +758,14 @@ const PostoppsettComponent = ({
       ? rings.findIndex((item) => item.id === id)
       : -1;
 
-    if (index >= 0) {
+    // Sjekker om elementet ikke er det siste i listen
+    if (Array.isArray(rings) && index >= 0 && index < rings.length - 1) {
       const newItems = Array.isArray(rings) ? [...rings] : []; // Oppretter en kopi av rings
       const tempItem = newItems[index];
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index] = newItems[index + 1];
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       newItems[index + 1] = tempItem;
-
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
       setLocalData((prevData) => ({
         ...prevData,
@@ -799,7 +799,8 @@ const PostoppsettComponent = ({
   const moveLeftRaw = (id: string) => {
     const index = (rawRings ?? []).findIndex((item) => item.id === id);
 
-    if (index < (rawRings?.length ?? 0) + 1) {
+    // Sjekker om elementet ikke er det første i listen
+    if (index > 0) {
       const newItems = [...(rawRings ?? [])];
       const tempItem = newItems[index];
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
@@ -823,6 +824,7 @@ const PostoppsettComponent = ({
       }));
     }
   };
+
   const moveRightRaw = (id: string) => {
     const index = (rawRings ?? []).findIndex((item) => item.id === id);
 
