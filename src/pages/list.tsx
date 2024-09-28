@@ -109,7 +109,7 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
           colorMode={colorMode}
         />
       )}
-      <div data-theme={colorMode} className="min-h-screen px-5 xl:px-96">
+      <div data-theme={colorMode} className="min-h-screen px-5 xl:px-20">
         <button
           onClick={() => setOpenManualSearch(!openManualSearch)}
           className="btn mt-5 bg-accent"
