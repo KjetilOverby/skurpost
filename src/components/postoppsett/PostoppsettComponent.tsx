@@ -910,6 +910,8 @@ const PostoppsettComponent = ({
     setSearchInputAll(true);
   };
 
+  console.log(rawRings);
+
   return (
     <>
       <div>
@@ -1019,10 +1021,8 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                           blade={localData.blade}
                           /*   rawDivide={rawDivideParse} */
                           ringItem={{
+                            ...ringItem,
                             ring: Number(ringItem.value),
-                            shims: 0,
-                            shimsVal2: 0,
-                            shimsVal: 0,
                           }}
                         />
                       ))}
