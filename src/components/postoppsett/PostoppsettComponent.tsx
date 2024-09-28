@@ -4,7 +4,6 @@ import RawRing from "./reusable/rings/RawRing";
 import Blade from "./reusable/rings/Blade";
 import calc from "~/utils/calc";
 
-type SawType = keyof typeof calc;
 import { EditMode } from "./modes/editMode";
 import RingPicker from "./reusable/ringpicker";
 import ringlist from "~/utils/ringlist";
@@ -20,6 +19,7 @@ import dateFormat from "dateformat";
 import { useContext } from "react";
 import { PostInfoContext } from "../context";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { settings } from ".eslintrc.cjs";
 
 interface Item {
   value: string;
@@ -59,6 +59,7 @@ const PostoppsettComponent = ({
     setSearchInputAll,
     editMode,
     setEditMode,
+    setGetUserInfo,
   } = context;
   const { data: sessionData } = useSession();
   const [startringSum, setStartringSum] = useState(0);
@@ -106,9 +107,24 @@ const PostoppsettComponent = ({
 
   const ctx = api.useContext();
 
+  useEffect(() => {
+    if (setGetUserInfo) {
+      setGetUserInfo(sessionData && sessionData.user);
+    }
+  }, [sessionData]);
+
+  const {
+    data: settings,
+    isLoading,
+    error,
+  } = api.settings.getByUser.useQuery({
+    userId: sessionData?.user.id ?? "",
+  });
+
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
     kundeID: kundeID,
+    sawType: settings?.sawType ?? "",
   });
 
   const { data: skurliste } = api.skurliste.getAll.useQuery({

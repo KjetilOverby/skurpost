@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 interface Result {
+  sawType: string;
   id: string;
   createdAt: Date;
   updatedAt: Date;
@@ -70,7 +71,10 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
                 onClick={() => openPostHandler(result.id)}
                 className="mb-5 rounded bg-base-100 p-5"
               >
-                <p className="mb-10">{result.header}</p>
+                <p className=" text-primary">{result.header}</p>
+                <p className="mb-10 text-xs italic text-accent">
+                  Maskin: {result.sawType}
+                </p>
                 <div className="flex gap-1">
                   <div className="flex gap-1">
                     {result.startRings?.map((ring) => {

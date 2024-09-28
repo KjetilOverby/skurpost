@@ -24,6 +24,7 @@ export const postoppsettRouter = createTRPCRouter({
   .input(z.object({
     header: z.string(),
     kundeID: z.string(),
+    sawType: z.string(),
   }))
   .query(async ({ input, ctx }) => {
     return ctx.db.postningsoppsett.findMany({
@@ -35,6 +36,7 @@ export const postoppsettRouter = createTRPCRouter({
             },
           },
           {
+            sawType: input.sawType,
             kunde: input.kundeID,
           },
         ],

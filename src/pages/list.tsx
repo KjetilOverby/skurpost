@@ -12,8 +12,8 @@ import SkurlisteComponent from "~/components/postoppsett/reusable/SkurlisteCompo
 import SkurlistePakkingComponent from "~/components/postoppsett/reusable/SkurlistePakkingComponent";
 import { api } from "~/utils/api";
 import { useContext } from "react";
-import { PostInfoContext } from "../components/context";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { PostInfoContext } from "~/components/context";
 
 interface ListProps {
   setPostId: (id: string) => void;
@@ -49,6 +49,20 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
   } = context;
 
   useEffect(() => {
+    if (setGetUserInfo) {
+      setGetUserInfo(sessionData && sessionData.user);
+    }
+  }, [sessionData]);
+
+  const {
+    data: settings,
+    isLoading,
+    error,
+  } = api.settings.getByUser.useQuery({
+    userId: sessionData?.user.id ?? "",
+  });
+
+  useEffect(() => {
     setGetUserInfo(sessionData && sessionData.user);
   }, [sessionData, setGetUserInfo]);
 
@@ -73,6 +87,7 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
     kundeID: kundeID ?? "",
+    sawType: settings?.sawType ?? "",
   });
 
   const clickSearchAll = () => {
