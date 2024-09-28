@@ -69,4 +69,29 @@ export const settingsRouter = createTRPCRouter({
 
         }),
 
+    updateSawType: protectedProcedure
+        .input(
+            z.object({
+                sawType: z.string(),
+                userId: z.string(),
+
+            })
+        )
+        .mutation(({ ctx, input }) => {
+            const creatorName: string = ctx.session.user.name ?? "DefaultCreator";
+            const creatorImg: string = ctx.session.user.image ?? "DefaultCreator";
+
+            return ctx.db.settings.update({
+                where: {
+                    userId: input.userId,
+                },
+                data: {
+                    sawType: input.sawType,
+                },
+            });
+
+
+
+        }),
+
 });

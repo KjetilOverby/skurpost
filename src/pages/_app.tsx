@@ -17,7 +17,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [postInfoWrite, setPostInfoWrite] = useState("");
   const [searchInputAll, setSearchInputAll] = useState(false);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [sawType, setSawType] = useState("");
+  const [sawType, setSawType] = useState<string>("");
 
   interface UserInfo {
     id: string;
@@ -38,6 +38,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
   useEffect(() => {
     setColorMode(posts?.theme);
   }, [posts]);
+
+  console.log(sawType);
 
   return (
     <SessionProvider session={session}>

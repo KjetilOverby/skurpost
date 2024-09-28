@@ -16,8 +16,10 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
   const context = useContext(PostInfoContext);
   const { data: sessionData } = useSession();
 
-  const setGetUserInfo = context?.setGetUserInfo;
   const [currentTheme, setCurrentTheme] = useState("");
+  const [currentSawType, setCurrentSawType] = useState("");
+
+  const { setSawType, setGetUserInfo } = context ?? {};
 
   useEffect(() => {
     if (setGetUserInfo) {
@@ -40,15 +42,15 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
     }
   }, [currentTheme, colorMode]);
 
-  const createSettings = api.settings.createPost.useMutation({
-    onSuccess: () => {
-      void ctx.settings.getByUser.invalidate();
-    },
-  });
-
   const updateTheme = api.settings.updateTheme.useMutation({
     onSuccess: (data) => {
       setCurrentTheme(data.theme);
+      void ctx.settings.getByUser.invalidate();
+    },
+  });
+  const updateSawType = api.settings.updateSawType.useMutation({
+    onSuccess: (data) => {
+      setCurrentSawType(data.theme);
       void ctx.settings.getByUser.invalidate();
     },
   });
@@ -59,6 +61,18 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
       const response = await updateTheme.mutateAsync({
         userId: sessionData?.user.id ?? "",
         theme: newTheme,
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Error updating theme:", error);
+    }
+  };
+  const handleUpdateSawType = async (newType: string) => {
+    try {
+      const userId = "user-id";
+      const response = await updateSawType.mutateAsync({
+        userId: sessionData?.user.id ?? "",
+        sawType: newType,
       });
       console.log(response);
     } catch (error) {
@@ -81,7 +95,12 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
             console.log(toggles);
           }}
         />
-        <SawTypeChoose />
+        <SawTypeChoose
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          setSawType={setSawType ?? (() => {})}
+          update={handleUpdateSawType}
+          type={posts?.sawType ?? "default-theme"}
+        />
       </div>
     </div>
   );

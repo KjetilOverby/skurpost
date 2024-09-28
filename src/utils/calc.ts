@@ -1,13 +1,13 @@
 const calcData = {
-      mkv: {
+      MKV: {
          toMiddle: 200,
           middleEnd: 217.2,
           fullLength: 417.2,
       },
-      mkb: {
-          toMiddle: 250,
-          middleEnd: 247.2,
-          fullLength: 460.2,
+      MKS: {
+          toMiddle: 300,
+          middleEnd: 317.2,
+          fullLength: 617.2,
       },
       
 

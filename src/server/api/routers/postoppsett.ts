@@ -1,6 +1,5 @@
 
 import { z } from "zod";
-import creator from "~/pages/create/creator";
 
 import {
   createTRPCRouter,

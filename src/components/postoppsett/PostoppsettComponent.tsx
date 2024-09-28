@@ -117,7 +117,7 @@ const PostoppsettComponent = ({
   });
 
   const getCalcData = (sawTypeData: string) => {
-    if (sawTypeData === "mkv" || sawTypeData === "mkb") {
+    if (sawTypeData === "MKV" || sawTypeData === "MKS") {
       return calc[sawTypeData];
     }
     return null; // or handle invalid sawTypeData
