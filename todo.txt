@@ -1,17 +1,11 @@
 info om posten
-sette type sag i utregning postoppsett (MKV) account instillinger?
-validering på skurliste
-lage ny post
 legge til progress post som går og som har gått
 spes is undefined on create new post
 legg til et blad som standard når nye poster skal lages
 Finne løsning på rawDivide
 nullstille ID på post når man velger lag ny post
-edit mode henter ikke opprinnelig post ved avbryt
-Lagre poster med sawType riktig
 legg til validering hvis header eksisterer kan ikke posten lagres
-edit header close fix 
-Oppdatere data kommer fram kun når man velger fra minilist
+ved valg av ny post vises ikke utregning
 
 
 

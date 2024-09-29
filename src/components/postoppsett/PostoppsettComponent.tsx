@@ -59,6 +59,8 @@ const PostoppsettComponent = ({
     editMode,
     setEditMode,
     setGetUserInfo,
+    searchInput,
+    setSearchInput,
   } = context;
   const { data: sessionData } = useSession();
   const [startringSum, setStartringSum] = useState(0);
@@ -90,7 +92,6 @@ const PostoppsettComponent = ({
   const [shimsVal2, setShimsVal2] = useState(0);
   const [calculationResult, setCalculationResult] = useState(0);
   const [clickSearchOpen, setClickSearchOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
   const [kundeID, setKundeID] = useState("");
   const [postInfoWrite, setPostInfoWrite] = useState("");
 
@@ -99,6 +100,8 @@ const PostoppsettComponent = ({
 
   const [differenceStart, setDifferenceStart] = useState<string | null>(null);
   const [differenceEnd, setDifferenceEnd] = useState<string | null>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const currentUserId = sessionData?.user?.id;
 
@@ -903,6 +906,7 @@ const PostoppsettComponent = ({
   };
 
   const resetPostHandler = () => {
+    setIsOpen(false);
     setLocalData({
       header: "",
       startRings: [],
@@ -933,6 +937,7 @@ const PostoppsettComponent = ({
       header: localData?.header ?? "",
       createdAt: localData?.createdAt ?? new Date(),
     });
+    setIsOpen(false);
   };
 
   const [searchGetAll, setSearchGetAll] = useState("");
@@ -959,6 +964,8 @@ const PostoppsettComponent = ({
     setSearchInputAll(true);
   };
 
+  console.log(searchInput);
+
   return (
     <>
       <div>
@@ -975,6 +982,8 @@ const PostoppsettComponent = ({
           searchInput={searchInput}
           saveDiasabled={(localData?.rawInput?.length ?? 0) > 0}
           updateDisabled={searchInput === ""}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
         />
         {clickSearchOpen && (
           <SearchResultComponent
@@ -1429,7 +1438,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
             </EditMode>
           </div>
           <EditMode editMode={editMode}>
-            <div className="mt-20 flex flex-col">
+            <div className="mt-20 flex flex-col rounded-xl border border-primary p-3">
               <form
                 className="mb-5"
                 action=""

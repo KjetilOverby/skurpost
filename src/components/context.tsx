@@ -12,6 +12,8 @@ interface ContextType {
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   sawType: string;
   setSawType: React.Dispatch<React.SetStateAction<string>>;
+  searchInput: string;
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const PostInfoContext = createContext<ContextType | undefined>(
@@ -26,6 +28,7 @@ export const PostInfoProvider: React.FC<{ children: React.ReactNode }> = ({
   const [searchInputAll, setSearchInputAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [sawType, setSawType] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   const setGetUserInfo = (info: unknown) => {
     // Implement your logic here
@@ -41,9 +44,11 @@ export const PostInfoProvider: React.FC<{ children: React.ReactNode }> = ({
         setPostInfoWrite,
         searchInputAll,
         setSearchInputAll,
-        setGetUserInfo, // Provide the function here
+        setGetUserInfo,
         editMode,
         setEditMode,
+        searchInput,
+        setSearchInput,
         sawType: "",
       }}
     >

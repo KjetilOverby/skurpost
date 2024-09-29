@@ -46,6 +46,8 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
     setSearchInputAll,
     searchInputAll,
     setGetUserInfo,
+    searchInput,
+    setSearchInput,
   } = context;
 
   useEffect(() => {
@@ -79,8 +81,6 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
       }
     }
   }, [user, currentUserId]);
-
-  const [searchInput, setSearchInput] = useState("");
 
   const [clickSearchOpen, setClickSearchOpen] = useState(false);
 

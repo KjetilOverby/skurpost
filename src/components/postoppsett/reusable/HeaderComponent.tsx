@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useState, useEffect, useContext } from "react";
 
 import { FaClipboardList } from "react-icons/fa";
@@ -13,7 +12,6 @@ interface HeaderComponentProps {
 }
 
 const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
-  const router = useRouter();
   const context = useContext(PostInfoContext);
 
   const text = "text-primary";

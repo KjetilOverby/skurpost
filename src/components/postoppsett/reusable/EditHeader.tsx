@@ -14,6 +14,8 @@ interface EditHeaderProps {
   setAlertShown: (shown: boolean) => void;
   saveDiasabled: boolean;
   updateDisabled: boolean;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
 const EditHeader: React.FC<EditHeaderProps> = ({
@@ -27,12 +29,18 @@ const EditHeader: React.FC<EditHeaderProps> = ({
   setAlertShown,
   saveDiasabled,
   updateDisabled,
+  isOpen,
+  setIsOpen,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const cancelBtn = () => {
     setAlertShown(false);
     setEditMode(false);
+    setIsOpen(false);
+  };
+
+  const editHandler = () => {
+    setEditMode(true);
+    setIsOpen(false);
   };
 
   return (
@@ -47,7 +55,7 @@ const EditHeader: React.FC<EditHeaderProps> = ({
               {!editMode && (
                 <>
                   <a
-                    onClick={() => setEditMode(true)}
+                    onClick={editHandler}
                     className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
                   >
                     Rediger post
