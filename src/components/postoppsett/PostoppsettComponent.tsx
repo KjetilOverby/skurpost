@@ -457,7 +457,7 @@ const PostoppsettComponent = ({
         setLocalData(data);
       }
     }
-  }, [data, alertShown]);
+  }, [data, alertShown, editMode]);
 
   const deleteStartring = (id: string) => {
     setLocalData((prevData) => {
