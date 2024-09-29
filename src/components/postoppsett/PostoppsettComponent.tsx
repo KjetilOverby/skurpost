@@ -19,7 +19,6 @@ import dateFormat from "dateformat";
 import { useContext } from "react";
 import { PostInfoContext } from "../context";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { settings } from ".eslintrc.cjs";
 
 interface Item {
   value: string;
@@ -175,7 +174,6 @@ const PostoppsettComponent = ({
       setSawTypeData(data.sawType);
     }
   }, [data]);
-  console.log(sawTypeData);
 
   const [headerText, setHeaderText] = useState("");
 
@@ -451,11 +449,15 @@ const PostoppsettComponent = ({
   }, [localData, rawinputSum, startRingsAltShow, endRingsAltShow]);
 
   useEffect(() => {
-    if (data) {
-      // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-      setLocalData(data);
+    if (alertShown) {
+      console.log("Alert was shown, skipping useEffect logic.");
+    } else {
+      if (data) {
+        // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+        setLocalData(data);
+      }
     }
-  }, [data]);
+  }, [data, alertShown]);
 
   const deleteStartring = (id: string) => {
     setLocalData((prevData) => {

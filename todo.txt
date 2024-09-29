@@ -1,6 +1,5 @@
 info om posten
 sette type sag i utregning postoppsett (MKV) account instillinger?
-Lagre id på post i nettleseren? (localStorage)
 validering på skurliste
 lage ny post
 legge til progress post som går og som har gått
@@ -10,8 +9,6 @@ Finne løsning på rawDivide
 nullstille ID på post når man velger lag ny post
 edit mode henter ikke opprinnelig post ved avbryt
 skurlisteredigering ved klikk på listen prøver den å hente clicksearch noe som ikke skal gjøres der.
-
-lukking av alert() i postredigering henter posten i databasen på ny og det bør ikke skje 
 
 
 
