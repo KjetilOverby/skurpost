@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { EditMode } from "../modes/editMode";
 import Link from "next/link";
+import Modal from "./Modal";
 
 interface EditHeaderProps {
   setEditMode: (mode: boolean) => void;
@@ -42,10 +43,7 @@ const EditHeader: React.FC<EditHeaderProps> = ({
             Menu
           </button>
           {isOpen && (
-            <div
-              className="absolute left-0 z-10 mt-2 w-48 rounded-md bg-accent py-1 shadow-lg"
-              onClick={() => setIsOpen(false)}
-            >
+            <div className="absolute left-0 z-10 mt-2 w-48 rounded-md bg-accent py-1 shadow-lg">
               {!editMode && (
                 <>
                   <a
@@ -83,13 +81,18 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                   Nullstill utfylling
                 </a>
                 {!updateDisabled && (
-                  <a
-                    onClick={handleUpdate}
-                    className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
-                  >
-                    Oppdater post
-                  </a>
+                  <div>
+                    <Modal
+                      setIsOpen={setIsOpen}
+                      title="Oppdatere posten"
+                      description="ADVARSEL! Oppdatering vil overskrive opprinnelig data."
+                      name="Oppdater post"
+                      actionTxt="Oppdater"
+                      action={handleUpdate}
+                    />
+                  </div>
                 )}
+
                 {saveDiasabled && (
                   <a
                     onClick={createData}

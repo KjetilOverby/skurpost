@@ -56,7 +56,7 @@ const Listcreator = ({ colorMode }: { colorMode: string }) => {
   return (
     <div data-theme={colorMode} className="min-h-screen bg-base-100">
       <HeaderComponent colorMode={colorMode} />
-      <div className="min-h-screen px-5 pt-20 xl:px-96">
+      <div className="min-h-screen px-5 pt-20 xl:px-20">
         <ListcreatorMain
           skurliste={skurliste ?? []}
           setBufferStatus={setBufferStatus}
