@@ -959,6 +959,8 @@ const PostoppsettComponent = ({
     setSearchInputAll(true);
   };
 
+  console.log(searchInput);
+
   return (
     <>
       <div>
@@ -972,6 +974,9 @@ const PostoppsettComponent = ({
           resetPostHandler={resetPostHandler}
           resetUtfyllingHandler={resetUtfyllingHandler}
           setAlertShown={setAlertShown}
+          searchInput={searchInput}
+          saveDiasabled={(localData?.rawInput?.length ?? 0) > 0}
+          updateDisabled={searchInput === ""}
         />
         {clickSearchOpen && (
           <SearchResultComponent

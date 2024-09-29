@@ -11,6 +11,8 @@ interface EditHeaderProps {
   resetPostHandler: () => void;
   resetUtfyllingHandler: () => void;
   setAlertShown: (shown: boolean) => void;
+  saveDiasabled: boolean;
+  updateDisabled: boolean;
 }
 
 const EditHeader: React.FC<EditHeaderProps> = ({
@@ -22,6 +24,8 @@ const EditHeader: React.FC<EditHeaderProps> = ({
   resetPostHandler,
   resetUtfyllingHandler,
   setAlertShown,
+  saveDiasabled,
+  updateDisabled,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -78,19 +82,23 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                 >
                   Nullstill utfylling
                 </a>
-                <a
-                  onClick={handleUpdate}
-                  className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
-                >
-                  Oppdater post
-                </a>
-                <a
-                  onClick={createData}
-                  href="#"
-                  className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
-                >
-                  Lagre som ny post
-                </a>
+                {!updateDisabled && (
+                  <a
+                    onClick={handleUpdate}
+                    className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
+                  >
+                    Oppdater post
+                  </a>
+                )}
+                {saveDiasabled && (
+                  <a
+                    onClick={createData}
+                    href="#"
+                    className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
+                  >
+                    Lagre som ny post
+                  </a>
+                )}
                 <a
                   onClick={handleDelete}
                   href="#"

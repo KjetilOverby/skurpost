@@ -47,6 +47,12 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
     });
   };
 
+  const newPostHandler = () => {
+    if (setEditMode) {
+      setEditMode(true);
+    }
+  };
+
   return (
     <header data-theme={colorMode}>
       <nav className="border border-x-0 border-t-0 border-gray-200 border-b-secondary bg-accent px-4  py-2.5 ">
@@ -89,7 +95,7 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
                       <Link href="/create/listcreator">Rediger skurliste</Link>
                     </li>
                     <li
-                      onClick={() => setEditMode && setEditMode(true)}
+                      onClick={newPostHandler}
                       className="px-4 py-2 hover:bg-secondary"
                     >
                       <Link href="/postoppsett">Lag ny post</Link>
