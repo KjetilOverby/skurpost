@@ -350,7 +350,7 @@ const PostoppsettComponent = ({
         const prosent = String(localData?.prosent);
         const spes = localData?.spes;
         const xlog = String(rawRings?.length);
-        const sawType = "mkv";
+        const sawType = sawTypeData;
         const kunde = kundeID;
 
         const response = await createPost.mutateAsync({
@@ -958,8 +958,6 @@ const PostoppsettComponent = ({
   const clickSearchAll = () => {
     setSearchInputAll(true);
   };
-
-  console.log(searchInput);
 
   return (
     <>

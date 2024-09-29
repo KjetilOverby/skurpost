@@ -83,6 +83,7 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                 {!updateDisabled && (
                   <div>
                     <Modal
+                      id="update"
                       setIsOpen={setIsOpen}
                       title="Oppdatere posten"
                       description="ADVARSEL! Oppdatering vil overskrive opprinnelig data."
@@ -92,7 +93,6 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                     />
                   </div>
                 )}
-
                 {saveDiasabled && (
                   <a
                     onClick={createData}
@@ -102,13 +102,17 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                     Lagre som ny post
                   </a>
                 )}
-                <a
-                  onClick={handleDelete}
-                  href="#"
-                  className="block cursor-pointer px-4 py-2 text-red-400 hover:bg-gray-600 hover:text-white"
-                >
-                  Slett post
-                </a>
+                <div>
+                  <Modal
+                    id="delete"
+                    setIsOpen={setIsOpen}
+                    title="Slette post"
+                    description="ADVARSEL! Sletting vil fjerne posten permanent."
+                    name="Slett post"
+                    actionTxt="Slett"
+                    action={handleDelete}
+                  />
+                </div>
               </EditMode>
             </div>
           )}

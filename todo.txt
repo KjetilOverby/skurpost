@@ -11,6 +11,7 @@ edit mode henter ikke opprinnelig post ved avbryt
 Lagre poster med sawType riktig
 legg til validering hvis header eksisterer kan ikke posten lagres
 edit header close fix 
+Oppdatere data kommer fram kun når man velger fra minilist
 
 
 

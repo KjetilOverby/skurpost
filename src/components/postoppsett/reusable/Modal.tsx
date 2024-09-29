@@ -1,6 +1,7 @@
 import React from "react";
 
 interface ModalProps {
+  id: string; // Add the id property
   name: string;
   title: string;
   description: string;
@@ -10,6 +11,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({
+  id,
   name,
   title,
   description,
@@ -18,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({
   actionTxt,
 }) => {
   const openHandler = () => {
-    const modal = document.getElementById("my_modal_5");
+    const modal = document.getElementById(id); // Use the dynamic id
     if (modal) {
       (modal as HTMLDialogElement).showModal();
     }
@@ -26,17 +28,18 @@ const Modal: React.FC<ModalProps> = ({
   };
   return (
     <div>
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
-      <button className="my-3 ml-3" onClick={openHandler}>
+      <button
+        className="w-full py-2 pr-16 text-primary hover:bg-gray-600 hover:text-white"
+        onClick={openHandler}
+      >
         {name}
       </button>
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
+      <dialog id={id} className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box bg-accent">
           <h3 className="text-lg font-bold">{title}</h3>
           <p className="py-4">{description}</p>
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
               <button onClick={action} className="btn mr-5">
                 {actionTxt}
               </button>
