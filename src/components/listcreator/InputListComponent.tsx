@@ -123,7 +123,26 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createPost.mutate(listProps);
+          if (listProps.post === "") {
+            alert("Post må fylles ut");
+          } else if (listProps.bredde === 0) {
+            alert("Bredde må fylles ut");
+          } else if (listProps.prosent === "") {
+            alert("Prosent må fylles ut");
+          } else if (
+            !listProps.post.includes("1x") &&
+            !listProps.post.includes("2x") &&
+            !listProps.post.includes("3x") &&
+            !listProps.post.includes("4x") &&
+            !listProps.post.includes("5x") &&
+            !listProps.post.includes("6x")
+          ) {
+            alert(
+              "Postuttak må starte med et tall fra 1 til 6, etterfulgt av en liten 'x'.",
+            );
+          } else {
+            createPost.mutate(listProps);
+          }
         }}
         className="flex flex-wrap gap-2"
       >
