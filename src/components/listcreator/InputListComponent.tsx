@@ -5,10 +5,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import { settings } from ".eslintrc.cjs";
 import React, { useEffect } from "react";
 import { api } from "~/utils/api";
 
-const InputListComponent = ({ listProps, setListProps }) => {
+const InputListComponent = ({ listProps, setListProps, settings }) => {
   const klassetype = [
     "Spesial",
     "Panel",
@@ -507,148 +508,154 @@ const InputListComponent = ({ listProps, setListProps }) => {
             ))}
           </select>
         </div>
-        <div className="flex w-28 flex-col bg-neutral p-2">
-          <label className="text-xs " htmlFor="Dim">
-            Dim
-          </label>
-          <input
-            onChange={(e) =>
-              setListProps((prevState) => ({
-                ...prevState,
-                dimensjon: e.target.value,
-              }))
-            }
-            className="bg-base-100 text-xs"
-            type="text"
-            value={listProps.dimensjon}
-          />
-        </div>
-        <div className="flex w-28 flex-col bg-neutral p-2">
-          <label className="text-xs" htmlFor="Sortering">
-            Sortering
-          </label>
-          <select
-            onChange={(e) =>
-              setListProps((prevState) => ({
-                ...prevState,
-                sortering: e.target.value,
-              }))
-            }
-            className="bg-base-100 text-xs"
-            value={listProps.sortering}
-          >
-            <option value="">Velg</option>
-            {sortering.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex w-28 flex-col bg-neutral p-2">
-          <label className="text-xs" htmlFor="KvalKode">
-            KvalKode
-          </label>
-          <select
-            onChange={(e) =>
-              setListProps((prevState) => ({
-                ...prevState,
-                kode: e.target.value,
-              }))
-            }
-            className="bg-base-100 text-xs"
-            value={listProps.kode}
-          >
-            <option value="">Velg</option>
-            {kvalKode.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex w-28 flex-col bg-neutral p-2">
-          <label className="text-xs" htmlFor="prosent">
-            Tørkeprosent
-          </label>
-          <select
-            onChange={(e) =>
-              setListProps((prevState) => ({
-                ...prevState,
-                torke: e.target.value,
-              }))
-            }
-            className="bg-base-100 text-xs"
-            value={listProps.torke}
-          >
-            <option value="">Velg</option>
-            {prosent.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex w-28 flex-col bg-neutral p-2">
-          <label className="text-xs" htmlFor="anmerk">
-            Anmerk
-          </label>
-          <select
-            onChange={(e) =>
-              setListProps((prevState) => ({
-                ...prevState,
-                anmerk: e.target.value,
-              }))
-            }
-            className="bg-base-100 text-xs"
-            value={listProps.anmerk}
-          >
-            <option value="">Velg</option>
-            {anmerk.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex w-28 flex-col bg-neutral p-2">
-          <label className="text-xs" htmlFor="torke">
-            Tørke
-          </label>
-          <select
-            onChange={(e) =>
-              setListProps((prevState) => ({
-                ...prevState,
-                destinasjon: e.target.value,
-              }))
-            }
-            className="bg-base-100 text-xs"
-            value={listProps.destinasjon}
-          >
-            <option value="">Velg</option>
-            {torke.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex w-28 flex-col bg-neutral p-2">
-          <label className="text-xs" htmlFor="Merknad">
-            Merknad
-          </label>
-          <input
-            onChange={(e) =>
-              setListProps((prevState) => ({
-                ...prevState,
-                text: e.target.value,
-              }))
-            }
-            className="bg-base-100 text-xs"
-            type="text"
-            value={listProps.text}
-          />
-        </div>
+        {/* settings section */}
+        {settings?.visPakking && (
+          <>
+            <div className="flex w-28 flex-col bg-neutral p-2">
+              <label className="text-xs " htmlFor="Dim">
+                Dim
+              </label>
+              <input
+                onChange={(e) =>
+                  setListProps((prevState) => ({
+                    ...prevState,
+                    dimensjon: e.target.value,
+                  }))
+                }
+                className="bg-base-100 text-xs"
+                type="text"
+                value={listProps.dimensjon}
+              />
+            </div>
+            <div className="flex w-28 flex-col bg-neutral p-2">
+              <label className="text-xs" htmlFor="Sortering">
+                Sortering
+              </label>
+              <select
+                onChange={(e) =>
+                  setListProps((prevState) => ({
+                    ...prevState,
+                    sortering: e.target.value,
+                  }))
+                }
+                className="bg-base-100 text-xs"
+                value={listProps.sortering}
+              >
+                <option value="">Velg</option>
+                {sortering.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex w-28 flex-col bg-neutral p-2">
+              <label className="text-xs" htmlFor="KvalKode">
+                KvalKode
+              </label>
+              <select
+                onChange={(e) =>
+                  setListProps((prevState) => ({
+                    ...prevState,
+                    kode: e.target.value,
+                  }))
+                }
+                className="bg-base-100 text-xs"
+                value={listProps.kode}
+              >
+                <option value="">Velg</option>
+                {kvalKode.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex w-28 flex-col bg-neutral p-2">
+              <label className="text-xs" htmlFor="prosent">
+                Tørkeprosent
+              </label>
+              <select
+                onChange={(e) =>
+                  setListProps((prevState) => ({
+                    ...prevState,
+                    torke: e.target.value,
+                  }))
+                }
+                className="bg-base-100 text-xs"
+                value={listProps.torke}
+              >
+                <option value="">Velg</option>
+                {prosent.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex w-28 flex-col bg-neutral p-2">
+              <label className="text-xs" htmlFor="anmerk">
+                Anmerk
+              </label>
+              <select
+                onChange={(e) =>
+                  setListProps((prevState) => ({
+                    ...prevState,
+                    anmerk: e.target.value,
+                  }))
+                }
+                className="bg-base-100 text-xs"
+                value={listProps.anmerk}
+              >
+                <option value="">Velg</option>
+                {anmerk.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex w-28 flex-col bg-neutral p-2">
+              <label className="text-xs" htmlFor="torke">
+                Tørke
+              </label>
+              <select
+                onChange={(e) =>
+                  setListProps((prevState) => ({
+                    ...prevState,
+                    destinasjon: e.target.value,
+                  }))
+                }
+                className="bg-base-100 text-xs"
+                value={listProps.destinasjon}
+              >
+                <option value="">Velg</option>
+                {torke.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex w-28 flex-col bg-neutral p-2">
+              <label className="text-xs" htmlFor="Merknad">
+                Merknad
+              </label>
+              <input
+                onChange={(e) =>
+                  setListProps((prevState) => ({
+                    ...prevState,
+                    text: e.target.value,
+                  }))
+                }
+                className="bg-base-100 text-xs"
+                type="text"
+                value={listProps.text}
+              />
+            </div>
+          </>
+        )}
+
         <button className="btn btn-info btn-xs text-white">Lagre</button>
       </form>
     </div>

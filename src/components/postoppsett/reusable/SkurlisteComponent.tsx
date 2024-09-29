@@ -232,7 +232,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
               return (
                 <>
                   <tr
-                    onClick={() => clickSearch(list)}
+                    onClick={!edit ? () => clickSearch(list) : undefined}
                     className="border border-gray-700 border-l-transparent border-r-transparent bg-base-100 hover:cursor-pointer hover:bg-neutral "
                   >
                     <td
@@ -240,7 +240,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                     >
                       {list.treslag}
 
-                      <div className="text-xs font-normal italic text-gray-500">
+                      <div className="text-xs font-normal italic text-primary">
                         {dateFormat(list.createdAt, "dd.mm.yyyy HH:MM")}
                       </div>
                     </td>
@@ -386,7 +386,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                           <div>
                             <button
                               onClick={() => handleEdit(list.id)}
-                              className="btn btn-xs bg-warning"
+                              className="btn btn-xs bg-warning text-black"
                             >
                               Rediger
                             </button>

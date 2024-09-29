@@ -58,14 +58,14 @@ const SkurlistePakkingInput: React.FC<{ list: List }> = ({ list }) => {
               <td className="py-5">
                 <div className="flex  space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.klasse}</div>
+                    <div className="text-primaryl text-xs">{list.klasse}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex  space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.klGrense}</div>
+                    <div className="text-primaryl text-xs">{list.klGrense}</div>
                   </div>
                 </div>
               </td>
@@ -81,7 +81,7 @@ const SkurlistePakkingInput: React.FC<{ list: List }> = ({ list }) => {
               <td className="py-5">
                 <div className="flex  flex-col  ">
                   {sorteringArray.map((item, index) => (
-                    <p className="mb-2 text-neutral" key={index}>
+                    <p className="text-primaryl mb-2" key={index}>
                       {item}
                     </p>
                   ))}
@@ -90,7 +90,7 @@ const SkurlistePakkingInput: React.FC<{ list: List }> = ({ list }) => {
               <td className="py-5">
                 <div className="flex flex-col  ">
                   {kvKode.map((item, index) => (
-                    <p className="mb-2 text-neutral" key={index}>
+                    <p className="text-primaryl mb-2" key={index}>
                       {item}
                     </p>
                   ))}
@@ -100,7 +100,7 @@ const SkurlistePakkingInput: React.FC<{ list: List }> = ({ list }) => {
               <td className="py-5">
                 <div className="flex flex-col  ">
                   {tProsent.map((item, index) => (
-                    <p className="mb-2 text-neutral" key={index}>
+                    <p className="text-primaryl mb-2" key={index}>
                       {item}
                     </p>
                   ))}
@@ -121,7 +121,7 @@ const SkurlistePakkingInput: React.FC<{ list: List }> = ({ list }) => {
                 <div className="flex  space-x-3">
                   <div className="flex flex-col ">
                     {dest.map((item, index) => (
-                      <p className="mb-2 text-left text-neutral" key={index}>
+                      <p className="text-primaryl mb-2 text-left" key={index}>
                         {item}
                       </p>
                     ))}
@@ -132,7 +132,7 @@ const SkurlistePakkingInput: React.FC<{ list: List }> = ({ list }) => {
                 <div className="flex  space-x-3">
                   <div className="flex flex-col  ">
                     {text.map((item, index) => (
-                      <p className="mb-2 text-neutral" key={index}>
+                      <p className="text-primaryl mb-2" key={index}>
                         {item}
                       </p>
                     ))}

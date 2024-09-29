@@ -42,7 +42,7 @@ const SkurlisteComponentInput = ({ list }) => {
               >
                 {list.treslag}
 
-                <div className="text-xs font-normal italic text-gray-500">
+                <div className="text-xs font-normal italic text-primary">
                   {dateFormat(list.createdAt, "dd.mm.yyyy HH:MM")}
                 </div>
               </td>
@@ -50,35 +50,35 @@ const SkurlisteComponentInput = ({ list }) => {
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.klGrense}</div>
+                    <div className="text-xs text-primary">{list.klGrense}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.klasse}</div>
+                    <div className="text-xs text-primary">{list.klasse}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.postNr}</div>
+                    <div className="text-xs text-primary">{list.postNr}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.antall}</div>
+                    <div className="text-xs text-primary">{list.antall}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.m3}</div>
+                    <div className="text-xs text-primary">{list.m3}</div>
                   </div>
                 </div>
               </td>
@@ -86,7 +86,7 @@ const SkurlisteComponentInput = ({ list }) => {
                 <div className="flex items-center space-x-3">
                   <div>
                     <div
-                      className={`text-xs text-neutral ${list.status === "stopp" ? "text-red-500" : "text-green-500"}`}
+                      className={`text-xs text-primary ${list.status === "stopp" ? "text-red-500" : "text-green-500"}`}
                     >
                       {list.status}
                     </div>
@@ -105,14 +105,14 @@ const SkurlisteComponentInput = ({ list }) => {
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.xLog}</div>
+                    <div className="text-xs text-primary">{list.xLog}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.prosent}</div>
+                    <div className="text-xs text-primary">{list.prosent}</div>
                   </div>
                 </div>
               </td>
@@ -126,35 +126,35 @@ const SkurlisteComponentInput = ({ list }) => {
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.vs66}</div>
+                    <div className="text-xs text-primary">{list.vs66}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.vs66Br}</div>
+                    <div className="text-xs text-primary">{list.vs66Br}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.mkvBord}</div>
+                    <div className="text-xs text-primary">{list.mkvBord}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.mkvBordBr}</div>
+                    <div className="text-xs text-primary">{list.mkvBordBr}</div>
                   </div>
                 </div>
               </td>
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-neutral">{list.blad}</div>
+                    <div className="text-xs text-primary">{list.blad}</div>
                   </div>
                 </div>
               </td>

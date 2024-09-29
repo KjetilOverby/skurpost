@@ -33,6 +33,20 @@ const Listcreator = ({ colorMode }: { colorMode: string }) => {
     }
   }, [users, currentUserId]);
 
+  useEffect(() => {
+    if (setGetUserInfo) {
+      setGetUserInfo(sessionData && sessionData.user);
+    }
+  }, [sessionData]);
+
+  const {
+    data: settings,
+    isLoading,
+    error,
+  } = api.settings.getByUser.useQuery({
+    userId: sessionData?.user.id ?? "",
+  });
+
   const [bufferStatus, setBufferStatus] = useState(false);
   const { data: skurliste } = api.skurliste.getAll.useQuery({
     buffer: bufferStatus,
@@ -48,6 +62,11 @@ const Listcreator = ({ colorMode }: { colorMode: string }) => {
           setBufferStatus={setBufferStatus}
           bufferStatus={bufferStatus}
           colorMode={colorMode}
+          settings={
+            settings
+              ? { visPakking: settings.visPakking }
+              : { visPakking: false }
+          }
         />
       </div>
     </div>

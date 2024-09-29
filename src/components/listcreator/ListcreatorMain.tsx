@@ -55,12 +55,16 @@ interface ListcreatorMainProps {
   bufferStatus: boolean;
   setBufferStatus: (status: boolean) => void;
   colorMode: string;
+settings: {
+  visPakking: boolean;
+};
 }
 
 const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
-  skurliste,
-  bufferStatus,
-  setBufferStatus,
+skurliste,
+bufferStatus,
+setBufferStatus,
+settings,
 }) => {
   const { data: user } = api.users.getUsers.useQuery();
 
@@ -234,13 +238,19 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
         <h1>Skurplan</h1>
         <SkurlisteComponentInput list={listProps} />
       </div>
-      <div className="mb-5">
-        <h1 className="mt-5">Pakking</h1>
-        <SkurlistePakkingInput list={listProps} />
-      </div>
+      {settings?.visPakking && (
+        <div className="mb-5">
+          <h1 className="mt-5">Pakking</h1>
+          <SkurlistePakkingInput list={listProps} />
+        </div>
+      )}
       <div className="border border-accent bg-secondary p-4">
         <h1 className="text-neutral">Legg til verdier i listen.</h1>
-        <InputListComponent listProps={listProps} setListProps={setListProps} />
+        <InputListComponent
+          listProps={listProps}
+          setListProps={setListProps}
+          settings={settings}
+        />
       </div>
       <div className="bg-base-100 pt-20">
         <div className="mb-10">
@@ -264,10 +274,12 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
             searchInputAll={false}
           />
         </div>
-        <div>
-          <h1>Pakking</h1>
-          <SkurlistePakkingComponent skurliste={skurliste} />
-        </div>
+        {settings?.visPakking && (
+          <div>
+            <h1>Pakking</h1>
+            <SkurlistePakkingComponent skurliste={skurliste} />
+          </div>
+        )}
       </div>
     </div>
   );
