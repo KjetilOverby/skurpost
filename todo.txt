@@ -6,6 +6,7 @@ Finne løsning på rawDivide
 nullstille ID på post når man velger lag ny post
 legg til validering hvis header eksisterer kan ikke posten lagres
 ved valg av ny post vises ikke utregning
+Flere trykk på Alt knappen lager flere ringer.
 
 
 

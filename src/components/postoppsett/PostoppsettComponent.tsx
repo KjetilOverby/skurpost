@@ -158,12 +158,13 @@ const PostoppsettComponent = ({
     deletePost.mutate({ id: postId });
   };
 
-  const startRings =
+  /*  const startRings =
     localData?.startRings?.map((ring) => ({
       ...ring,
       value: Number(ring.value),
-    })) ?? [];
+    })) ?? []; */
 
+  const startRings = localData?.startRings;
   const startRingsAlt = localData?.startRingsAlt;
   const endRings = localData?.endRings;
   const endRingsAlt = localData?.endRingsAlt;
@@ -964,7 +965,9 @@ const PostoppsettComponent = ({
     setSearchInputAll(true);
   };
 
-  console.log(searchInput);
+  const swapStartRings = () => {
+    setstartRingsAltShow(!startRingsAltShow);
+  };
 
   return (
     <>
@@ -1012,7 +1015,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
             <div className="animations">
               {startRingsAlt && startRingsAlt.length > 0 && (
                 <button
-                  onClick={() => setstartRingsAltShow(!startRingsAltShow)}
+                  onClick={swapStartRings}
                   className="btn btn-xs bg-primary text-secondary"
                 >
                   ALT
@@ -1027,46 +1030,47 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                       {dateFormat(localData?.createdAt, "dd.mm.yyyy, HH:MM")}
                     </p>
                   </div>
+
                   <div className="flex ">
                     <div className="flex gap-1">
-                      {!startRingsAltShow
-                        ? // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                          startRings?.map((ringItem: { value: string }) => (
-                            <Ring
-                              mode={editMode}
-                              key={ringItem.value}
-                              value={Number(ringItem.value)}
-                              edit={false}
-                              deleteRing={function (id: string | number): void {
-                                throw new Error("Function not implemented.");
-                              }}
-                              id={""}
-                              moveLeft={function (id: string | number): void {
-                                throw new Error("Function not implemented.");
-                              }}
-                              moveRight={function (id: string | number): void {
-                                throw new Error("Function not implemented.");
-                              }}
-                            />
-                          ))
-                        : startRingsAlt?.map((ringItem: { value: string }) => (
-                            <Ring
-                              mode={editMode}
-                              key={ringItem.value}
-                              value={ringItem.value}
-                              edit={false}
-                              deleteRing={function (id: string | number): void {
-                                throw new Error("Function not implemented.");
-                              }}
-                              id={""}
-                              moveLeft={function (id: string | number): void {
-                                throw new Error("Function not implemented.");
-                              }}
-                              moveRight={function (id: string | number): void {
-                                throw new Error("Function not implemented.");
-                              }}
-                            />
-                          ))}
+                      {!startRingsAltShow &&
+                        startRings?.map((ringItem: { value: string }) => (
+                          <Ring
+                            mode={editMode}
+                            key={ringItem.value}
+                            value={ringItem.value}
+                            edit={false}
+                            deleteRing={function (id: string | number): void {
+                              throw new Error("Function not implemented.");
+                            }}
+                            id={""}
+                            moveLeft={function (id: string | number): void {
+                              throw new Error("Function not implemented.");
+                            }}
+                            moveRight={function (id: string | number): void {
+                              throw new Error("Function not implemented.");
+                            }}
+                          />
+                        ))}
+                      {startRingsAltShow &&
+                        startRingsAlt?.map((ringItem: { value: string }) => (
+                          <Ring
+                            mode={editMode}
+                            key={ringItem.value}
+                            value={ringItem.value}
+                            edit={false}
+                            deleteRing={function (id: string | number): void {
+                              throw new Error("Function not implemented.");
+                            }}
+                            id={""}
+                            moveLeft={function (id: string | number): void {
+                              throw new Error("Function not implemented.");
+                            }}
+                            moveRight={function (id: string | number): void {
+                              throw new Error("Function not implemented.");
+                            }}
+                          />
+                        ))}
                     </div>
 
                     <Blade blade={localData?.blade ?? 0} />
@@ -1242,7 +1246,6 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     </EditMode>
                     {!startRingsAltShow
                       ? startRings?.map(
-                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
                           (ringItem: {
                             id: string | number;
                             value: string;
