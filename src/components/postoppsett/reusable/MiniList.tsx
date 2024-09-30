@@ -1,3 +1,4 @@
+import { get } from "http";
 import React from "react";
 
 interface SkurlisteItem {
@@ -14,6 +15,7 @@ interface SkurlisteItem {
   vs66: string;
   mkvBord: string;
   blad: number;
+  progress: string;
 }
 
 interface MiniListProps {
@@ -47,11 +49,21 @@ export const MiniList: React.FC<MiniListProps> = ({
         </thead>
         <tbody>
           {skurliste?.map((list) => {
+            const getProgressClass = (progress: string) => {
+              switch (progress) {
+                case "aktiv":
+                  return "bg-secondary";
+                case "fullført":
+                  return "bg-neutral";
+                case "":
+                  return "bg-base-100";
+              }
+            };
             return (
               <>
                 <tr
                   onClick={() => clickSearch(list)}
-                  className="border border-base-100 bg-base-100 hover:cursor-pointer hover:bg-accent "
+                  className={`border border-base-100 bg-base-100 hover:cursor-pointer hover:bg-accent ${getProgressClass(list.progress)}`}
                 >
                   <td
                     className={` font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}

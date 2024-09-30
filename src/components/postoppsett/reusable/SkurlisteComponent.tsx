@@ -229,11 +229,21 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
           </thead>
           <tbody>
             {skurliste?.map((list) => {
+              const getProgressClass = (progress: string) => {
+                switch (progress) {
+                  case "aktiv":
+                    return "bg-accent";
+                  case "fullført":
+                    return "bg-neutral";
+                  case "":
+                    return "bg-base-100";
+                }
+              };
               return (
                 <>
                   <tr
                     onClick={!edit ? () => clickSearch(list) : undefined}
-                    className="border border-gray-700 border-l-transparent border-r-transparent bg-base-100 hover:cursor-pointer hover:bg-neutral "
+                    className={`border border-gray-700 border-l-transparent border-r-transparent  hover:cursor-pointer hover:bg-neutral ${getProgressClass(list.progress)}`}
                   >
                     <td
                       className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
