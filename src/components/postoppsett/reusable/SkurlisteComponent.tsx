@@ -114,7 +114,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
       destinasjon: listProps.destinasjon,
       text: listProps.text,
       buffer: listProps.buffer,
-      progress: "",
+      progress: listProps.progress,
       createdAt: new Date(),
       updatedAt: new Date(),
       order: 0,
@@ -159,7 +159,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
         createdAt: new Date(),
         updatedAt: new Date(),
         order: maxOrder,
-        progress: "",
+        progress: list.progress,
       });
     }
   };

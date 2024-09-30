@@ -528,6 +528,7 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
           </select>
         </div>
         {/* settings section */}
+
         {settings?.visPakking && (
           <>
             <div className="flex w-28 flex-col bg-neutral p-2">
@@ -674,6 +675,24 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
             </div>
           </>
         )}
+        <div className="mr-5 flex flex-col">
+          <label>Status</label>
+          <select
+            onChange={(e) =>
+              setListProps((prevState) => ({
+                ...prevState,
+                progress: e.target.value,
+              }))
+            }
+            id="Status"
+            className="bg-base-100 text-xs"
+            value={listProps.progress}
+          >
+            <option value="">Planlagt</option>
+            <option value="aktiv">Aktiv</option>
+            <option value="fullført">Fullført</option>
+          </select>
+        </div>
 
         <button className="btn btn-info btn-xs text-white">Lagre</button>
       </form>

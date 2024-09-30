@@ -55,16 +55,16 @@ interface ListcreatorMainProps {
   bufferStatus: boolean;
   setBufferStatus: (status: boolean) => void;
   colorMode: string;
-settings: {
-  visPakking: boolean;
-};
+  settings: {
+    visPakking: boolean;
+  };
 }
 
 const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
-skurliste,
-bufferStatus,
-setBufferStatus,
-settings,
+  skurliste,
+  bufferStatus,
+  setBufferStatus,
+  settings,
 }) => {
   const { data: user } = api.users.getUsers.useQuery();
 
@@ -143,7 +143,7 @@ settings,
     destinasjon: "",
     text: "",
     blad: 0,
-    progress: String(""),
+    progress: "",
     createdAt: new Date(),
     updatedAt: new Date(),
     buffer: false,

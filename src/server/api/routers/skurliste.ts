@@ -111,7 +111,7 @@ export const skurlisteRouter = createTRPCRouter({
             text: input.text,
             buffer : input.buffer,
             order: input.order,
-            progress: input.progress,
+            progress: '',
             kunde: input.kunde,
           },
         });
@@ -152,6 +152,7 @@ export const skurlisteRouter = createTRPCRouter({
           text: z.string(),
           buffer: z.boolean(),
           order: z.number().optional(),
+          progress: z.string(),
         })
       )
       .mutation(({ ctx, input }) => {
@@ -195,6 +196,7 @@ export const skurlisteRouter = createTRPCRouter({
             text: input.text,
             buffer : input.buffer,
             order: input.order,
+            progress: input.progress,
           },
         });
   
