@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use, SetStateAction, Key } from "react";
+import React, { useState, useEffect, SetStateAction } from "react";
 import Ring from "./reusable/rings/Ring";
 import RawRing from "./reusable/rings/RawRing";
 import Blade from "./reusable/rings/Blade";
@@ -45,6 +45,7 @@ const PostoppsettComponent = ({
   setPostId: (id: string) => void;
 }) => {
   const { data: users } = api.users.getUsers.useQuery();
+
   const context = useContext(PostInfoContext);
   if (!context) {
     throw new Error(
@@ -1172,7 +1173,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                 {!startRingsAltShow ? (
                   <RingPicker
                     // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                    values={ringlist}
+                    values={settings?.ringlist}
                     position="left-48"
                     title="Utfylling foran"
                     onChange={handleRingPickerChange}
@@ -1180,7 +1181,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                 ) : (
                   <RingPicker
                     // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                    values={ringlist}
+                    values={settings?.ringlist}
                     position="left-48"
                     title="Utfylling foran Alternativ"
                     onChange={handleRingPickerChangeAlt}
@@ -1422,7 +1423,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   {!endRingsAltShow ? (
                     <RingPicker
                       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                      values={ringlist}
+                      values={settings?.ringlist}
                       position="right-48"
                       title="Utfylling bak"
                       onChange={handleEndRingPickerChange}
@@ -1430,7 +1431,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   ) : (
                     <RingPicker
                       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
-                      values={ringlist}
+                      values={settings?.ringlist}
                       position="right-48"
                       title="Utfylling bak alternativ"
                       onChange={handleEndRingPickerChangeAlt}

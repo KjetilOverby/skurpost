@@ -6,6 +6,7 @@ nullstille ID på post når man velger lag ny post
 legg til validering hvis header eksisterer kan ikke posten lagres
 ved valg av ny post vises ikke utregning
 save successfull modal
+legge inn valg av ringer i instillinger
 
 
 

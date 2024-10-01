@@ -12,7 +12,7 @@ export const settingsRouter = createTRPCRouter({
         userId: z.string()
     }))
         .query(({ input, ctx }) => {
-            console.log("Input received:", input); // Log the input object
+            console.log("Input received:", input); 
             return ctx.db.settings.findUnique({
                 where: {
                  

@@ -169,6 +169,7 @@ model Settings {
     fonts        String
     visPakking   Boolean
     visMiniListe Boolean
+    ringlist     Float[]
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
     creator      String
