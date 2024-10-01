@@ -36,6 +36,13 @@ export default {
           "base-100": "#212a31",
         },
         lightmode: {
+          "primary": "#718ba6",
+          "secondary": "#bababa",
+          "accent": "#c5eddd",
+          "neutral": "#dbdbdb",
+          "base-100": "#ffffff",
+        },
+        lightpink: {
           "primary": "#5d001e",
           "secondary": "#ee4c7c",
           "accent": "#e3afbc",

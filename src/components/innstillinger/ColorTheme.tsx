@@ -26,6 +26,7 @@ const ColorTheme: React.FC<ColorThemeProps> = ({ update, theme }) => {
           "darkmode",
           "lightmode",
           "coffee",
+          "lightpink",
           "halloween",
           "pastel",
           "fantasy",

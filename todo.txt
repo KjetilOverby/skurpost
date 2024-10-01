@@ -1,11 +1,11 @@
 info om posten
-legge til progress post som går og som har gått
 spes is undefined on create new post
 legg til et blad som standard når nye poster skal lages
 Finne løsning på rawDivide
 nullstille ID på post når man velger lag ny post
 legg til validering hvis header eksisterer kan ikke posten lagres
 ved valg av ny post vises ikke utregning
+save successfull modal
 
 
 

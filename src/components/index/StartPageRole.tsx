@@ -1,5 +1,6 @@
 import React from "react";
 import HeaderComponent from "../postoppsett/reusable/HeaderComponent";
+import Link from "next/link";
 
 interface StartPageRoleProps {
   colorMode: string;
@@ -12,12 +13,27 @@ const StartPageRole: React.FC<StartPageRoleProps> = ({ colorMode }) => {
         <HeaderComponent colorMode={colorMode} />
         <div className="flex flex-col items-center gap-2">
           <div className="flex flex-col items-center justify-center gap-4"></div>
+          <h1 className="mt-40 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-[5rem] font-bold text-transparent">
+            LUMBER LOGIC
+          </h1>
           <div className="w-96">
             <img
-              className="h-full w-full object-cover"
-              src="https://lh3.googleusercontent.com/pw/AP1GczNnwVVmIk7oPqbRfJeNiCVthHHDPKq8JiNBvrL7ROLKkhNhIg6fyIUgvVz6OHdg9DadaToKfpCB_au8ZlkSgd4N2hka355A25MBRzuI6cYWCRU9ZK332u8FVBGE-lKvY5e4SMmhgisDgLkP6lUoCe4AhehWYiF8shBg5B6BuRqEuSzFtUt4xhUjW8hFpf-mQXN0ZgGLWs_g8LOkB44_6Ir0P1_5dTcVt5BJ_SzFp4dMJEmbRveb5xYnQmOGu5YR4Y2Sb6YfUytUy9bNn3YnPb_Q0CipZ_TBngZhUzcKxxxCJOJY26g4U8FERg2BvWCSKx0lcthT2Z4jrgXqZ4ey2BxPhmq8N6dkiUXXCktcRsiqLg_lgeeqzm9Skin25k5jLDhvwjoSuLQiCCIJytJkNmSnZ1ZEzgLOau4EvUKs2e-ijmP8Ohp1FHJk9oJ8iwcblKLseIQNVRNwbkqjZ__Y_u_wxxZIdv98wAVfl3f2OaAkKFe9GhdQe0klktjX1q-heS7_erVdp5zXBODkUmgdUZBltdoJL7R5Ge1IuTl5R-Ol6BhDmi4VgGSLTpGCCjp2ZZbBJfg6XFk66eh4bqFMOS8I8SopBsrU_KnQHX7Ftcjt2cOBG5Tv_4HnZGZK1hghMPpcyp2CwM1uAEbaUVmL90ZWtfvcsDoW1xj_vytSzCtocpP3NpfJatUm0Y0fEnvw4yR0sLaWPkn_QkHct0pjSb1Jyo9kgPR8RoKGhEvdpEuEmFxf-rAmblfz0TOrwsrQXcXjDfxo9p-gBBi_kEJRi44zychpTAP6nWLyF4ugPJJ9laJFpEGCQzl6zdVxSbJdzjPNBrAxGmc3oFSk6NBQQI4tR4DYIxLWmtN9jtV696_Il8n-wbg70WA0f4DLier4ViffancLDgBG5a5xjfZZU8UrnfP2rdZzW5sDEI2OjcQqf40f-3fNO-IJv4k_rg=w2579-h475-s-no?authuser=0"
+              className="w-full"
+              src="https://lh3.googleusercontent.com/pw/AP1GczPSQFvx0W9aDywuE4KqYKLR17Mad9zujzd15PkFvnZiqoQjsZBiddRGoDznWW7qVw_j50KOXY4HTb-UBY6wxse2JfVeKTY_6F5Ijd4kGvhChmxjvQx2q9IWaAVcg4eSNgKjPJUPWkrKq-FIvSwenAF7=w800-h666-s-no?authuser=0"
               alt=""
             />
+          </div>
+          <div className="mt-20">
+            <Link href="/list">
+              <button className="btn mr-5 w-40 bg-neutral text-accent hover:bg-secondary">
+                Skurliste
+              </button>
+            </Link>
+            <Link href="/create/listcreator">
+              <button className="btn mr-5 w-40 bg-neutral text-accent hover:bg-secondary">
+                Rediger skurliste
+              </button>
+            </Link>
           </div>
         </div>
       </main>
