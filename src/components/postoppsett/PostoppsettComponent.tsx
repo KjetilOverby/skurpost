@@ -551,6 +551,26 @@ const PostoppsettComponent = ({
     });
   };
 
+  const handleRingPickerChangeInput = (value: string) => {
+    const startRingsCopy = [...(localData?.startRings ?? [])];
+    startRingsCopy.push({ id: uuidv4(), value: value });
+
+    setLocalData({
+      ...localData,
+      startRings: startRingsCopy,
+      startRingsAlt: localData?.startRingsAlt ?? [],
+      endRings: localData?.endRings ?? [],
+      endRingsAlt: localData?.endRingsAlt ?? [],
+      rawInput: localData?.rawInput ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
+    });
+  };
+
   const handleRingPickerChangeAlt = (value: string) => {
     const startRingsCopy = [...(localData?.startRingsAlt ?? [])];
     startRingsCopy.push({ id: uuidv4(), value: value });
@@ -1177,6 +1197,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     position="left-48"
                     title="Utfylling foran"
                     onChange={handleRingPickerChange}
+                    inputChange={handleRingPickerChangeInput}
                   />
                 ) : (
                   <RingPicker
