@@ -591,6 +591,26 @@ const PostoppsettComponent = ({
     });
   };
 
+  const handleRingPickerChangeInputAlt = (value: string) => {
+    const startRingsCopy = [...(localData?.startRingsAlt ?? [])];
+    startRingsCopy.push({ id: uuidv4(), value: value });
+
+    setLocalData({
+      ...localData,
+      startRingsAlt: startRingsCopy,
+      startRings: localData?.startRings ?? [],
+      endRings: localData?.endRings ?? [],
+      endRingsAlt: localData?.endRingsAlt ?? [],
+      rawInput: localData?.rawInput ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
+    });
+  };
+
   const handleEndRingPickerChange = (value: string) => {
     const endRingsCopy = [...(localData?.endRings ?? [])];
     endRingsCopy.push({ id: uuidv4(), value: value });
@@ -600,6 +620,26 @@ const PostoppsettComponent = ({
       endRings: endRingsCopy,
       startRings: localData?.startRings ?? [],
       startRingsAlt: localData?.startRingsAlt ?? [],
+      endRingsAlt: localData?.endRingsAlt ?? [],
+      rawInput: localData?.rawInput ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
+    });
+  };
+
+  const handleEndRingPickerChangeInput = (value: string) => {
+    const startRingsCopy = [...(localData?.endRings ?? [])];
+    startRingsCopy.push({ id: uuidv4(), value: value });
+
+    setLocalData({
+      ...localData,
+      endRings: startRingsCopy,
+      startRingsAlt: localData?.startRingsAlt ?? [],
+      startRings: localData?.startRings ?? [],
       endRingsAlt: localData?.endRingsAlt ?? [],
       rawInput: localData?.rawInput ?? [],
       blade: localData?.blade ?? 0,
@@ -646,6 +686,30 @@ const PostoppsettComponent = ({
       startRingsAlt: localData?.startRingsAlt ?? [],
       endRings: localData?.endRings ?? [],
       endRingsAlt: localData?.endRingsAlt ?? [],
+      blade: localData?.blade ?? 0,
+      prosent: localData?.prosent ?? 0,
+      plankeTy: localData?.plankeTy ?? "",
+      spes: localData?.spes ?? "",
+      header: localData?.header ?? "",
+      createdAt: localData?.createdAt ?? new Date(),
+    });
+  };
+
+  const handleEndRingPickerChangeInputAlt = (value: string) => {
+    // Copy the current 'endRingsAlt' or create an empty array if it doesn't exist
+    const endRingsAltCopy = [...(localData?.endRingsAlt ?? [])];
+
+    // Add the new ring data
+    endRingsAltCopy.push({ id: uuidv4(), value });
+
+    // Update only the necessary fields in localData
+    setLocalData({
+      ...localData,
+      endRingsAlt: endRingsAltCopy, // Update endRingsAlt specifically
+      startRings: localData?.startRings ?? [],
+      startRingsAlt: localData?.startRingsAlt ?? [],
+      endRings: localData?.endRings ?? [],
+      rawInput: localData?.rawInput ?? [],
       blade: localData?.blade ?? 0,
       prosent: localData?.prosent ?? 0,
       plankeTy: localData?.plankeTy ?? "",
@@ -1206,6 +1270,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     position="left-48"
                     title="Utfylling foran Alternativ"
                     onChange={handleRingPickerChangeAlt}
+                    inputChange={handleRingPickerChangeInputAlt}
                   />
                 )}
               </EditMode>
@@ -1448,6 +1513,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                       position="right-48"
                       title="Utfylling bak"
                       onChange={handleEndRingPickerChange}
+                      inputChange={handleEndRingPickerChangeInput}
                     />
                   ) : (
                     <RingPicker
@@ -1456,6 +1522,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                       position="right-48"
                       title="Utfylling bak alternativ"
                       onChange={handleEndRingPickerChangeAlt}
+                      inputChange={handleEndRingPickerChangeInputAlt}
                     />
                   )}
                 </EditMode>
