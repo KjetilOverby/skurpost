@@ -91,6 +91,28 @@ export const settingsRouter = createTRPCRouter({
             });
         }),
 
+    updateRinglist: protectedProcedure
+        .input(
+            z.object({
+                ringlist: z.array(z.number()),
+                userId: z.string(),
+
+            })
+        )
+        .mutation(({ ctx, input }) => {
+            const creatorName: string = ctx.session.user.name ?? "DefaultCreator";
+            const creatorImg: string = ctx.session.user.image ?? "DefaultCreator";
+
+            return ctx.db.settings.update({
+                where: {
+                    userId: input.userId,
+                },
+                data: {
+                    ringlist: input.ringlist,
+                },
+            });
+        }),
+
 
     updateDisplay: protectedProcedure
         .input(

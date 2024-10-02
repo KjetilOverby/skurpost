@@ -7,6 +7,7 @@ import AccountComponent from "~/components/innstillinger/AccountComponent";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { PostInfoContext } from "~/components/context";
 import SawTypeChoose from "~/components/innstillinger/SawTypeChoose";
+import RinglistCreator from "~/components/innstillinger/RinglistCreator";
 
 interface InnstillingerProps {
   colorMode: string;
@@ -55,6 +56,12 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
       void ctx.settings.getByUser.invalidate();
     },
   });
+  const updateRinglist = api.settings.updateRinglist.useMutation({
+    onSuccess: (data) => {
+      setCurrentSawType(data.theme);
+      void ctx.settings.getByUser.invalidate();
+    },
+  });
 
   const updateDisplay = api.settings.updateDisplay.useMutation({
     onSuccess: (data) => {
@@ -86,6 +93,19 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
       console.log(response);
     } catch (error) {
       console.error("Error updating theme:", error);
+    }
+  };
+
+  const handleUpdateRinglist = async (newRinglist: number[]) => {
+    try {
+      const userId = sessionData?.user.id ?? "";
+      const response = await updateRinglist.mutateAsync({
+        userId: userId,
+        ringlist: newRinglist,
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Error updating ringlist:", error);
     }
   };
 
@@ -134,6 +154,10 @@ const Innstillinger: React.FC<InnstillingerProps> = ({ colorMode }) => {
           setSawType={setSawType ?? (() => {})}
           update={handleUpdateSawType}
           type={posts?.sawType ?? "default-theme"}
+        />
+        <RinglistCreator
+          ringlist={posts?.ringlist ?? []}
+          update={handleUpdateRinglist}
         />
       </div>
     </div>
