@@ -53,7 +53,8 @@ const RinglistCreator: React.FC<RinglistCreatorProps> = ({
     <div className="mb-10 rounded-xl border border-primary p-5">
       <h1 className="mb-5">Ringer</h1>
       <p className="mb-3 text-xs">
-        Legg til eller trekk fra ringer som skal være i listen
+        Legg til ringer. Klikk på en ring for å fjerne den. Ringene blir lagt i
+        stigende rekkefølge.
       </p>
       <form onSubmit={handleSubmit}>
         <input
@@ -62,46 +63,32 @@ const RinglistCreator: React.FC<RinglistCreatorProps> = ({
           placeholder="ringverdi"
           value={newRingValue}
           onChange={(e) => setNewRingValue(parseFloat(e.target.value))}
+          className="input input-bordered mb-3"
         />
-        <button type="submit" className="rounded-md bg-accent p-2 text-primary">
+        <button
+          type="submit"
+          className="btn ml-5 rounded-md bg-accent p-2 text-primary"
+        >
           Legg til
         </button>
-        <div className="mt-5 flex flex-wrap">
+        <div className="mt-5 flex flex-wrap gap-2">
           {ringlist
             ?.sort((a, b) => a - b) // Sorterer listen før rendering
             .map((ring) => (
               <div
                 key={ring}
-                className={`m-3 flex h-10 w-20 cursor-pointer items-center justify-center rounded-md border border-primary bg-base-100 p-2 text-primary ${
-                  deletingRing === ring
-                    ? "ring-exit-active"
-                    : "ring-enter-active"
-                }`}
+                className="flex h-8 w-16 cursor-pointer items-center justify-center rounded-md border border-primary bg-base-100 text-primary"
                 onClick={() =>
                   handleDeleteRing(ring).catch((error) =>
                     console.error("Failed to delete ring:", error),
                   )
                 }
               >
-                <p className="mr-2">{ring}</p>
+                <p>{ring}</p>
               </div>
             ))}
         </div>
       </form>
-      <style jsx>{`
-        .ring-enter-active {
-          transform: translateY(0);
-          transition:
-            opacity 500ms,
-            transform 500ms;
-        }
-        .ring-exit-active {
-          transform: translateY(-20px) translateY(100vh);
-          transition:
-            opacity 500ms,
-            transform 500ms;
-        }
-      `}</style>
     </div>
   );
 };

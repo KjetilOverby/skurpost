@@ -35,21 +35,21 @@ const RingPicker: React.FC<RingPickerProps> = ({
         <input
           type="number"
           step={0.01}
-          placeholder="Add new value"
+          placeholder="Egendefinert verdi"
           className="mr-2 rounded border p-1"
           onChange={(e) => setinputValue(e.target.value)}
         />
         <button
           onClick={() => inputChange(inputValue)}
-          className="rounded bg-primary p-1 text-white"
+          className="rounded bg-secondary p-1 text-primary hover:bg-accent"
         >
-          Add
+          Legg til
         </button>
       </div>
 
       {values.map((value) => (
         <button
-          className="m-1  h-12 w-12 rounded-full bg-secondary p-1 text-xs text-primary hover:bg-accent"
+          className="m-1  h-12 w-12 rounded-full bg-neutral p-1 text-xs text-primary hover:bg-accent"
           key={value}
           onClick={() => handleClick(value)}
         >

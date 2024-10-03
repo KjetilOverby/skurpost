@@ -25,12 +25,12 @@ const StartPageRole: React.FC<StartPageRoleProps> = ({ colorMode }) => {
           </div>
           <div className="mt-20">
             <Link href="/list">
-              <button className="btn mr-5 w-40 bg-neutral text-accent hover:bg-secondary">
+              <button className="btn mr-5 w-40 bg-neutral text-accent hover:bg-accent hover:text-base-100">
                 Skurliste
               </button>
             </Link>
             <Link href="/create/listcreator">
-              <button className="btn mr-5 w-40 bg-neutral text-accent hover:bg-secondary">
+              <button className="btn mr-5 w-40 bg-neutral text-accent hover:bg-accent hover:text-base-100">
                 Rediger skurliste
               </button>
             </Link>

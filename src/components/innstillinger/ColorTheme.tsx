@@ -27,15 +27,8 @@ const ColorTheme: React.FC<ColorThemeProps> = ({ update, theme }) => {
           "lightmode",
           "coffee",
           "lightpink",
-          "halloween",
-          "pastel",
-          "fantasy",
           "luxury",
           "autumn",
-          "acid",
-          "lemonade",
-          "corporate",
-          "synthwave",
           "cyberpunk",
         ].map((label) => (
           <div key={label} className="form-control w-52">

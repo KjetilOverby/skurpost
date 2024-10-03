@@ -1085,7 +1085,7 @@ const PostoppsettComponent = ({
             clickSearchAll={clickSearchAll}
           />
         )}
-        {localData?.header && (
+        {localData?.header && !editMode && (
           <div className="absolute bottom-5 left-5">
             <p className="text-5xl font-thin">
               {postInfoWriteChange && postInfoWriteChange}
@@ -1095,7 +1095,7 @@ const PostoppsettComponent = ({
         {/* 
 className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0d243c] via-[#599c53] to-[#e09a18]" */}
 
-        <div className="flex h-screen flex-col items-center justify-center bg-base-100">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-base-100">
           {!editMode && (
             <div className="animations">
               {startRingsAlt && startRingsAlt.length > 0 && (
@@ -1116,7 +1116,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     </p>
                   </div>
 
-                  <div className="flex ">
+                  <div className="flex">
                     <div className="flex gap-1">
                       {!startRingsAltShow &&
                         startRings?.map((ringItem: { value: string }) => (
@@ -1232,7 +1232,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
             </div>
           )}
 
-          <div>
+          <div className="">
             <EditMode editMode={editMode}>
               {openRawDivide && (
                 <RawDivideComponent
@@ -1258,7 +1258,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   <RingPicker
                     // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
                     values={settings?.ringlist}
-                    position="left-48"
+                    position="left-20"
                     title="Utfylling foran"
                     onChange={handleRingPickerChange}
                     inputChange={handleRingPickerChangeInput}
@@ -1267,14 +1267,14 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   <RingPicker
                     // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
                     values={settings?.ringlist}
-                    position="left-48"
+                    position="left-20"
                     title="Utfylling foran Alternativ"
                     onChange={handleRingPickerChangeAlt}
                     inputChange={handleRingPickerChangeInputAlt}
                   />
                 )}
               </EditMode>
-              <div key={localData?.header}>
+              <div key={localData?.header} className="mt-60">
                 <div className="absolute left-1/2 top-20 mb-20 mt-10 -translate-x-1/2 -translate-y-1/2 transform">
                   <p className="text-primary">
                     Opprinnelig post: {localData?.header}
@@ -1510,7 +1510,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     <RingPicker
                       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
                       values={settings?.ringlist}
-                      position="right-48"
+                      position="right-20"
                       title="Utfylling bak"
                       onChange={handleEndRingPickerChange}
                       inputChange={handleEndRingPickerChangeInput}
@@ -1519,7 +1519,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     <RingPicker
                       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
                       values={settings?.ringlist}
-                      position="right-48"
+                      position="right-20"
                       title="Utfylling bak alternativ"
                       onChange={handleEndRingPickerChangeAlt}
                       inputChange={handleEndRingPickerChangeInputAlt}
@@ -1530,7 +1530,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
             </EditMode>
           </div>
           <EditMode editMode={editMode}>
-            <div className="mt-20 flex flex-col rounded-xl border border-primary p-3">
+            <div className="mb-40 mt-20 flex flex-col rounded-xl border border-primary p-3">
               <form
                 className="mb-5"
                 action=""
