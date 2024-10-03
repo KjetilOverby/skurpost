@@ -19,6 +19,7 @@ import dateFormat from "dateformat";
 import { useContext } from "react";
 import { PostInfoContext } from "../context";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { set } from "zod";
 
 interface Item {
   value: string;
@@ -106,6 +107,8 @@ const PostoppsettComponent = ({
 
   const currentUserId = sessionData?.user?.id;
 
+  const [sawTypeSettings, setSawTypeSettings] = useState("");
+
   const router = useRouter();
 
   const ctx = api.useContext();
@@ -123,6 +126,10 @@ const PostoppsettComponent = ({
   } = api.settings.getByUser.useQuery({
     userId: sessionData?.user.id ?? "",
   });
+
+  useEffect(() => {
+    setSawTypeSettings(settings?.sawType ?? "");
+  }, [settings]);
 
   const { data: posts } = api.postoppsett.getByHeader.useQuery({
     header: searchInput,
@@ -238,7 +245,7 @@ const PostoppsettComponent = ({
         const prosent = String(localData?.prosent);
         const spes = localData?.spes;
         const xlog = String(rawRings?.length);
-        const sawType = String("mkv");
+        const sawType = String("");
 
         const response = await updatePost.mutateAsync({
           id,
@@ -775,16 +782,17 @@ const PostoppsettComponent = ({
   };
 
   useEffect(() => {
-    const calcData = getCalcData(sawTypeData);
-    if (calcData) {
+    if (sawTypeSettings) {
       const calculatedDifferenceEnd = (
-        calcData.middleEnd -
+        calc[sawTypeSettings as keyof typeof calc].middleEnd -
         rawinputSum / 2 -
         bladeSum / 2 -
         (localData?.blade ?? 0) / 2 -
         endringSum
       ).toFixed(2);
       setDifferenceEnd(calculatedDifferenceEnd);
+    } else {
+      setDifferenceEnd("0.00");
     }
   }, [
     sawTypeData,
@@ -794,13 +802,13 @@ const PostoppsettComponent = ({
     bladeSum,
     localData?.blade,
     endringSum,
+    sawTypeSettings,
   ]);
 
   useEffect(() => {
-    const calcData = getCalcData(sawTypeData);
-    if (calcData) {
+    if (sawTypeSettings) {
       const calculatedDifferenceStart = (
-        calcData.toMiddle -
+        calc[sawTypeSettings as keyof typeof calc].toMiddle -
         rawinputSum / 2 -
         bladeSum / 2 -
         (localData?.blade ?? 0) / 2 -
@@ -817,6 +825,7 @@ const PostoppsettComponent = ({
     bladeSum,
     localData?.blade,
     startringSum,
+    sawTypeSettings,
   ]);
 
   interface RingItem {
@@ -1296,9 +1305,10 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                       <div>
                         <p className="text-primary">
                           Distanse:{" "}
-                          {getCalcData(sawTypeData)
+                          {sawTypeSettings
                             ? (
-                                getCalcData(sawTypeData)!.toMiddle -
+                                calc[sawTypeSettings as keyof typeof calc]
+                                  .toMiddle -
                                 rawinputSum / 2 -
                                 bladeSum / 2 -
                                 (localData?.blade ?? 0) / 2
@@ -1474,9 +1484,10 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     <div>
                       <p className="text-primary">
                         Distanse:{" "}
-                        {getCalcData(sawTypeData)
+                        {sawTypeSettings
                           ? (
-                              getCalcData(sawTypeData)!.middleEnd -
+                              calc[sawTypeSettings as keyof typeof calc]
+                                .middleEnd -
                               rawinputSum / 2 -
                               bladeSum / 2 -
                               (localData?.blade ?? 0) / 2
