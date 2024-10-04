@@ -4,9 +4,9 @@ legg til et blad som standard når nye poster skal lages
 Finne løsning på rawDivide
 nullstille ID på post når man velger lag ny post
 legg til validering hvis header eksisterer kan ikke posten lagres
-ved valg av ny post vises ikke utregning
 save successfull modal
 gjøre appen lukket når man ikke er innlogget
+nullstille post når man går ut av postoppsett sånn at id en på en post ikke lenger er valgt
 
 
 
