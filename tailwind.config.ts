@@ -8,11 +8,11 @@ export default {
     themes: [
       {
         mytheme: {
-          "primary": "#254e58",
-          "secondary": "#379683",
-          "accent": "#6e6658",
-          "neutral": "#88bdbc",
-          "base-100": "#112d32",
+          "primary": "#718ba6",
+          "secondary": "#bababa",
+          "accent": "#c5eddd",
+          "neutral": "#dbdbdb",
+          "base-100": "#ffffff",
         },
         bluefresh: {
           "primary": "#2e9cca",
@@ -26,7 +26,7 @@ export default {
           "secondary": "#474646",
           "accent": "#374151",
           "neutral": "#c2c0c0",
-          "base-100": "rgb(51, 51, 51)",
+          "base-100": "#ffffff",
         },
         darkmode: {
           "primary": "#d3d9d4",

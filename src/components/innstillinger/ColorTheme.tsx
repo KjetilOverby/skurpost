@@ -30,6 +30,9 @@ const ColorTheme: React.FC<ColorThemeProps> = ({ update, theme }) => {
           "luxury",
           "autumn",
           "cyberpunk",
+          "futurisk",
+          "bluefresh",
+          "mytheme",
         ].map((label) => (
           <div key={label} className="form-control w-52">
             <label className="label cursor-pointer">

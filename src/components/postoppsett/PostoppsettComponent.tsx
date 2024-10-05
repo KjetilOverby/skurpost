@@ -1576,6 +1576,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   value={localData?.plankeTy}
                 />
               </div>
+              <label>Prosent</label>
               <select
                 className="mb-5 h-full rounded-md border-0 bg-neutral py-0 pl-2 pr-7 text-primary focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
                 // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
@@ -1600,7 +1601,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                 val={localData?.blade}
               />
               <div>
-                <label>Legg til text i parantes</label>
+                <label>Legg til tekst i parantes</label>
                 <input
                   className="focus:shadow-outline w-full appearance-none rounded border bg-neutral px-3 py-2 leading-tight text-primary shadow focus:outline-none"
                   onChange={handleSpes}
