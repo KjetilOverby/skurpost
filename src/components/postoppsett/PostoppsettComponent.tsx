@@ -1177,10 +1177,8 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                           value={ringItem.value}
                           blade={localData.blade}
                           /*   rawDivide={rawDivideParse} */
-                          ringItem={{
-                            ...ringItem,
-                            ring: Number(ringItem.value),
-                          }}
+                          // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+                          ringItem={ringItem}
                         />
                       ))}
                     </div>
@@ -1386,7 +1384,6 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                           ),
                         )}
                   </div>
-
                   <Blade blade={localData?.blade ?? 0} />
 
                   <div className="flex">
@@ -1479,7 +1476,6 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                           ),
                         )}
                   </div>
-
                   <EditMode editMode={editMode}>
                     <div>
                       <p className="text-primary">

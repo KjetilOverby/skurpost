@@ -40,6 +40,8 @@ const RawRing = ({
 }: RawRingProps) => {
   const [calculationResult, setCalculationResult] = useState("");
 
+  console.log(ringItem);
+
   useEffect(() => {
     if (ringItem?.ring !== undefined ?? ringItem?.shims !== undefined) {
       const result = (
