@@ -4,7 +4,7 @@ const Documentation = () => {
   const [activeTab, setActiveTab] = useState("introduction");
 
   return (
-    <div className="3xl:mx-[60rem] mx-96 mt-20 flex min-h-screen">
+    <div className="mx-40 mt-20 flex min-h-screen bg-slate-200 3xl:mx-[60rem]">
       <aside className="w-64  p-5">
         <div>
           <h1 className="mb-2 font-bold text-black">Postoppsett</h1>
@@ -128,12 +128,10 @@ const Documentation = () => {
       </aside>
 
       {/* Hovedinnhold */}
-      <main className="flex-1 bg-white p-10">
+      <main className="flex-1 bg-white pl-10">
         {activeTab === "introduction" && (
           <section>
-            <h1 className="mb-4 text-3xl font-bold text-gray-600">
-              Postoppsett
-            </h1>
+            <h1 className="mb-4 text-2xl font-bold text-black">Postoppsett</h1>
             <p className="mb-10 text-lg text-gray-500">
               Et eksempel på en ferdig post. Over ringen mellom sagbladene står
               råmålet i midten er verdien på ringene akkurat som i
@@ -150,7 +148,7 @@ const Documentation = () => {
               ringene er i bruk så kan man trykke på ALT kanppen og få en
               alternativ utfylling.
             </p>
-            <div className="3xl:w-[50rem] w-[40rem]">
+            <div className="w-[40rem] 3xl:w-[50rem]">
               <img
                 className="w-full"
                 src="https://lh3.googleusercontent.com/pw/AP1GczPIZyCWsfZ8OShKXHjIPosZpGUADeZT7z5LDYuDtVCaIjAewAvtADV__WEoIW0RyfUrE9i7J4Z_4te-sqZjQsVcuQ9-JQ4Y6hhFLQuIW4U0w_d0j3_eQ6gCxEMZboNw0_2HP5ZG5lY5yQIjQlOjqnAe=w853-h430-s-no?authuser=0"
@@ -177,10 +175,13 @@ const Documentation = () => {
               inne å redigerer en post ved å lagre som ny, les mer på{" "}
               <span className="text-blue-500">Rediger post</span>)
             </p>
-            <img
-              src="https://lh3.googleusercontent.com/pw/AP1GczMpE1vHavQEQKO6PtWSxH_4m_DFLqO-l2cqigfmziTWtx5l4SJnuFy8GlPNHc8e5M6rWuetdMv3xT5ZpZQmG4cIDAt1J_96jThTTLA4fHoPV163v705aOkMDRON2hmlj4ioqdhr29ONVfp3A3TB5KVv=w4675-h2229-s-no?authuser=0"
-              alt=""
-            />
+            <div className="w-[55rem] 3xl:w-[50rem]">
+              <img
+                className="w-full"
+                src="https://lh3.googleusercontent.com/pw/AP1GczMpE1vHavQEQKO6PtWSxH_4m_DFLqO-l2cqigfmziTWtx5l4SJnuFy8GlPNHc8e5M6rWuetdMv3xT5ZpZQmG4cIDAt1J_96jThTTLA4fHoPV163v705aOkMDRON2hmlj4ioqdhr29ONVfp3A3TB5KVv=w4675-h2229-s-no?authuser=0"
+                alt=""
+              />
+            </div>
             <div className="">
               <p className="mb-5 mt-10 text-lg text-gray-500">
                 I input feltet i midten må man legge inn:
@@ -200,7 +201,7 @@ const Documentation = () => {
                 differanse og da vil skriften bli grønn. Alle mål opererer i mm.
               </p>
 
-              <div className="w-[20rem]">
+              <div className="w-[30rem]">
                 <img
                   className="w-full"
                   src="https://lh3.googleusercontent.com/pw/AP1GczNFafXLtv9_CGmBdyQhNf5PoTJdTAOH4lFNfflPRuLJXwWCD8zJYiP1gGSY9aKG26KJduC8i9PjA9hvYppMct9q1mI7aL_nMyaM1-vifKYX944bong6VngyR8GLs_gEh8S_1hqNn8OPiRgyLFu_cXWFbVoZYIaAbB3enfr8fj8dkxx2KDaupLonOTIleFhlBNr58cVIbtaE_G9mNg_C36Af9INC6_9EWyrIvTbLEJgc6I16cSYYego72d1j9c98nVJyn4AhOD1HwuZPJIxnRl3MreGIdK06s85kbHmh8RdmQofrFCKw1mxFwtRHaqxeqD_3-UUNfmBjcFyFy6s5LtvINDV3pXIife55a3b9VkGubBxLhTzux1rRRKEFr2-1RCaN7ALmNRcPZC7dJNtH4kilvk6ttxndgVqa7FOo-oGNltgpoUyYvC-LHwgXe-KX90ledh4tFCT4g3PfA-z27OSKua1lGLq8ywFK7OjladtVq_bGwk1wLxq45i_wPAZkfFMaGcqd0g2IXzpymrKg2xsew2nKOFEtumnMRaP-5gTme1Gb7haGfExxBr-aXW2q6m4k_I_GRYDkKVMJ7Guh4HsNX0O8ixacQjR5l7csrCmvUP0F2xJ9l1Yqt2MMhMbrx3gPqjw_I5Krug7uw0xC3Do1mIFiAk5UoWIgTfumeEdpmhGvWzT8XY_oAQPGpmdukbKjLEF08d8_HHDEsXEpZu9kkQMRsOCFYp_1_CiNPCfRvpnlOaUBYeR6Yy90-NYLEtjRP5g1-4O4egwJ3o5wTqIRAniTWTu4Ti7l1iFBgS7P7X1QP4IzLcUYttY5D0cQELowC-kQphrywlo2CIokD65rdXR2Pyqk4UcW0q3nYv4V-feZkrnZ19awmGynBKTDnfX1cdTXK46xFqv3PkCi_as=w812-h794-s-no?authuser=0"
@@ -210,7 +211,7 @@ const Documentation = () => {
             </div>
             <h2 className="my-8 text-xl text-black">Utfyllingsringer</h2>
             <div className="flex">
-              <div className="mr-10 w-[45rem]">
+              <div className="mr-10 w-[35rem]">
                 <img
                   className="w-full"
                   src="https://lh3.googleusercontent.com/pw/AP1GczPR3W2uo9QV0FHc20AaXAa08TOeTfm0OHJd71zAUWR2nVMxTfOuU9cbyqkplgdb8zE2XWMNvD7niBQ-ih-gdP5pls1TTlXthampAAdX__NvmrESbNukoXQVCW19VkWcFpRZlakzKQgcb_a16NqCPnia-IqPol1STwSyg05kJ1aplY2CBJIMcvAv2BGnY-DAW_UAz6FF9ncdAArUW3C_cnXdRGLJNEdCNwgg0HvavJzD_Qk2udNqvO73MlFbASlYPPlcm5ldLcpIIiRQjWVs39tKZgkeks7V-u_AvRUKockXTO8eIGuNWfrsk9LkFvW5VrLOHZ0cV72UOw8FbcG9JsFi5gRamFugFXOWAk_B_9OZhDhcW6nT01AWskEwv2WsleXl_tF5befhATlMgQGgIbP92bLU6cMZRBGLxtRN9RvVdkZO5WVcJeKCn6el732FgpSz_zX0Iz-sqyvqzxuBbMrlcoFsusMFXtNTTNldkjJklsSA9R4Ei0I3Aq2ZXA3MmkQef1uShqGioCw9x0Dy0X0APMAslDyyBSJHZselrqM3NoOwc5meQc-LClWqNH-WN87PQbiGP8czHpKyThInOunygXA3WW8oLdZ9ADbVeoAaiK6CIXxY5Wy71Hpqy3dvQ7nwNqx3ZL-bx9IpRuIsI7Hcl2rtjBjtlVQpiFfHgr6HpBrqwDZAIMn9d-4G9LNtmnfSLPkCSWLb0JDoLLc9R_mI6Cj91xvkFcfyk1hbRNn10C97FMcFNuk9UPcZ75of72ZkRruNMRtpNhgZ7G9VCcOLRybZWV6v6UQoeWii0iPkAeVhruDcSQX5yfcdSMdMNM8zd6qF0aa7O0YcZ9SIr9SIF-KbDZauDdVVFa3TKrTdZnqQ3cz-cry7_VUVajYdfigkyUGnyMvw8k9m7VQ6mn_K=w678-h1978-s-no?authuser=0"
