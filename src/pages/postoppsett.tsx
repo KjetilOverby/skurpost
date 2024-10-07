@@ -18,15 +18,25 @@ interface PostoppsettProps {
 }
 
 const Postoppsett = ({ postId, setPostId, colorMode }: PostoppsettProps) => {
-  const { data: sessionData } = useSession();
-  const { data: postoppsett } = api.postoppsett.getById.useQuery({ postId });
+  const { data: sessionData, status: sessionStatus } = useSession();
+  const { data: postoppsett, isLoading: isLoadingPostoppsett } =
+    api.postoppsett.getById.useQuery({ postId });
   const context = useContext(PostInfoContext);
   const { setGetUserInfo } = context ?? {};
+
   useEffect(() => {
     if (setGetUserInfo) {
       setGetUserInfo(sessionData && sessionData.user);
     }
   }, [sessionData, setGetUserInfo]);
+
+  if (sessionStatus === "loading" || isLoadingPostoppsett) {
+    return (
+      <div className="grid min-h-screen items-center justify-center bg-base-100">
+        <div className="text-gray-500">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div data-theme={colorMode}>

@@ -20,8 +20,9 @@ interface HomeProps {
 }
 
 export default function Home({ colorMode }: HomeProps) {
-  const { data: sessionData } = useSession();
-  const { data: users } = api.users.getUsers.useQuery();
+  const { data: sessionData, status: sessionStatus } = useSession();
+  const { data: users, isLoading: isLoadingUsers } =
+    api.users.getUsers.useQuery();
   const context = useContext(PostInfoContext);
   const ctx = api.useContext();
 
@@ -41,7 +42,7 @@ export default function Home({ colorMode }: HomeProps) {
 
   const {
     data: posts,
-    isLoading,
+    isLoading: isLoadingPosts,
     error,
   } = api.settings.getByUser.useQuery({
     userId: sessionData?.user.id ?? "",
@@ -67,6 +68,14 @@ export default function Home({ colorMode }: HomeProps) {
     }
   };
 
+  if (sessionStatus === "loading" || isLoadingUsers || isLoadingPosts) {
+    return (
+      <div className="grid min-h-screen items-center justify-center bg-white">
+        <div className="text-gray-500">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -75,7 +84,7 @@ export default function Home({ colorMode }: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {sessionData && sessionData ? (
+      {sessionData ? (
         ""
       ) : (
         <div className="grid min-h-screen items-center justify-center bg-white">

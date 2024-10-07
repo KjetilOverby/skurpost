@@ -4,7 +4,7 @@ const Documentation = () => {
   const [activeTab, setActiveTab] = useState("introduction");
 
   return (
-    <div className="mx-40 mt-20 flex min-h-screen bg-slate-200 3xl:mx-[60rem]">
+    <div className="mx-40 mt-20 flex min-h-screen bg-gray-100 3xl:mx-[60rem]">
       <aside className="w-64  p-5">
         <div>
           <h1 className="mb-2 font-bold text-black">Postoppsett</h1>
@@ -23,16 +23,9 @@ const Documentation = () => {
                 activeTab === "createPost" ? "font-bold" : ""
               }`}
             >
-              Lag post
+              Lag/rediger post
             </button>
-            <button
-              onClick={() => setActiveTab("editPost")}
-              className={`block w-full rounded-lg px-5 text-left text-gray-500 hover:bg-gray-200  ${
-                activeTab === "editPost" ? " font-bold" : ""
-              }`}
-            >
-              Rediger post
-            </button>
+
             <button
               onClick={() => setActiveTab("rawMeasure")}
               className={`block w-full rounded-lg px-5 text-left text-gray-500 hover:bg-gray-200  ${
@@ -41,18 +34,11 @@ const Documentation = () => {
             >
               Råmål
             </button>
+
             <button
-              onClick={() => setActiveTab("rawMeasure")}
+              onClick={() => setActiveTab("alt")}
               className={`block w-full rounded-lg px-5 text-left text-gray-500 hover:bg-gray-200  ${
-                activeTab === "e" ? " font-bold" : ""
-              }`}
-            >
-              Dele opp verdi råmål
-            </button>
-            <button
-              onClick={() => setActiveTab("e")}
-              className={`block w-full rounded-lg px-5 text-left text-gray-500 hover:bg-gray-200  ${
-                activeTab === "e" ? " font-bold" : ""
+                activeTab === "alt" ? " font-bold" : ""
               }`}
             >
               Alternativ utfylling
@@ -71,25 +57,18 @@ const Documentation = () => {
           <h1 className="mb-2 mt-5 font-bold text-black">Skurlister og søk</h1>
           <nav className="space-y-4">
             <button
-              onClick={() => setActiveTab("listCreate")}
+              onClick={() => setActiveTab("list")}
               className={`block w-full rounded-lg px-5 text-left text-gray-500 hover:bg-gray-200 ${
-                activeTab === "introduction" ? "font-bold" : ""
+                activeTab === "list" ? "font-bold" : ""
               }`}
             >
-              Lag skurliste
+              Lag/rediger skurliste
             </button>
-            <button
-              onClick={() => setActiveTab("editList")}
-              className={`block w-full rounded-lg px-5 text-left text-gray-500 hover:bg-gray-200  ${
-                activeTab === "e" ? "bg-gray-300 font-bold" : ""
-              }`}
-            >
-              Rediger skurliste
-            </button>
+
             <button
               onClick={() => setActiveTab("search")}
               className={`block w-full rounded-lg px-5 text-left text-gray-500 hover:bg-gray-200  ${
-                activeTab === "crea" ? " font-bold" : ""
+                activeTab === "search" ? " font-bold" : ""
               }`}
             >
               Søk etter poster
@@ -151,15 +130,15 @@ const Documentation = () => {
             </p>
             <br />
             <p className="mb-10 text-lg text-gray-500">
-              I dette eksemplet er det to knapper som heter ALT og disse er der
-              for at det er en alternativ utfylling tilgjengelig. Hvis noen av
-              ringene er i bruk så kan man trykke på ALT kanppen og få en
-              alternativ utfylling.
+              I dette eksemplet er det en knapp som heter ALT på utfylling foran
+              og denne er der for at det er en alternativ utfylling
+              tilgjengelig. Hvis noen av ringene er i bruk så kan man trykke på
+              ALT kanppen og få en alternativ utfylling.
             </p>
             <div className="w-[40rem] 3xl:w-[50rem]">
               <img
                 className="w-full"
-                src="https://lh3.googleusercontent.com/pw/AP1GczPIZyCWsfZ8OShKXHjIPosZpGUADeZT7z5LDYuDtVCaIjAewAvtADV__WEoIW0RyfUrE9i7J4Z_4te-sqZjQsVcuQ9-JQ4Y6hhFLQuIW4U0w_d0j3_eQ6gCxEMZboNw0_2HP5ZG5lY5yQIjQlOjqnAe=w853-h430-s-no?authuser=0"
+                src="https://lh3.googleusercontent.com/pw/AP1GczOvyu67teWdocPj9ByqAwiu-Za_b82Bx3TjqDgP9E9VKGynuyEFUvNF1J-lm0d5_Yad-sQnHAsQBlFrNu-LGqxBDWm5yqiDnfHlrKELyRnafGce-FIaTirfD5MCqo4_o7Hd9NutPqfgnolLQIjEqRwh=w853-h430-s-no?authuser=0"
                 alt=""
               />
             </div>
@@ -217,7 +196,9 @@ const Documentation = () => {
                 />
               </div>
             </div>
-            <h2 className="my-8 text-xl text-black">Utfyllingsringer</h2>
+            <h2 className="my-8 text-xl font-bold text-black">
+              Utfyllingsringer
+            </h2>
             <div className="flex">
               <div className="mr-10 w-[35rem]">
                 <img
@@ -252,33 +233,32 @@ const Documentation = () => {
                 </p>
               </div>
             </div>
+            <div className="mb-10">
+              <h1 className="mb-4 mt-10 text-lg font-bold text-black">
+                Redigere post
+              </h1>
+              <p className="text-lg text-gray-500">
+                Når en post oppe i postoppsett, gå til{" "}
+                <span className="text-green-500">Menu</span> og velg{" "}
+                <span className="text-green-500">Rediger Post</span>. Da er man
+                inne på samme side som om man skal lage en ny post men her har
+                man en post oppe. Dette gjør at du kan lagre data som er
+                redigert men vær obs på at data som var opprinnelig på den
+                posten du har opp vil bli overskrevet.
+              </p>
+              <br />
+              <p className="text-lg text-gray-500">
+                Hvis du vil beholde begge postenen skal du velge lagre som ny
+                post, dette vil ikke påvirke den opprinnelige posten noen ting.
+                Hvis du ikke skal gjøre noe likevel kan du klikke på{" "}
+                <span className="text-green-500">Menu</span> og velg{" "}
+                <span className="text-green-500">Avbryt</span> for å gå tilbake
+                til postoppsett. Poster som har samme navn kan ikke lagres.
+              </p>
+            </div>
           </section>
         )}
-        {activeTab === "editPost" && (
-          <section>
-            <h1 className="mb-4 text-2xl font-bold text-black">
-              Redigere post
-            </h1>
-            <p className="text-lg text-gray-500">
-              Når en post oppe i postoppsett, gå til{" "}
-              <span className="text-green-500">Menu</span> og velg{" "}
-              <span className="text-green-500">Rediger Post</span>. Da er man
-              inne på samme side som om man skal lage en ny post men her har man
-              en post oppe. Dette gjør at du kan lagre data som er redigert men
-              vær obs på at data som var opprinnelig på den posten du har opp
-              vil bli overskrevtet.
-            </p>
-            <br />
-            <p className="text-lg text-gray-500">
-              Hvis du vil beholde begge postenen skal du velge lagre som ny
-              post, dette vil ikke påvirke den opprinnelige posten noen ting.
-              Hvis du ikke skal gjøre noe likevel kan du klikke på{" "}
-              <span className="text-green-500">Menu</span> og velg{" "}
-              <span className="text-green-500">Avbryt</span> for å gå tilbake
-              til postoppsett.
-            </p>
-          </section>
-        )}
+
         {activeTab === "screen" && (
           <section className="mb-10">
             <h1 className="mb-4 text-2xl font-bold text-black">
@@ -293,7 +273,7 @@ const Documentation = () => {
               />
             </div>
             <p className="text-lg text-gray-500">
-              Skermer kommer i mange størrelser og oppløsninger. hvis skjermen
+              Skjermer kommer i mange størrelser og oppløsninger. hvis skjermen
               har høy oppløsning så kan elementer på appen virke små og ved lav
               oppløsning kan ting flyte i hverandre. For å tilpasse dette kan
               man bruke zoom funksjonen som nettleseren har og tilpasse dette
@@ -481,11 +461,131 @@ const Documentation = () => {
             </ul>
           </section>
         )}
+        {activeTab === "alt" && (
+          <section>
+            <h1 className="mb-4 text-2xl font-bold text-black">
+              Alternativ utfylling
+            </h1>
+            <p className="mb-10 text-lg text-gray-500">
+              Hvis du vil lage en alternativ utfylling kan du klikke på{" "}
+              <span className="text-blue-500">Vis alternativ</span> knappen som
+              er på hver side under beregningen. Legge inn utfylling foregår da
+              akkurat på samme måte som standard utfyllingen, det vil stå{" "}
+              <span className="text-green-600">
+                utfylling foran/bak Alternativ
+              </span>{" "}
+              over input på utfyllingsringer.
+            </p>
+            <br />
+            <p className="mb-10 text-lg text-gray-500"></p>
+            <div className="w-[50rem] 3xl:w-[50rem]">
+              <img
+                className="w-full"
+                src="https://lh3.googleusercontent.com/pw/AP1GczOkuZGfpNKwmTG40JC3vyWNmQ8daTLo8Tmv3su_DBH-P_zDys7r6uDUNpN-XGyb6Xwwa9XI0M3V8PVxyETZ5V09Q86Co2rE48RsMx5kzA8NmWTRrZQ-diW-SYe4OQqTTFFxQsAFFK9ZJBLXnSFjEzjQ=w1088-h432-s-no?authuser=0"
+                alt=""
+              />
+            </div>
+            <p className="mt-10 text-lg text-gray-500">
+              Når man er på postoppsettsiden så vil man få opp en knapp som det
+              står <span className="text-green-600">Alt</span> på dersom det er
+              et alternativ. Dersom det ikke finnes alternativ vises heller
+              ingen knapp.
+            </p>
+          </section>
+        )}
         {activeTab === "rawMeasure" && (
           <section>
             <h1 className="mb-4 text-2xl font-bold text-black">Råmål</h1>
             <p className="text-lg text-gray-500">
               Råmål legges inn i input feltet under posten
+            </p>
+          </section>
+        )}
+        {activeTab === "list" && (
+          <section>
+            <h1 className="mb-4 text-2xl font-bold text-black">
+              Lag/rediger skurliste
+            </h1>
+            <p className="mb-10 text-lg text-gray-500">
+              For å lage skurliste går du til headerene og velger{" "}
+              <span className="text-blue-500">
+                Rediger{" > "} Rediger skurliste
+              </span>{" "}
+              og du vil komme til denne skjermen:
+            </p>
+            <div className="w-full">
+              <img
+                className="w-full"
+                src="https://lh3.googleusercontent.com/pw/AP1GczNtwN3eN508W_dcbGMIZ1xAGdVQt3meSPgvW-spToxzD7scx9sRr7KV6IVC3OJPcE6Z7AQg6VZGt2hAcwOZlosa7SUFRJHmtJ9DAQ1byBf-fCpv4ePMbgYC3NArSQuTgHEYi2eQZ09PKTBkAThNq-9D=w1777-h765-s-no?authuser=0"
+                alt=""
+              />
+            </div>
+
+            <p className="mb-10 mt-10 text-lg text-gray-500">
+              Her legger man inn de forskjellige detaljer som er på skurlisten.
+              For at klikksøk skal fungere må man legge inn feltet{" "}
+              <span className="text-blue-500">Post, Bredde og prosent</span>, da
+              vil det fungere å klikke på listen og få opp postene som har den
+              dataen dersom de eksisterer. Bortsett fra det er det ikke
+              nødvendig å legge inn noe mer. Men hvis ønskelig kan man legge inn
+              resten av detaljene som er på skurlisten. på{" "}
+              <span className="text-blue-500">Post</span> feltet må det legges
+              in f. eks: 2x50 og bruk liten x. Feltene sier seg selv hva de skal
+              inneholde men det er et felt som heter{" "}
+              <span className="text-blue-500">status</span>, der kan man velge{" "}
+              <span className="text-blue-500">
+                Planlagt, Aktiv eller fullført
+              </span>
+              . Dette vil vise hvilke poster som er kjørt eller ikke.
+            </p>
+            <div className="w-[25rem] 3xl:w-[35rem]">
+              <img
+                className="w-full"
+                src="https://lh3.googleusercontent.com/pw/AP1GczOWrmyuhK0_L5TEnOywK-Nz1v_bZ38BuzCU5n6c4ZaZM77bzqeBSkAx_9-p15PGgVvz8uMcbxDQNAWhiUZyavP_xeAEVdg1XTKxDuP7B_Vpc0YSDZFmPSAUL_6Wm74qcuDKweT-rjMQQq1i4mUrDcgC=w403-h321-s-no?authuser=0"
+                alt=""
+              />
+            </div>
+            <p className="mb-10 mt-10 text-lg text-gray-500">
+              På bildet ovenfor ser man knapper som er i enden av hver post i
+              skurlisten. klikk på
+              <span className="text-blue-500"> Rediger</span> og da vil knappene
+              forandre seg til dette:
+            </p>
+            <div className="w-[25rem] 3xl:w-[35rem]">
+              <img
+                className="w-full"
+                src="https://lh3.googleusercontent.com/pw/AP1GczP6kDQnPM5IxGXqHcfy84z9uDGNHY463TD7_vm4acC7i2zfkOJ8EePtfS5PmxiVTKdNwgSud7czZPGj-PogeiV6F3HUK6-_JrJAxs-OHx-69Cyzxqb1IJeiQezuyjVYGxJPrOYr1VrUJ-VHpH7Y61wN=w393-h70-s-no?authuser=0"
+                alt=""
+              />
+            </div>
+            <p className="mb-10 mt-10 text-lg text-gray-500">
+              Da vil du få opp en{" "}
+              <span className="text-blue-500"> Oppdater</span> knapp og en{" "}
+              <span className="text-blue-500"> Avbryt</span> Etter at du har
+              gjort endringer i input feltene så kan du klikke på{" "}
+              <span className="text-blue-500"> Oppdater</span>, da vil de nye
+              dataene du har lagt inn bli oppdatert. Hvis du ikke vil lagre
+              endringene kan du klikke på{" "}
+              <span className="text-blue-500"> Avbryt</span> og da vil ingen
+              endringer skje. Trykk på{" "}
+              <span className="text-blue-500"> Slett</span> knappen for å slette
+              posten og pilene opp og ned kan man flytte postene dit man ønsker
+              dem.
+            </p>
+          </section>
+        )}
+        {activeTab === "search" && (
+          <section>
+            <h1 className="mb-4 text-2xl font-bold text-black">
+              Skurliste og søk
+            </h1>
+            <p className="text-lg text-gray-500">
+              For å søke etter poster går du til{" "}
+              <span className="text-blue-500">Skurliste</span> og klikker på
+              posten du vil søke på. Da vil du få opp en liste over poster som
+              har samme data som du har klikket på. Hvis du vil søke på flere
+              data så kan du legge inn flere data i input feltene og klikke på{" "}
+              <span className="text-blue-500">Søk</span> knappen.
             </p>
           </section>
         )}
