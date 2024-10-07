@@ -1,7 +1,6 @@
 info om posten
 spes is undefined on create new post
 legg til et blad som standard når nye poster skal lages
-Finne løsning på rawDivide
 nullstille ID på post når man velger lag ny post
 legg til validering hvis header eksisterer kan ikke posten lagres
 save successfull modal

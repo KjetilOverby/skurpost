@@ -245,7 +245,7 @@ const PostoppsettComponent = ({
         const prosent = String(localData?.prosent);
         const spes = localData?.spes;
         const xlog = String(rawRings?.length);
-        const sawType = String("");
+        const sawType = settings?.sawType ?? "";
 
         const response = await updatePost.mutateAsync({
           id,
@@ -362,7 +362,7 @@ const PostoppsettComponent = ({
         const prosent = String(localData?.prosent);
         const spes = localData?.spes;
         const xlog = String(rawRings?.length);
-        const sawType = sawTypeData;
+        const sawType = settings?.sawType ?? "";
         const kunde = kundeID;
 
         const response = await createPost.mutateAsync({
@@ -412,6 +412,9 @@ const PostoppsettComponent = ({
   const openRawDivideHandler = (value: React.SetStateAction<undefined>) => {
     setOpenRawDivide(true);
     setGetRawValues(value);
+    setFirstRingVal(0);
+    setShimsVal(0);
+    setShimsVal2(0);
   };
   const handleUpdate = async () => {
     // get the id and data you want to update

@@ -34,16 +34,13 @@ export const RawDivideComponent: React.FC<RawDivideComponentProps> = ({
 }) => {
   const [getRing, setGetRing] = useState(0);
 
-  console.log(getRing);
-
   useEffect(() => {
     setCalculationResult(
       parseFloat(
         (Number(getRawValues) + 1.4 - firstRingVal - shimsVal).toFixed(1),
       ),
     );
-    console.log("calc runs");
-  }, [getRing, shimsVal, firstRingVal]);
+  }, [getRing, shimsVal, firstRingVal, getRawValues]);
 
   const rawInputHandler = () => {
     setFirstRingVal(getRing);
@@ -64,38 +61,50 @@ export const RawDivideComponent: React.FC<RawDivideComponentProps> = ({
     setShimsVal2(0);
   };
   return (
-    <div className="absolute bottom-0 left-0 right-0 top-10  z-10 mx-auto my-auto flex h-[900px] w-screen flex-col justify-end rounded-xl bg-secondary p-5">
-      <div className="flex">
-        <RingPickerRaw
-          values={ringlist}
-          position="right-0"
-          title="Utfylling bak"
-          onChange={(value: number) => setGetRing(value)}
-        />
-        <div className="flex">
-          <button onClick={() => setOpenRawDivide(false)}>Lukk</button>
-          <div className="mr-10 flex flex-col">
+    <div className="fixed bottom-0 left-0 right-0 top-0  z-10  h-screen w-screen rounded-xl bg-base-100 p-5">
+      <div className="grid h-[98%] grid-cols-2 place-content-end">
+        <div className="">
+          <div className="mr-10 flex w-20 flex-col">
             <button onClick={rawInputHandler} className="btn btn-primary mb-2">
               RING
             </button>
             <button onClick={skimsHandler} className="btn btn-primary mb-2">
               SKIMS
             </button>
-            <button onClick={nullstillHandler} className="btn btn-primary">
+            {/*  <button onClick={nullstillHandler} className="btn btn-primary">
               Nullstill
-            </button>
+            </button> */}
           </div>
-          <div className="w-20">
-            <p>{getRing}</p>
+          <RingPickerRaw
+            values={ringlist}
+            position="right-0"
+            title="Utfylling bak"
+            onChange={(value: number) => setGetRing(value)}
+          />
+        </div>
+        <div className="flex w-full  items-end justify-end pr-20">
+          <div className="w-96">
+            <div className="w-96">
+              <p className="text-5xl text-secondary">Valgt ring: {getRing}</p>
+            </div>
           </div>
+
           <div>
-            <p>X-verdi: {Number(getRawValues) + 1.4}</p>
-            <p>Ring: {firstRingVal}</p>
-            <p>shims: {Number(shimsVal)}</p>
-            <p>Shims2: {calculationResult}</p>
+            <p className="text-5xl text-secondary">
+              X-verdi: {Number(getRawValues) + 1.4}
+            </p>
+            <p className="text-2xl">Ring: {firstRingVal}</p>
+            <p className="text-2xl">shims: {Number(shimsVal)}</p>
+            <p className="text-2xl">Shims2: {calculationResult}</p>
           </div>
         </div>
       </div>
+      <button
+        className="btn btn-accent absolute left-10 top-10"
+        onClick={() => setOpenRawDivide(false)}
+      >
+        Lukk
+      </button>
     </div>
   );
 };
