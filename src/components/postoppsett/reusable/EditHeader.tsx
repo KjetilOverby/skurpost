@@ -3,6 +3,14 @@ import { EditMode } from "../modes/editMode";
 import Link from "next/link";
 import Modal from "./Modal";
 import { PostInfoContext } from "../../context";
+import { CiLogout } from "react-icons/ci";
+import { BiReset } from "react-icons/bi";
+import { RiDeleteBin3Line } from "react-icons/ri";
+import { VscSaveAs } from "react-icons/vsc";
+import { FaSave } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
+import { FaClipboardList } from "react-icons/fa";
 
 interface EditHeaderProps {
   setEditMode: (mode: boolean) => void;
@@ -55,45 +63,61 @@ const EditHeader: React.FC<EditHeaderProps> = ({
             Menu
           </button>
           {isOpen && (
-            <div className="absolute left-0 z-10 mt-2 w-48 rounded-md bg-accent py-1 shadow-lg">
+            <div className="absolute left-0 z-10 mt-2 w-72 rounded-md bg-accent py-1 shadow-lg">
               {!editMode && (
                 <>
-                  <a
-                    onClick={editHandler}
-                    className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
-                  >
-                    Rediger post
-                  </a>
+                  <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                    <FaRegEdit className="mr-3 text-xl" />
+                    <a
+                      onClick={editHandler}
+                      className="block cursor-pointer text-primary hover:bg-gray-600 hover:text-white"
+                    >
+                      Rediger post
+                    </a>
+                  </div>
                   <Link href="/list">
-                    <p className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white">
-                      Skurliste
-                    </p>
+                    <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                      <FaClipboardList className="mr-3 text-xl" />
+                      <p className="block cursor-pointer  text-primary hover:bg-gray-600 hover:text-white">
+                        Skurliste
+                      </p>
+                    </div>
                   </Link>
                 </>
               )}
               <EditMode editMode={editMode}>
-                <a
-                  onClick={cancelBtn}
-                  className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
-                >
-                  Avbryt
-                </a>
-                <a
-                  onClick={resetPostHandler}
-                  href="#"
-                  className="block px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
-                >
-                  Nullstill
-                </a>
-                <a
-                  onClick={resetUtfyllingHandler}
-                  href="#"
-                  className="block px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
-                >
-                  Nullstill utfylling
-                </a>
+                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <CiLogout className="mr-3 text-xl" />
+                  <a
+                    onClick={cancelBtn}
+                    className="block cursor-pointer  text-primary hover:bg-gray-600 hover:text-white"
+                  >
+                    Avbryt
+                  </a>
+                </div>
+                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <BiReset className="mr-3 text-xl" />
+                  <a
+                    onClick={resetPostHandler}
+                    href="#"
+                    className="block text-primary hover:bg-gray-600 hover:text-white"
+                  >
+                    Nullstill post
+                  </a>
+                </div>
+                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <RiDeleteBin3Line className="mr-3 text-xl" />
+                  <a
+                    onClick={resetUtfyllingHandler}
+                    href="#"
+                    className="block  text-primary hover:bg-gray-600 hover:text-white"
+                  >
+                    Nullstill utfylling
+                  </a>
+                </div>
                 {!updateDisabled && (
-                  <div>
+                  <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                    <VscSaveAs className="mr-3 text-xl" />
                     <Modal
                       id="update"
                       setIsOpen={setIsOpen}
@@ -106,16 +130,21 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                   </div>
                 )}
                 {saveDiasabled && (
-                  <a
-                    onClick={createData}
-                    href="#"
-                    className="block cursor-pointer px-4 py-2 text-primary hover:bg-gray-600 hover:text-white"
-                  >
-                    Lagre som ny post
-                  </a>
+                  <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                    <FaSave className="mr-3 text-xl" />
+                    <a
+                      onClick={createData}
+                      href="#"
+                      className="block cursor-pointer text-primary hover:bg-gray-600 hover:text-white"
+                    >
+                      Lagre som ny post
+                    </a>
+                  </div>
                 )}
-                <div>
-                  {postId && (
+
+                {postId && (
+                  <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                    <RiDeleteBin6Line className="mr-3 text-xl" />
                     <Modal
                       id="delete"
                       setIsOpen={setIsOpen}
@@ -125,8 +154,8 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                       actionTxt="Slett"
                       action={handleDelete}
                     />
-                  )}
-                </div>
+                  </div>
+                )}
               </EditMode>
             </div>
           )}

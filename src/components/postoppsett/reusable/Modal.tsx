@@ -29,7 +29,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <div>
       <button
-        className="w-full py-2 pr-16 text-primary hover:bg-gray-600 hover:text-white"
+        className="w-full pr-16 text-primary hover:bg-gray-600 hover:text-white"
         onClick={openHandler}
       >
         {name}
