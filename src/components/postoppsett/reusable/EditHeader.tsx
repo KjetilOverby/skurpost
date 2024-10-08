@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { EditMode } from "../modes/editMode";
 import Link from "next/link";
 import Modal from "./Modal";
+import { PostInfoContext } from "../../context";
 
 interface EditHeaderProps {
   setEditMode: (mode: boolean) => void;
@@ -42,6 +43,9 @@ const EditHeader: React.FC<EditHeaderProps> = ({
     setEditMode(true);
     setIsOpen(false);
   };
+  const context = useContext(PostInfoContext);
+
+  const { setPostId, postId } = context ?? {};
 
   return (
     <nav className="bg-accent p-4">
@@ -111,15 +115,17 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                   </a>
                 )}
                 <div>
-                  <Modal
-                    id="delete"
-                    setIsOpen={setIsOpen}
-                    title="Slette post"
-                    description="ADVARSEL! Sletting vil fjerne posten permanent."
-                    name="Slett post"
-                    actionTxt="Slett"
-                    action={handleDelete}
-                  />
+                  {postId && (
+                    <Modal
+                      id="delete"
+                      setIsOpen={setIsOpen}
+                      title="Slette post"
+                      description="ADVARSEL! Sletting vil fjerne posten permanent."
+                      name="Slett post"
+                      actionTxt="Slett"
+                      action={handleDelete}
+                    />
+                  )}
                 </div>
               </EditMode>
             </div>

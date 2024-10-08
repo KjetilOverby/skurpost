@@ -1121,7 +1121,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                   <div className="absolute left-1/2 top-40 mb-20 -translate-x-1/2 -translate-y-1/2 transform ">
                     <p className="text-3xl text-primary">{localData?.header}</p>
                     <p className="italic text-primary">
-                      Oprettet:{" "}
+                      Opprettet:{" "}
                       {dateFormat(localData?.createdAt, "dd.mm.yyyy, HH:MM")}
                     </p>
                   </div>
@@ -1288,8 +1288,9 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                     Opprinnelig post: {localData?.header}
                   </p>
                   <p className="italic text-primary">
-                    Oprettet:{" "}
-                    {dateFormat(localData?.createdAt, "dd.mm.yyyy, MM:HH")}
+                    Opprettet:{" "}
+                    {postId &&
+                      dateFormat(localData?.createdAt, "dd.mm.yyyy, MM:HH")}
                   </p>
                   <p className="text-3xl text-primary">
                     {rawRings?.length}x{localData?.plankeTy}-
