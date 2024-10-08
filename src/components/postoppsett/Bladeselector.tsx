@@ -18,7 +18,7 @@ const Bladeselector: React.FC<BladeselectorProps> = ({
         onChange={sawbladeSelectHandler}
         value={val}
       >
-        <option className="option" value="" selected disabled hidden>
+        <option className="option" value="#" selected disabled hidden>
           Velg sagblad
         </option>
         <option className="option" value={2.2}>

@@ -1582,7 +1582,7 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                 onChange={prosentSelectHandler}
                 value={localData?.prosent}
               >
-                <option className="option" value="" selected disabled hidden>
+                <option className="option" value="#" selected disabled hidden>
                   Velg prosent
                 </option>
                 <option className="option" value="18">
@@ -1590,6 +1590,12 @@ className="flex h-screen flex-col items-center justify-center bg-gradient-to-b f
                 </option>
                 <option className="option" value="12">
                   12
+                </option>
+                <option className="option" value="18/12">
+                  18/12
+                </option>
+                <option className="option" value="12/12">
+                  12/18
                 </option>
               </select>
 
