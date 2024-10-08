@@ -2,7 +2,6 @@ legg til et blad som standard når nye poster skal lages
 legg til validering hvis header eksisterer kan ikke posten lagres
 save successfull modal
 gjøre appen lukket når man ikke er innlogget
-Ta bort postinfo når man ikke velger fra liste
 logo på valg i menu
 tilgang til menu i postoppsett siden
 

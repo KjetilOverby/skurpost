@@ -1102,8 +1102,6 @@ const PostoppsettComponent = ({
             </p>
           </div>
         )}
-        {/* 
-className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0d243c] via-[#599c53] to-[#e09a18]" */}
 
         <div className="flex min-h-screen flex-col items-center justify-center bg-base-100">
           {!editMode && (
