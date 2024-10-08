@@ -78,7 +78,7 @@ const RawRing = ({
           )}
           <RiAddBoxLine
             onClick={openRawDivideHandler}
-            className="absolute bottom-11 left-1/2 -translate-x-1/2 transform text-sm text-gray-700"
+            className="absolute bottom-11 left-1/2 -translate-x-1/2 transform text-xl text-gray-700"
           />
         </EditMode>
         <div className="absolute top-20 flex flex-col  items-center  pt-1 text-[9px] text-primary sm:bottom-28 sm:text-xs md:top-44 md:text-sm">
