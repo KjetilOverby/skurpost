@@ -6,7 +6,6 @@ import calc from "~/utils/calc";
 
 import { EditMode } from "./modes/editMode";
 import RingPicker from "./reusable/ringpicker";
-import ringlist from "~/utils/ringlist";
 import { v4 as uuidv4 } from "uuid";
 import BladeSelector from "./Bladeselector";
 import { api } from "~/utils/api";
@@ -19,7 +18,6 @@ import dateFormat from "dateformat";
 import { useContext } from "react";
 import { PostInfoContext } from "../context";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { set } from "zod";
 
 interface Item {
   value: string;
@@ -33,7 +31,6 @@ interface Item {
 
 interface Data {
   sawType: string;
-  // Add other properties of the data object here if needed
 }
 
 const PostoppsettComponent = ({
@@ -946,6 +943,7 @@ const PostoppsettComponent = ({
       }));
     }
   };
+
   const moveLeftRaw = (id: string) => {
     const index = (rawRings ?? []).findIndex((item) => item.id === id);
 

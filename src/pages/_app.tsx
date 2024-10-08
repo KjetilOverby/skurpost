@@ -56,6 +56,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
           setSawType,
           searchInput,
           setSearchInput,
+          postId,
+          setPostId,
           setGetUserInfo: (info) =>
             setGetUserInfo(info as UserInfo | undefined),
         }}

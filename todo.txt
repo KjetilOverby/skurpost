@@ -1,12 +1,14 @@
 info om posten
 spes is undefined on create new post
 legg til et blad som standard når nye poster skal lages
-nullstille ID på post når man velger lag ny post
 legg til validering hvis header eksisterer kan ikke posten lagres
 save successfull modal
 gjøre appen lukket når man ikke er innlogget
-nullstille post når man går ut av postoppsett sånn at id en på en post ikke lenger er valgt
 Ta bort postinfo når man ikke velger fra liste
+logo på valg i menu
+tilgang til menu i postoppsett siden
+sett ringer i stigende rekkefølge på postoppsett edit
+fjern slett knapp når inge id er valgt
 
 
 

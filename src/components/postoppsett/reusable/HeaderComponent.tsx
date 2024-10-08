@@ -17,7 +17,7 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
   const text = "text-primary";
   const logo = "text-primary";
 
-  const { editMode, setEditMode } = context ?? {};
+  const { editMode, setEditMode, setPostId } = context ?? {};
 
   const [actualPage, setActualPage] = useState({
     search: "",
@@ -33,8 +33,6 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
     innstillinger: false,
   });
 
-  const classText = "font-bold underline";
-
   const { data: sessionData } = useSession();
 
   const toggleSubmenu = (menu: "skurliste" | "innstillinger") => {
@@ -48,6 +46,9 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
   const newPostHandler = () => {
     if (setEditMode) {
       setEditMode(true);
+      if (setPostId) {
+        setPostId("");
+      }
     }
   };
 
