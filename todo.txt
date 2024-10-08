@@ -5,7 +5,6 @@ gjøre appen lukket når man ikke er innlogget
 Ta bort postinfo når man ikke velger fra liste
 logo på valg i menu
 tilgang til menu i postoppsett siden
-sett ringer i stigende rekkefølge på postoppsett edit
 
 
 

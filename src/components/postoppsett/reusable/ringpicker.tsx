@@ -47,15 +47,18 @@ const RingPicker: React.FC<RingPickerProps> = ({
         </button>
       </div>
 
-      {values.map((value) => (
-        <button
-          className="m-1  h-12 w-12 rounded-full bg-neutral p-1 text-xs text-primary hover:bg-accent"
-          key={value}
-          onClick={() => handleClick(value)}
-        >
-          {value}
-        </button>
-      ))}
+      {values
+        .slice() // Create a shallow copy to avoid mutating the original array
+        .sort((a, b) => parseFloat(a) - parseFloat(b)) // Sort the array in ascending order
+        .map((value) => (
+          <button
+            className="m-1 h-12 w-12 rounded-full bg-neutral p-1 text-xs text-primary hover:bg-accent"
+            key={value}
+            onClick={() => handleClick(value)}
+          >
+            {value}
+          </button>
+        ))}
       {selectedValue && <p>Selected value: {selectedValue}</p>}
     </div>
   );
