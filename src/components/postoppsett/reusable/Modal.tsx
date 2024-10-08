@@ -28,10 +28,7 @@ const Modal: React.FC<ModalProps> = ({
   };
   return (
     <div>
-      <button
-        className="w-full pr-16 text-primary hover:bg-gray-600 hover:text-white"
-        onClick={openHandler}
-      >
+      <button className="w-full pr-16 text-primary " onClick={openHandler}>
         {name}
       </button>
       <dialog id={id} className="modal modal-bottom sm:modal-middle">

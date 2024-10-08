@@ -11,6 +11,8 @@ import { FaSave } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { FaClipboardList } from "react-icons/fa";
+import { PiStarThin } from "react-icons/pi";
+import { IoSettingsOutline } from "react-icons/io5";
 
 interface EditHeaderProps {
   setEditMode: (mode: boolean) => void;
@@ -66,54 +68,38 @@ const EditHeader: React.FC<EditHeaderProps> = ({
             <div className="absolute left-0 z-10 mt-2 w-72 rounded-md bg-accent py-1 shadow-lg">
               {!editMode && (
                 <>
-                  <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <div
+                    onClick={editHandler}
+                    className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white"
+                  >
                     <FaRegEdit className="mr-3 text-xl" />
-                    <a
-                      onClick={editHandler}
-                      className="block cursor-pointer text-primary hover:bg-gray-600 hover:text-white"
-                    >
+                    <p className="block cursor-pointer text-primary ">
                       Rediger post
-                    </a>
+                    </p>
                   </div>
-                  <Link href="/list">
-                    <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
-                      <FaClipboardList className="mr-3 text-xl" />
-                      <p className="block cursor-pointer  text-primary hover:bg-gray-600 hover:text-white">
-                        Skurliste
-                      </p>
-                    </div>
-                  </Link>
                 </>
               )}
               <EditMode editMode={editMode}>
-                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                <div
+                  onClick={cancelBtn}
+                  className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white"
+                >
                   <CiLogout className="mr-3 text-xl" />
-                  <a
-                    onClick={cancelBtn}
-                    className="block cursor-pointer  text-primary hover:bg-gray-600 hover:text-white"
-                  >
-                    Avbryt
-                  </a>
+                  <p className="block cursor-pointer  text-primary ">Avbryt</p>
                 </div>
-                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                <div
+                  onClick={resetPostHandler}
+                  className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white"
+                >
                   <BiReset className="mr-3 text-xl" />
-                  <a
-                    onClick={resetPostHandler}
-                    href="#"
-                    className="block text-primary hover:bg-gray-600 hover:text-white"
-                  >
-                    Nullstill post
-                  </a>
+                  <p className="block">Nullstill post</p>
                 </div>
-                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                <div
+                  onClick={resetUtfyllingHandler}
+                  className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white"
+                >
                   <RiDeleteBin3Line className="mr-3 text-xl" />
-                  <a
-                    onClick={resetUtfyllingHandler}
-                    href="#"
-                    className="block  text-primary hover:bg-gray-600 hover:text-white"
-                  >
-                    Nullstill utfylling
-                  </a>
+                  <p className="block">Nullstill utfylling</p>
                 </div>
                 {!updateDisabled && (
                   <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
@@ -157,6 +143,31 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                   </div>
                 )}
               </EditMode>
+              <hr className="mx-5 my-2 border-primary" />
+              <Link href="/">
+                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <PiStarThin className="mr-3 text-xl" />
+                  <p className="block">Startside</p>
+                </div>
+              </Link>
+              <Link href="/list">
+                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <FaClipboardList className="mr-3 text-xl" />
+                  <p className="block">Skurliste</p>
+                </div>
+              </Link>
+              <Link href="/create/listcreator">
+                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <FaRegEdit className="mr-3 text-xl" />
+                  <p className="block">Rediger skurliste</p>
+                </div>
+              </Link>
+              <Link href="/innstillinger">
+                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <IoSettingsOutline className="mr-3 text-xl" />
+                  <p className="block ">Innstillinger</p>
+                </div>
+              </Link>
             </div>
           )}
         </div>
