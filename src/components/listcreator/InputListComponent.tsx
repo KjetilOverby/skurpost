@@ -21,15 +21,15 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
     "Decker",
   ];
   const xLogList = [
-    "1x",
-    "2x",
-    "3x",
-    "4x",
-    "5x",
-    "1x/OS",
-    "2x/OS",
-    "3x/OS",
-    "5x/OS",
+    "1X",
+    "2X",
+    "3X",
+    "4X",
+    "5X",
+    "1X/OS",
+    "2X/OS",
+    "3X/OS",
+    "5X/OS",
   ];
   const tProsent = ["18", "12", "12/18", "18/12", "16"];
   const bordtykkelser = ["16", "19", "22", "25", "32"];

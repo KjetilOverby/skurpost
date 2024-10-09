@@ -18,6 +18,11 @@ export const postoppsettRouter = createTRPCRouter({
       },
     })
   }),
+  
+  numberOfPosts: publicProcedure.query(async ({ ctx }) => {
+    const postCount = await ctx.db.postningsoppsett.count();
+    return { postCount };
+  }),
 
 
   getByHeader: publicProcedure

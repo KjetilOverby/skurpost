@@ -90,6 +90,8 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
     sawType: settings?.sawType ?? "",
   });
 
+  const { data: numberOfPosts } = api.postoppsett.numberOfPosts.useQuery({});
+
   const clickSearchAll = () => {
     setSearchInputAll(true);
   };
@@ -115,9 +117,15 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
         />
       )}
       <div data-theme={colorMode} className="min-h-screen px-5 xl:px-20">
-        <button onClick={manualSearchHandler} className="btn mt-5 bg-accent">
-          {`${openManualSearch ? "Lukk søk" : "Søk"}`}
-        </button>
+        <div className="flex items-center">
+          <button
+            onClick={manualSearchHandler}
+            className="btn mr-5 mt-5 w-40 bg-accent"
+          >
+            {`${openManualSearch ? "Lukk søk" : "Søk"}`}
+          </button>
+          <p>Antall poster: {numberOfPosts?.postCount}</p>
+        </div>
         {openManualSearch && (
           <div>
             <input

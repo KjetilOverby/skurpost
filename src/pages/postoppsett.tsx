@@ -30,13 +30,13 @@ const Postoppsett = ({ postId, setPostId, colorMode }: PostoppsettProps) => {
     }
   }, [sessionData, setGetUserInfo]);
 
-  if (sessionStatus === "loading" || isLoadingPostoppsett) {
+  /*   if (sessionStatus === "loading" || isLoadingPostoppsett) {
     return (
-      <div className="grid min-h-screen items-center justify-center bg-base-100">
-        <div className="text-gray-500">Loading...</div>
+      <div className="grid min-h-screen items-center justify-center bg-gray-900">
+        <div className="text-primary">Loading...</div>
       </div>
     );
-  }
+  } */
 
   return (
     <div data-theme={colorMode}>
@@ -45,6 +45,8 @@ const Postoppsett = ({ postId, setPostId, colorMode }: PostoppsettProps) => {
         postId={postId}
         setPostId={setPostId}
         colorMode={colorMode}
+        sessionStatus={sessionStatus}
+        isLoadingPostoppsett={isLoadingPostoppsett}
       />
     </div>
   );

@@ -37,6 +37,10 @@ const PostoppsettComponent = ({
   data,
   postId,
   setPostId,
+  // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+  sessionStatus,
+  // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
+  isLoadingPostoppsett,
 }: {
   data: Data;
   postId: string;
@@ -1233,7 +1237,11 @@ const PostoppsettComponent = ({
                   </div>
                 </div>
               ) : (
-                <p className="text-2xl text-primary">Ingen data valgt</p>
+                <p className="text-2xl text-primary">
+                  {sessionStatus === "loading" || isLoadingPostoppsett
+                    ? "Loading..."
+                    : "Ingen data valgt"}
+                </p>
               )}
             </div>
           )}
