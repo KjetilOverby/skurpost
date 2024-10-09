@@ -1,11 +1,11 @@
 import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession, signIn } from "next-auth/react";
 import { type AppType } from "next/app";
-import { api } from "~/utils/api";
 import { PostInfoContext } from "../components/context";
 
 import "~/styles/globals.css";
 import { useState, useEffect } from "react";
+import { api } from "~/utils/api";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -22,12 +22,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
   interface UserInfo {
     id: string;
-    // Add other properties if needed
   }
 
   const [getUserInfo, setGetUserInfo] = useState<UserInfo | undefined>(
     undefined,
   );
+
   const {
     data: posts,
     isLoading,
@@ -42,35 +42,65 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
   return (
     <SessionProvider session={session}>
-      <PostInfoContext.Provider
-        value={{
-          postInfoWriteChange,
-          setPostInfoWriteChange,
-          postInfoWrite,
-          setPostInfoWrite,
-          searchInputAll,
-          setSearchInputAll,
-          editMode,
-          setEditMode,
-          sawType,
-          setSawType,
-          searchInput,
-          setSearchInput,
-          postId,
-          setPostId,
-          setGetUserInfo: (info) =>
-            setGetUserInfo(info as UserInfo | undefined),
-        }}
-      >
-        <Component
-          {...pageProps}
-          postId={postId}
-          setPostId={setPostId}
-          colorMode={colorMode}
-        />
-      </PostInfoContext.Provider>
+      <AuthWrapper>
+        <PostInfoContext.Provider
+          value={{
+            postInfoWriteChange,
+            setPostInfoWriteChange,
+            postInfoWrite,
+            setPostInfoWrite,
+            searchInputAll,
+            setSearchInputAll,
+            editMode,
+            setEditMode,
+            sawType,
+            setSawType,
+            searchInput,
+            setSearchInput,
+            postId,
+            setPostId,
+            setGetUserInfo: (info) =>
+              setGetUserInfo(info as UserInfo | undefined),
+          }}
+        >
+          <Component
+            {...pageProps}
+            postId={postId}
+            setPostId={setPostId}
+            colorMode={colorMode}
+          />
+        </PostInfoContext.Provider>
+      </AuthWrapper>
     </SessionProvider>
   );
+};
+
+interface AuthWrapperProps {
+  children: React.ReactNode;
+}
+
+const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <p>Loading authentication status...</p>; // Vise en lasteskjerm mens status sjekkes
+  }
+
+  if (status === "unauthenticated") {
+    return (
+      <div className="grid h-screen place-items-center">
+        <div>
+          <p>Du er ikke innlogget.</p>
+          <button className="btn btn-primary" onClick={() => signIn()}>
+            Log in
+          </button>{" "}
+        </div>
+      </div>
+    );
+    // Vis en melding hvis brukeren ikke er logget inn
+  }
+
+  return <>{children}</>; // Når autentisert, render barna (innholdet)
 };
 
 export default api.withTRPC(MyApp);

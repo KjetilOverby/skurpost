@@ -4,6 +4,7 @@
  */
 await import("./src/env.js");
 
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -18,5 +19,7 @@ const config = {
     defaultLocale: "en",
   },
 };
+
+
 
 export default config;

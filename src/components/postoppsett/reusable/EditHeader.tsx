@@ -11,7 +11,7 @@ import { FaSave } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { FaClipboardList } from "react-icons/fa";
-import { PiStarThin } from "react-icons/pi";
+import { IoHomeOutline } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
 
 interface EditHeaderProps {
@@ -146,8 +146,8 @@ const EditHeader: React.FC<EditHeaderProps> = ({
               <hr className="mx-5 my-2 border-primary" />
               <Link href="/">
                 <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
-                  <PiStarThin className="mr-3 text-xl" />
-                  <p className="block">Startside</p>
+                  <IoHomeOutline className="mr-3 text-xl" />
+                  <p className="block">Hjem</p>
                 </div>
               </Link>
               <Link href="/list">
