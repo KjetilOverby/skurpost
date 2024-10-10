@@ -64,6 +64,18 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
       >
         <div className="">
           <button onClick={closeSearchResult}>Lukk</button>
+          {results?.length === 0 && (
+            <>
+              <h1 className="py-5 text-primary">Ingen poster funnet.</h1>
+              <p className="text-xs text-primary">
+                Posten du søker etter eksisterer ikke,
+              </p>
+              <p className="mb-5 text-xs text-primary">
+                eller så matcher ikke postens overskrift med listen
+                <span className="font-bold"> ({postInfoWrite})</span>.
+              </p>
+            </>
+          )}
           {results?.map((result) => {
             return (
               <div

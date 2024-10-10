@@ -212,7 +212,6 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         )}
-
         <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-secondary">
           <thead>
             <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left">

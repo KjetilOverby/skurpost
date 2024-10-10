@@ -99,10 +99,9 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
         </div>
       </div>
     );
-    // Vis en melding hvis brukeren ikke er logget inn
   }
 
-  return <>{children}</>; // Når autentisert, render barna (innholdet)
+  return <>{children}</>;
 };
 
 export default api.withTRPC(MyApp);

@@ -153,7 +153,7 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
           setPostInfoWrite={setPostInfoWrite}
           listLoad={listLoad}
         />
-        ´
+
         {settings?.visPakking && (
           <>
             <h1 className="mb-3 mt-10 text-xl">Pakking</h1>

@@ -8,6 +8,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { PostInfoContext } from "../../context";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { GiCloudRing } from "react-icons/gi";
 
 interface HeaderComponentProps {
   colorMode: string;
@@ -19,7 +20,7 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
   const text = "text-primary";
   const logo = "text-primary";
 
-  const { editMode, setEditMode, setPostId } = context ?? {};
+  const { editMode, setEditMode, setPostId, postId } = context ?? {};
 
   const [actualPage, setActualPage] = useState({
     search: "",
@@ -51,6 +52,12 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
       if (setPostId) {
         setPostId("");
       }
+    }
+  };
+
+  const existPostopen = () => {
+    if (setEditMode) {
+      setEditMode(false);
     }
   };
 
@@ -134,6 +141,23 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
                   </div>
                 </Link>
               </div>
+              {postId && (
+                <div className="relative">
+                  <Link href="/postoppsett">
+                    <div
+                      className="grid cursor-pointer place-items-center"
+                      onClick={existPostopen}
+                    >
+                      <GiCloudRing className={`text-2xl ${logo} mb-2`} />
+                      <li>
+                        <p className={`text-xs ${text} ${actualPage.list}`}>
+                          Postoppsett
+                        </p>
+                      </li>
+                    </div>
+                  </Link>
+                </div>
+              )}
             </ul>
           </div>
           <div className="flex items-center  lg:order-2">
