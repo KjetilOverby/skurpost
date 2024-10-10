@@ -1,8 +1,7 @@
 legg til et blad som standard når nye poster skal lages
 legg til validering hvis header eksisterer kan ikke posten lagres
 save successfull modal
-loading on list fetch
-
+Gjøre så at begge alt ikke kan lages feil
 
 
 

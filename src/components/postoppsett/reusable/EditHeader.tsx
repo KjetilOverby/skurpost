@@ -13,6 +13,8 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaClipboardList } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { set } from "zod";
 
 interface EditHeaderProps {
   setEditMode: (mode: boolean) => void;
@@ -57,6 +59,14 @@ const EditHeader: React.FC<EditHeaderProps> = ({
 
   const { setPostId, postId } = context ?? {};
 
+  const newPostHandler = () => {
+    setEditMode(true);
+    if (setPostId) {
+      setPostId("");
+      setIsOpen(false);
+    }
+  };
+
   return (
     <nav className="bg-accent p-4">
       <div className="flex items-center justify-between">
@@ -70,12 +80,17 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                 <>
                   <div
                     onClick={editHandler}
-                    className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white"
+                    className="align-center flex cursor-pointer px-4 py-2 hover:bg-gray-600 hover:text-white"
                   >
                     <FaRegEdit className="mr-3 text-xl" />
-                    <p className="block cursor-pointer text-primary ">
-                      Rediger post
-                    </p>
+                    <p className="block  text-primary ">Rediger post</p>
+                  </div>
+                  <div
+                    onClick={newPostHandler}
+                    className="align-center flex cursor-pointer px-4 py-2 hover:bg-gray-600 hover:text-white"
+                  >
+                    <MdOutlineCreateNewFolder className="mr-3 text-xl" />
+                    <p className="block ">Lag ny post</p>
                   </div>
                 </>
               )}
@@ -101,7 +116,7 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                   <RiDeleteBin3Line className="mr-3 text-xl" />
                   <p className="block">Nullstill utfylling</p>
                 </div>
-                {!updateDisabled && (
+                {!updateDisabled && postId != "" && (
                   <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
                     <VscSaveAs className="mr-3 text-xl" />
                     <Modal
@@ -129,18 +144,20 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                 )}
 
                 {postId && (
-                  <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
-                    <RiDeleteBin6Line className="mr-3 text-xl" />
-                    <Modal
-                      id="delete"
-                      setIsOpen={setIsOpen}
-                      title="Slette post"
-                      description="ADVARSEL! Sletting vil fjerne posten permanent."
-                      name="Slett post"
-                      actionTxt="Slett"
-                      action={handleDelete}
-                    />
-                  </div>
+                  <>
+                    <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                      <RiDeleteBin6Line className="mr-3 text-xl" />
+                      <Modal
+                        id="delete"
+                        setIsOpen={setIsOpen}
+                        title="Slette post"
+                        description="ADVARSEL! Sletting vil fjerne posten permanent."
+                        name="Slett post"
+                        actionTxt="Slett"
+                        action={handleDelete}
+                      />
+                    </div>
+                  </>
                 )}
               </EditMode>
               <hr className="mx-5 my-2 border-primary" />

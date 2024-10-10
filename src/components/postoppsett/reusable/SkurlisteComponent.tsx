@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
+import { DiVim } from "react-icons/di";
 
 interface SkurlisteItem {
   id: string;
@@ -56,6 +57,7 @@ interface SkurlisteComponentProps {
   setClickSearchOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setPostInfoWrite: React.Dispatch<React.SetStateAction<string>>;
   searchInputAll: boolean;
+  listLoad: boolean;
 }
 
 const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
@@ -76,6 +78,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
   setClickSearchOpen,
   setPostInfoWrite,
   searchInputAll,
+  listLoad,
 }) => {
   const handleDelete = (id: string) => {
     deletePost.mutate({ id: id });
@@ -205,6 +208,12 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
         </>
       )}
       <div className="overflow-scroll">
+        {listLoad && (
+          <div className="text-primary">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        )}
+
         <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-secondary">
           <thead>
             <tr className=" border border-l-base-100 border-r-base-100 border-t-base-100 text-left">

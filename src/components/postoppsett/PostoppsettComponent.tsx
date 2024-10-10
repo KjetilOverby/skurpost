@@ -153,6 +153,7 @@ const PostoppsettComponent = ({
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
       void ctx.postoppsett.getById.invalidate();
+      alert("Posten ble oppdatert");
     },
   });
 
@@ -1237,11 +1238,13 @@ const PostoppsettComponent = ({
                   </div>
                 </div>
               ) : (
-                <p className="text-2xl text-primary">
-                  {sessionStatus === "loading" || isLoadingPostoppsett
-                    ? "Loading..."
-                    : "Ingen data valgt"}
-                </p>
+                <div className="text-2xl text-primary">
+                  {sessionStatus === "loading" || isLoadingPostoppsett ? (
+                    <span className="loading loading-spinner loading-lg"></span>
+                  ) : (
+                    "Ingen data valgt"
+                  )}
+                </div>
               )}
             </div>
           )}

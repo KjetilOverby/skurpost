@@ -28,10 +28,11 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
   const [kundeID, setKundeID] = useState<string | undefined>(undefined);
   const [openManualSearch, setOpenManualSearch] = useState(false);
   const currentUserId = sessionData?.user?.id;
-  const { data: skurliste } = api.skurliste.getAll.useQuery({
-    buffer: false,
-    kunde: kundeID ?? "",
-  });
+  const { data: skurliste, isLoading: listLoad } =
+    api.skurliste.getAll.useQuery({
+      buffer: false,
+      kunde: kundeID ?? "",
+    });
 
   const context = useContext(PostInfoContext);
   if (!context) {
@@ -150,7 +151,9 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
           searchInputAll={searchInputAll}
           setClickSearchOpen={setClickSearchOpen}
           setPostInfoWrite={setPostInfoWrite}
+          listLoad={listLoad}
         />
+        ´
         {settings?.visPakking && (
           <>
             <h1 className="mb-3 mt-10 text-xl">Pakking</h1>
