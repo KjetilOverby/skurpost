@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
-import { DiVim } from "react-icons/di";
 
 interface SkurlisteItem {
   id: string;

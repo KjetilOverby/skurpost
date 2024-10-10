@@ -8,6 +8,7 @@
 import { settings } from ".eslintrc.cjs";
 import React, { useEffect } from "react";
 import { api } from "~/utils/api";
+import { toast } from "sonner";
 
 const InputListComponent = ({ listProps, setListProps, settings }) => {
   const klassetype = [
@@ -95,6 +96,7 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
   const createPost = api.skurliste.create.useMutation({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
+      toast.success("Post lagret");
     },
   });
 
@@ -124,11 +126,11 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
         onSubmit={(e) => {
           e.preventDefault();
           if (listProps.post === "") {
-            alert("Post må fylles ut");
+            toast.error("Post må fylles ut");
           } else if (listProps.bredde === 0) {
-            alert("Bredde må fylles ut");
+            toast.error("Bredde må fylles ut");
           } else if (listProps.prosent === "") {
-            alert("Prosent må fylles ut");
+            toast.error("Prosent må fylles ut");
           } else if (
             !listProps.post.includes("1x") &&
             !listProps.post.includes("2x") &&
@@ -137,7 +139,7 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
             !listProps.post.includes("5x") &&
             !listProps.post.includes("6x")
           ) {
-            alert(
+            toast.error(
               "Postuttak må starte med et tall fra 1 til 6, etterfulgt av en liten 'x'.",
             );
           } else {

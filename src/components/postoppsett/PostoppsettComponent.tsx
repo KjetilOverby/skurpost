@@ -18,6 +18,9 @@ import dateFormat from "dateformat";
 import { useContext } from "react";
 import { PostInfoContext } from "../context";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { toast } from "sonner";
+
+// ...
 
 interface Item {
   value: string;
@@ -153,7 +156,8 @@ const PostoppsettComponent = ({
   const updatePost = api.postoppsett.updatePost.useMutation({
     onSuccess: () => {
       void ctx.postoppsett.getById.invalidate();
-      alert("Posten ble oppdatert");
+      toast.success("Posten ble oppdatert");
+      setIsOpen(false);
     },
   });
 
@@ -161,6 +165,7 @@ const PostoppsettComponent = ({
     onSuccess: () => {
       void ctx.postoppsett.getById.invalidate();
       void router.push(`/list`);
+      toast.success("Posten ble slettet");
     },
   });
 
@@ -218,20 +223,20 @@ const PostoppsettComponent = ({
   const updateData = async (id: string, data: Record<string, unknown>) => {
     // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
     if (differenceStart >= 0.05 || differenceStart <= -0.05) {
-      alert("Ufylling foran er ikke korrekt");
+      toast.error("Ufylling foran er ikke korrekt");
       setAlertShown(true);
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
     } else if (differenceEnd >= 0.05 || differenceEnd <= -0.05) {
-      alert("Ufylling bak er ikke korrekt");
+      toast.error("Ufylling bak er ikke korrekt");
       setAlertShown(true);
     } else if (localData?.blade === 0) {
-      alert("Bladtykkelse er ikke valgt");
+      toast.error("Bladtykkelse er ikke valgt");
       setAlertShown(true);
     } else if (localData?.prosent === 0) {
-      alert("Prosent er ikke valgt");
+      toast.error("Prosent er ikke valgt");
       setAlertShown(true);
     } else if (localData?.plankeTy === "") {
-      alert("Planke tykkelse er ikke valgt");
+      toast.error("Planketykkelse er ikke lagt inn");
       setAlertShown(true);
     } else {
       try {
@@ -330,26 +335,27 @@ const PostoppsettComponent = ({
     onSuccess: () => {
       void ctx.postoppsett.getById.invalidate();
       void router.push(`/list`);
+      toast.success("Posten ble lagret");
     },
   });
 
   const createData = async () => {
     // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
     if (differenceStart >= 0.05 || differenceStart <= -0.05) {
-      alert("Ufylling foran er ikke korrekt");
+      toast.error("Ufylling foran er ikke korrekt");
       setAlertShown(true);
       // @ts-expect-error: Ignorerer denne feilen fordi den er irrelevant for vår brukstilfelle
     } else if (differenceEnd >= 0.05 || differenceEnd <= -0.05) {
-      alert("Ufylling bak er ikke korrekt");
+      toast.error("Ufylling bak er ikke korrekt");
       setAlertShown(true);
     } else if (localData?.blade === 0) {
-      alert("Bladtykkelse er ikke valgt");
+      toast.error("Bladtykkelse er ikke valgt");
       setAlertShown(true);
     } else if (localData?.prosent === 0) {
-      alert("Prosent er ikke valgt");
+      toast.error("Prosent er ikke valgt");
       setAlertShown(true);
     } else if (localData?.plankeTy === "") {
-      alert("Planke tykkelse er ikke valgt");
+      toast.error("Planke tykkelse er ikke lagt inn");
       setAlertShown(true);
     } else {
       try {

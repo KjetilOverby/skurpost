@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 interface RinglistCreatorProps {
   ringlist: number[];
@@ -17,7 +18,7 @@ const RinglistCreator: React.FC<RinglistCreatorProps> = ({
 
     // Check for duplicates
     if (ringlist.includes(newRingValue)) {
-      alert("Denne verdien eksisterer allerede i listen");
+      toast.error("Denne verdien eksisterer allerede i listen");
       return;
     }
 

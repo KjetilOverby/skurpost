@@ -13,6 +13,7 @@ import SkurlisteComponentInput from "./SkurlisteComponentInput";
 import SkurlistePakkingInput from "./SkurlistePakkingInput";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 interface SkurlisteItem {
   id: string;
@@ -87,12 +88,14 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   const deletePost = api.skurliste.delete.useMutation({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
+      toast.success("Post slettet");
     },
   });
 
   const editPost = api.skurliste.update.useMutation({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
+      toast.success("Post oppdatert");
     },
   });
 
@@ -162,6 +165,7 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   const updateBuffer = api.skurliste.updateBuffer.useMutation({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
+      toast.success("Lagt til/fra buffer.");
     },
   });
 

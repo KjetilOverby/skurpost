@@ -2,6 +2,7 @@ import { type Session } from "next-auth";
 import { SessionProvider, useSession, signIn } from "next-auth/react";
 import { type AppType } from "next/app";
 import { PostInfoContext } from "../components/context";
+import { Toaster } from "sonner";
 
 import "~/styles/globals.css";
 import { useState, useEffect } from "react";
@@ -69,6 +70,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             setPostId={setPostId}
             colorMode={colorMode}
           />
+          <Toaster position="top-left" richColors />
         </PostInfoContext.Provider>
       </AuthWrapper>
     </SessionProvider>
