@@ -203,27 +203,21 @@ export const skurlisteRouter = createTRPCRouter({
 
 
 }),
-      updateOrder: protectedProcedure
-      .input(
-        z.object({
-          id: z.string(),
-          order: z.number().optional(),
-        })
-      )
-      .mutation(({ ctx, input }) => {
-        return ctx.db.skurliste.update({
-          where: {
-            id: input.id
-        },
-          data: {
-      
-            order: input.order,
-          },
-        });
-  
+updateOrders: protectedProcedure
+  .input(z.array(z.object({
+    id: z.string(),
+    order: z.number(),
+  })))
+  .mutation(({ ctx, input }) => {
+    return Promise.all(input.map(({ id, order }) => 
+      ctx.db.skurliste.update({
+        where: { id },
+        data: { order },
+      })
+    ));
+  }),
 
 
-}),
       updateBuffer: protectedProcedure
       .input(
         z.object({
@@ -241,10 +235,38 @@ export const skurlisteRouter = createTRPCRouter({
             buffer: input.buffer,
           },
         });
-  
-
-
 }),
+
+/* updateOrders: protectedProcedure
+  .input(
+    z.array(
+      z.object({
+        id: z.string(),
+        order: z.number(),
+      })
+    )
+  )
+  .mutation(async ({ ctx, input }) => {
+    console.log("Input for updateOrders:", input); // Legg til logging her
+
+    const updatePromises = input.map((item) => {
+      return ctx.db.skurliste.update({
+        where: { id: item.id },
+        data: { order: item.order },
+      });
+    });
+
+    try {
+      await Promise.all(updatePromises);
+      return { success: true };
+    } catch (error) {
+      console.error("Error updating orders in database:", error); // Logg eventuelle feil
+      return { success: false };
+    }
+  }), */
+
+
+
 
 
 delete: protectedProcedure.input(z.object({id: z.string()}))

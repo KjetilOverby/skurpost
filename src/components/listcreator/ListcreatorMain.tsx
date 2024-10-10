@@ -14,6 +14,8 @@ import SkurlistePakkingInput from "./SkurlistePakkingInput";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
+import SkurlisteComponentMove from "./SkrurlisteComponentMove";
+import MyListComponent from "../listcreator/ReorderComponent";
 
 interface SkurlisteItem {
   id: string;
@@ -69,6 +71,8 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
 }) => {
   const { data: user } = api.users.getUsers.useQuery();
 
+  const [localList, setLocalList] = useState();
+
   const [maxOrder, setMaxOrder] = useState(1);
   const { data: sessionData } = useSession();
 
@@ -84,6 +88,12 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
     }
   }, [skurliste]);
   const ctx = api.useContext();
+
+  useEffect(() => {
+    if (skurliste) {
+      setLocalList(skurliste);
+    }
+  }, [skurliste]);
 
   const deletePost = api.skurliste.delete.useMutation({
     onSuccess: () => {
@@ -157,7 +167,7 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
     setListProps((prevProps) => ({ ...prevProps, kunde: kundeID || "" }));
   }, [kundeID, skurliste]);
 
-  const updateItemOrder = api.skurliste.updateOrder.useMutation({
+  const updateItemOrder = api.skurliste.updateOrders.useMutation({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
     },
@@ -166,6 +176,12 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
       toast.success("Lagt til/fra buffer.");
+    },
+  });
+  const updateOrder = api.skurliste.updateOrders.useMutation({
+    onSuccess: () => {
+      void ctx.skurliste.getAll.invalidate();
+      toast.success("Orders updated");
     },
   });
 
@@ -194,48 +210,122 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   };
 
   const [listItems, setListItems] = useState<SkurlisteItem[]>([]);
+
   const moveUp = async (id: string) => {
     const index = listItems.findIndex((item) => item.id === id);
-    console.log(`Index of item with id ${id} is ${index}`);
+
     if (index > 0) {
       const newItems = [...listItems];
+
+      // Bytt rekkefølge
       const tempOrder = newItems[index].order;
       newItems[index].order = newItems[index - 1].order;
       newItems[index - 1].order = tempOrder;
 
-      // Update the listItems state
+      // Oppdater den lokale listen for UI
       setListItems(newItems);
 
-      // Update the order in the database
-      await Promise.all([
-        updates(newItems[index].id, newItems[index].order),
-        updates(newItems[index - 1].id, newItems[index - 1].order),
-      ]);
+      try {
+        // Oppdater rekkefølge i databasen
+        await updateOrder.mutateAsync([
+          { id: newItems[index].id, order: newItems[index].order },
+          { id: newItems[index - 1].id, order: newItems[index - 1].order },
+        ]);
+
+        // Oppdater rekkefølge for alle elementene
+        await updateAllOrders();
+      } catch (error) {
+        console.error("Error updating database", error);
+        // Tilbakestill til den opprinnelige tilstanden hvis det er en feil
+        setListItems(listItems);
+      }
     }
   };
+
   const moveDown = async (id: string) => {
     const index = listItems.findIndex((item) => item.id === id);
-    console.log(`Index of item with id ${id} is ${index}`);
+
     if (index < listItems.length - 1) {
       const newItems = [...listItems];
+
+      // Bytt rekkefølge
       const tempOrder = newItems[index].order;
       newItems[index].order = newItems[index + 1].order;
       newItems[index + 1].order = tempOrder;
 
-      // Update the listItems state
+      // Oppdater den lokale listen for UI
       setListItems(newItems);
 
-      // Update the order in the database
-      await Promise.all([
-        updates(newItems[index].id, newItems[index].order),
-        updates(newItems[index + 1].id, newItems[index + 1].order),
-      ]);
+      try {
+        // Oppdater rekkefølge i databasen
+        await updateOrder.mutateAsync([
+          { id: newItems[index].id, order: newItems[index].order },
+          { id: newItems[index + 1].id, order: newItems[index + 1].order },
+        ]);
+
+        // Oppdater rekkefølge for alle elementene
+        await updateAllOrders();
+      } catch (error) {
+        console.error("Error updating database", error);
+        // Tilbakestill til den opprinnelige tilstanden hvis det er en feil
+        setListItems(listItems);
+      }
     }
+  };
+
+  // Funksjon for å oppdatere `order`-verdier for alle elementene
+  const updateAllOrders = async (updatedItems) => {
+    const ordersToUpdate = updatedItems.map((item, index) => ({
+      id: item.id,
+      order: index, // Sekvensiell verdi basert på index
+    }));
+
+    try {
+      await updateOrders.mutateAsync(ordersToUpdate); // Endret fra updateOrder til updateOrders
+    } catch (error) {
+      console.error("Error updating all orders in database", error);
+    }
+  };
+
+  // Funksjon for å tilbakestille `order`-verdier
+  const resetOrderValues = async () => {
+    const updatedItems = listItems.map((item, index) => ({
+      id: item.id,
+      order: index, // Sett ordren til sekvensiell verdi
+    }));
+
+    // Oppdater rekkefølge i databasen
+    await Promise.all(
+      updatedItems.map(({ id, order }) =>
+        updateOrder.mutateAsync({ id, order }),
+      ),
+    );
+
+    // Oppdater listen i UI
+    setListItems(updatedItems);
   };
 
   useEffect(() => {
     setListItems(skurliste);
   }, [skurliste]);
+
+  const saveOrderToDatabase = async () => {
+    try {
+      const updatedOrdersNow = localList.map((item, index) => ({
+        id: item.id,
+        order: index, // Setter order til index
+      }));
+
+      // Kaller updateOrder mutasjonen
+      await updateOrder.mutateAsync(updatedOrdersNow);
+
+      toast.success("Orders updated successfully!");
+    } catch (error) {
+      console.error("Error saving orders:", error);
+      toast.error("Error saving orders.");
+    }
+  };
+
   return (
     <div className="bg-base-100 pb-20">
       <div>
@@ -284,6 +374,14 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
             <SkurlistePakkingComponent skurliste={skurliste} />
           </div>
         )}
+      </div>
+
+      <div>
+        <MyListComponent
+          localList={localList}
+          setLocalList={setLocalList}
+          updateOrder={saveOrderToDatabase}
+        />
       </div>
     </div>
   );

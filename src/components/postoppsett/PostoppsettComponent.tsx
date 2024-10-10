@@ -412,7 +412,13 @@ const PostoppsettComponent = ({
         setEditMode(false);
         setAlertShown(false);
       } catch (error) {
-        console.error(error);
+        if (error instanceof Error) {
+          toast.error(
+            "Overskriften i posten finnes allerede! " + error.message,
+          );
+        } else {
+          toast.error("An unknown error occurred");
+        }
       }
     }
   };

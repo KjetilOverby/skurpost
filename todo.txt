@@ -1,6 +1,11 @@
 legg til et blad som standard når nye poster skal lages
-legg til validering hvis header eksisterer kan ikke posten lagres
 Gjøre så at begge alt ikke kan lages feil
+vis antall i bufferen
+skift textfarge under buffer kanppen
+vis spesial i listen
+vis ingen bor hvis det ikke er det
+ta bort lagre knappen ved redigering av en post i skurliste
+etter oppdatering kommer posten øverst igjen Det skal ikke skje
 
 
 
