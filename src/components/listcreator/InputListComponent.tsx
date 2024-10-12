@@ -170,7 +170,7 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
         </div>
 
         <div className="flex w-28 flex-col bg-accent p-2">
-          <label className="text-xs" htmlFor="Treslag">
+          <label className="text-xs" htmlFor="Klassetype">
             Klassetype
           </label>
           <select
@@ -183,11 +183,9 @@ const InputListComponent = ({ listProps, setListProps, settings }) => {
             className="bg-base-100 text-xs"
             value={listProps.klType}
           >
-            <option value={listProps.klType}>Velg</option>
+            <option>Velg</option>
             {klassetype.map((option) => (
-              <option key={option} value={listProps.klType}>
-                {option}
-              </option>
+              <option key={option}>{option}</option>
             ))}
           </select>
         </div>

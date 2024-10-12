@@ -34,13 +34,11 @@ interface Item {
 interface ReorderComponentProps {
   localList: Item[];
   setLocalList: React.Dispatch<React.SetStateAction<Item[]>>;
-  updateOrder: () => Promise<void>;
 }
 
 const ReorderComponent: React.FC<ReorderComponentProps> = ({
   localList,
   setLocalList,
-  updateOrder,
 }) => {
   const onDragEnd = async (result) => {
     if (!result.destination) return;
@@ -70,7 +68,6 @@ const ReorderComponent: React.FC<ReorderComponentProps> = ({
 
   return (
     <div>
-      <button onClick={updateOrder}>Lagre</button>
       <DragDropContext onDragEnd={onDragEnd}>
         <StrictModeDroppable droppableId="droppable">
           {(provided) => (
@@ -125,87 +122,87 @@ const ReorderComponent: React.FC<ReorderComponentProps> = ({
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className={`border border-gray-700 border-l-transparent border-r-transparent hover:cursor-pointer hover:bg-neutral ${getProgressClass(item.progress)} ${snapshot.isDragging ? "" : ""}`} // Change background color when dragging
+                          className={`border border-gray-700 border-l-transparent border-r-transparent py-2 hover:cursor-pointer hover:bg-neutral ${getProgressClass(item.progress)} ${snapshot.isDragging ? "" : ""}`} // Change background color when dragging
                         >
                           <td
-                            className={`py-5 font-bold ${item.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
+                            className={`py-6 font-bold ${item.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                           >
                             {item.treslag}
                             <div className="text-xs font-normal italic text-primary"></div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.klGrense}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.klasse}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.postNr}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.antall}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.m3}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div
                               className={`text-xs text-primary ${item.status === "stopp" ? "text-red-500" : "text-green-500"}`}
                             >
                               {item.status}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs font-bold text-primary">
                               {item.post}x{item.bredde}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.xLog}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.prosent}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-blue-500">
                               {item.anm}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.vs66}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.vs66Br}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.mkvBord}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.mkvBordBr}
                             </div>
                           </td>
-                          <td className="py-5">
+                          <td className="py-6">
                             <div className="text-xs text-primary">
                               {item.blad.toFixed(1)}
                             </div>

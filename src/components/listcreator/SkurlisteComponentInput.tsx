@@ -40,8 +40,7 @@ const SkurlisteComponentInput = ({ list }) => {
               <td
                 className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
               >
-                {list.treslag}
-
+                {list.treslag} {list.klType}
                 <div className="text-xs font-normal italic text-primary">
                   {dateFormat(list.createdAt, "dd.mm.yyyy HH:MM")}
                 </div>
@@ -126,7 +125,9 @@ const SkurlisteComponentInput = ({ list }) => {
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-primary">{list.vs66}</div>
+                    <div className="text-xs text-primary">
+                      {list.vs66 ? list.vs66 : <p>Ingen bord</p>}
+                    </div>
                   </div>
                 </div>
               </td>
@@ -140,7 +141,9 @@ const SkurlisteComponentInput = ({ list }) => {
               <td className="py-5">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <div className="text-xs text-primary">{list.mkvBord}</div>
+                    <div className="text-xs text-primary">
+                      {list.mkvBord ? list.mkvBord : <p>Ingen bord</p>}
+                    </div>
                   </div>
                 </div>
               </td>

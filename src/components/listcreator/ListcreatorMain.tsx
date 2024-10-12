@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import SkurlisteComponentMove from "./SkrurlisteComponentMove";
 import MyListComponent from "../listcreator/ReorderComponent";
+import { set } from "zod";
 
 interface SkurlisteItem {
   id: string;
@@ -58,6 +59,8 @@ interface ListcreatorMainProps {
   bufferStatus: boolean;
   setBufferStatus: (status: boolean) => void;
   colorMode: string;
+  countBuffer: number;
+  countList: number;
   settings: {
     visPakking: boolean;
   };
@@ -68,10 +71,13 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   bufferStatus,
   setBufferStatus,
   settings,
+  countBuffer,
+  countList,
 }) => {
   const { data: user } = api.users.getUsers.useQuery();
 
   const [localList, setLocalList] = useState();
+  const [sortList, setSortList] = useState(false);
 
   const [maxOrder, setMaxOrder] = useState(1);
   const { data: sessionData } = useSession();
@@ -105,6 +111,7 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   const editPost = api.skurliste.update.useMutation({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
+
       toast.success("Post oppdatert");
     },
   });
@@ -128,7 +135,7 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   }, [user, currentUserId]);
 
   const [listProps, setListProps] = useState<SkurlisteItem>({
-    id: "", // Add the id property here
+    id: "",
     treslag: "",
     klGrense: "",
     klType: "",
@@ -175,6 +182,7 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   const updateBuffer = api.skurliste.updateBuffer.useMutation({
     onSuccess: () => {
       void ctx.skurliste.getAll.invalidate();
+      void ctx.skurliste.countBuffer.invalidate();
       toast.success("Lagt til/fra buffer.");
     },
   });
@@ -200,84 +208,12 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
     });
   };
 
-  const updates = (id: string, order: number) => {
-    console.log(`Updating item with id ${id} to order ${order}`);
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    updateItemOrder.mutateAsync({
-      id: id,
-      order: order,
-    });
-  };
-
   const [listItems, setListItems] = useState<SkurlisteItem[]>([]);
 
-  const moveUp = async (id: string) => {
-    const index = listItems.findIndex((item) => item.id === id);
-
-    if (index > 0) {
-      const newItems = [...listItems];
-
-      // Bytt rekkefølge
-      const tempOrder = newItems[index].order;
-      newItems[index].order = newItems[index - 1].order;
-      newItems[index - 1].order = tempOrder;
-
-      // Oppdater den lokale listen for UI
-      setListItems(newItems);
-
-      try {
-        // Oppdater rekkefølge i databasen
-        await updateOrder.mutateAsync([
-          { id: newItems[index].id, order: newItems[index].order },
-          { id: newItems[index - 1].id, order: newItems[index - 1].order },
-        ]);
-
-        // Oppdater rekkefølge for alle elementene
-        await updateAllOrders();
-      } catch (error) {
-        console.error("Error updating database", error);
-        // Tilbakestill til den opprinnelige tilstanden hvis det er en feil
-        setListItems(listItems);
-      }
-    }
-  };
-
-  const moveDown = async (id: string) => {
-    const index = listItems.findIndex((item) => item.id === id);
-
-    if (index < listItems.length - 1) {
-      const newItems = [...listItems];
-
-      // Bytt rekkefølge
-      const tempOrder = newItems[index].order;
-      newItems[index].order = newItems[index + 1].order;
-      newItems[index + 1].order = tempOrder;
-
-      // Oppdater den lokale listen for UI
-      setListItems(newItems);
-
-      try {
-        // Oppdater rekkefølge i databasen
-        await updateOrder.mutateAsync([
-          { id: newItems[index].id, order: newItems[index].order },
-          { id: newItems[index + 1].id, order: newItems[index + 1].order },
-        ]);
-
-        // Oppdater rekkefølge for alle elementene
-        await updateAllOrders();
-      } catch (error) {
-        console.error("Error updating database", error);
-        // Tilbakestill til den opprinnelige tilstanden hvis det er en feil
-        setListItems(listItems);
-      }
-    }
-  };
-
-  // Funksjon for å oppdatere `order`-verdier for alle elementene
   const updateAllOrders = async (updatedItems) => {
     const ordersToUpdate = updatedItems.map((item, index) => ({
       id: item.id,
-      order: index, // Sekvensiell verdi basert på index
+      order: index,
     }));
 
     try {
@@ -287,21 +223,18 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
     }
   };
 
-  // Funksjon for å tilbakestille `order`-verdier
   const resetOrderValues = async () => {
     const updatedItems = listItems.map((item, index) => ({
       id: item.id,
-      order: index, // Sett ordren til sekvensiell verdi
+      order: index,
     }));
 
-    // Oppdater rekkefølge i databasen
     await Promise.all(
       updatedItems.map(({ id, order }) =>
         updateOrder.mutateAsync({ id, order }),
       ),
     );
 
-    // Oppdater listen i UI
     setListItems(updatedItems);
   };
 
@@ -313,12 +246,11 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
     try {
       const updatedOrdersNow = localList.map((item, index) => ({
         id: item.id,
-        order: index, // Setter order til index
+        order: index,
       }));
 
-      // Kaller updateOrder mutasjonen
       await updateOrder.mutateAsync(updatedOrdersNow);
-
+      setSortList(false);
       toast.success("Orders updated successfully!");
     } catch (error) {
       console.error("Error saving orders:", error);
@@ -327,9 +259,9 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   };
 
   return (
-    <div className="bg-base-100 pb-20">
+    <div className="bg-base-100 ">
       <div>
-        <h1>Skurplan</h1>
+        <h1 className="text-primary">Skurplan</h1>
         <SkurlisteComponentInput list={listProps} />
       </div>
       {settings?.visPakking && (
@@ -346,43 +278,65 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
           settings={settings}
         />
       </div>
-      <div className="bg-base-100 pt-20">
-        <div className="mb-10">
-          <SkurlisteComponent
-            skurliste={skurliste}
-            edit={true}
-            deletePost={deletePost}
-            editPost={editPost}
-            listProps={listProps}
-            setListProps={setListProps}
-            moveUp={moveUp}
-            moveDown={moveDown}
-            maxOrder={maxOrder}
-            updateBufferHandler={updateBufferHandler}
-            setBufferStatus={setBufferStatus}
-            bufferStatus={bufferStatus}
-            updateBufferHandlerFalse={updateBufferHandlerFalse}
-            setSearchInput={undefined}
-            setClickSearchOpen={undefined}
-            setPostInfoWrite={undefined}
-            searchInputAll={false}
-          />
-        </div>
-        {settings?.visPakking && (
-          <div>
-            <h1>Pakking</h1>
-            <SkurlistePakkingComponent skurliste={skurliste} />
-          </div>
+      <div className="mb-5 mt-10">
+        <button
+          className="btn  mr-3 bg-accent text-primary "
+          onClick={() => setBufferStatus(!bufferStatus)}
+        >
+          {bufferStatus
+            ? `Skjul buffer ${countBuffer}`
+            : `  Vis buffer ${countBuffer}`}
+        </button>
+        <button
+          className="btn  mr-3 bg-accent text-primary"
+          onClick={() => setSortList(!sortList)}
+        >
+          {!sortList ? "Sorter" : "Avbryt"}
+        </button>
+        {sortList && (
+          <button
+            className="btn  bg-accent text-primary"
+            onClick={saveOrderToDatabase}
+          >
+            Lagre sortering
+          </button>
         )}
       </div>
 
-      <div>
-        <MyListComponent
-          localList={localList}
-          setLocalList={setLocalList}
-          updateOrder={saveOrderToDatabase}
-        />
-      </div>
+      {!sortList && (
+        <div className="bg-base-100 ">
+          Antall: poster: {countList}
+          <div>
+            <SkurlisteComponent
+              skurliste={skurliste}
+              edit={true}
+              deletePost={deletePost}
+              editPost={editPost}
+              listProps={listProps}
+              setListProps={setListProps}
+              maxOrder={maxOrder}
+              updateBufferHandler={updateBufferHandler}
+              bufferStatus={bufferStatus}
+              updateBufferHandlerFalse={updateBufferHandlerFalse}
+              setSearchInput={undefined}
+              setClickSearchOpen={undefined}
+              setPostInfoWrite={undefined}
+              searchInputAll={false}
+            />
+          </div>
+          {settings?.visPakking && (
+            <div>
+              <h1>Pakking</h1>
+              <SkurlistePakkingComponent skurliste={skurliste} />
+            </div>
+          )}
+        </div>
+      )}
+      {sortList && (
+        <div>
+          <MyListComponent localList={localList} setLocalList={setLocalList} />
+        </div>
+      )}
     </div>
   );
 };

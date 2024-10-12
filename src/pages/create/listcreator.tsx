@@ -1,3 +1,4 @@
+import { count } from "console";
 import { useSession } from "next-auth/react";
 import React, { useState, useEffect, useContext } from "react";
 import { PostInfoContext } from "~/components/context";
@@ -53,6 +54,10 @@ const Listcreator = ({ colorMode }: { colorMode: string }) => {
     kunde: kundeID,
   });
 
+  const { data: count } = api.skurliste.countBuffer.useQuery({
+    kunde: kundeID,
+  });
+
   return (
     <div data-theme={colorMode} className="min-h-screen bg-base-100">
       <HeaderComponent colorMode={colorMode} />
@@ -62,6 +67,8 @@ const Listcreator = ({ colorMode }: { colorMode: string }) => {
           setBufferStatus={setBufferStatus}
           bufferStatus={bufferStatus}
           colorMode={colorMode}
+          countBuffer={count?.true ?? 0}
+          countList={count?.false ?? 0}
           settings={
             settings
               ? { visPakking: settings.visPakking }

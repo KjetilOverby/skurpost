@@ -45,12 +45,9 @@ interface SkurlisteComponentProps {
   editPost: { mutate: (data: SkurlisteItem) => void };
   listProps: SkurlisteItem;
   setListProps: React.Dispatch<React.SetStateAction<SkurlisteItem>>;
-  moveUp: (id: string) => void;
-  moveDown: (id: string) => void;
   maxOrder: number;
   updateBufferHandler: (id: string) => void;
   bufferStatus: boolean;
-  setBufferStatus: React.Dispatch<React.SetStateAction<boolean>>;
   updateBufferHandlerFalse: (id: string) => void;
   setSearchInput: React.Dispatch<React.SetStateAction<string>>;
   setClickSearchOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -66,12 +63,9 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
   editPost,
   listProps,
   setListProps,
-  moveUp,
-  moveDown,
   maxOrder,
   updateBufferHandler,
   bufferStatus,
-  setBufferStatus,
   updateBufferHandlerFalse,
   setSearchInput,
   setClickSearchOpen,
@@ -193,15 +187,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
     <div>
       {edit && (
         <>
-          <button
-            className="btn btn-xs bg-info text-white"
-            onClick={() => setBufferStatus(!bufferStatus)}
-          >
-            {bufferStatus ? "Skjul buffer" : "Vis Buffer"}
-          </button>
-          <h1
-            className={`${!bufferStatus ? "text-neutral" : "text-2xl text-red-500"}`}
-          >
+          <h1 className={`text-priamry`}>
             {bufferStatus ? "Buffer" : "Skurplan"}
           </h1>
         </>
@@ -255,8 +241,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                     <td
                       className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                     >
-                      {list.treslag}
-
+                      {list.treslag} {list.klType}
                       <div className="text-xs font-normal italic text-primary">
                         {dateFormat(list.createdAt, "dd.mm.yyyy HH:MM")}
                       </div>
@@ -356,7 +341,11 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                       <div className="flex items-center space-x-3">
                         <div>
                           <div className="text-xs text-primary">
-                            {list.vs66}
+                            {list.vs66 ? (
+                              list.vs66
+                            ) : (
+                              <p className="text-red-400">Ingen bord</p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -374,7 +363,11 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                       <div className="flex items-center space-x-3">
                         <div>
                           <div className="text-xs text-primary">
-                            {list.mkvBord}
+                            {list.mkvBord ? (
+                              list.mkvBord
+                            ) : (
+                              <p className="text-red-400">Ingen bord</p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -403,7 +396,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                           <div>
                             <button
                               onClick={() => handleEdit(list.id)}
-                              className="btn btn-xs bg-warning text-black"
+                              className="btn btn-xs w-24 bg-warning text-black"
                             >
                               Rediger
                             </button>
@@ -417,7 +410,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                           <div>
                             <button
                               onClick={() => updateBufferHandler(list.id)}
-                              className="btn btn-xs bg-info text-white"
+                              className="btn btn-xs w-24 bg-info text-white"
                             >
                               Til buffer
                             </button>
@@ -431,7 +424,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                           <div>
                             <button
                               onClick={() => updateBufferHandlerFalse(list.id)}
-                              className="btn btn-xs bg-info text-white"
+                              className="btn btn-xs w-24 bg-info text-white"
                             >
                               Legg til i listen
                             </button>
@@ -445,7 +438,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                           <div>
                             <button
                               onClick={() => handleDelete(list.id)}
-                              className="btn btn-xs bg-red-500 text-white"
+                              className="btn btn-xs w-24 bg-red-500 text-white"
                             >
                               Slett
                             </button>
@@ -459,7 +452,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                           <div>
                             <button
                               onClick={() => handleEditExecute(list.id)}
-                              className="btn btn-xs bg-green-500 text-white"
+                              className="btn btn-xs w-24 bg-green-500 text-white"
                             >
                               Oppdater
                             </button>
@@ -473,29 +466,13 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                           <div>
                             <button
                               onClick={() => setEditingId(null)}
-                              className="btn btn-xs bg-blue-500 text-white"
+                              className="btn btn-xs w-24 bg-blue-500 text-white"
                             >
                               Avbryt
                             </button>
                           </div>
                         </div>
                       </td>
-                    )}
-                    {edit && (
-                      <div className="flex items-center justify-center">
-                        <td className="flex h-full items-center">
-                          <FaArrowAltCircleUp
-                            onClick={() => moveUp(list.id)}
-                            className="text-lg text-green-600"
-                          />
-                        </td>
-                        <td className="flex h-full items-center">
-                          <FaArrowAltCircleDown
-                            onClick={() => moveDown(list.id)}
-                            className="text-lg text-green-600"
-                          />
-                        </td>
-                      </div>
                     )}
                   </tr>
                 </>
