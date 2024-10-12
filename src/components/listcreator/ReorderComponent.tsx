@@ -71,32 +71,30 @@ const ReorderComponent: React.FC<ReorderComponentProps> = ({
       <DragDropContext onDragEnd={onDragEnd}>
         <StrictModeDroppable droppableId="droppable">
           {(provided) => (
-            <table
+            <div
               className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-base-100"
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <thead>
-                <tr className="border border-l-base-100 border-r-base-100 border-t-base-100 bg-neutral text-left">
-                  <th className="text-sm text-primary">Treslag</th>
-                  <th className="text-sm text-primary">Klassegrense</th>
-                  <th className="text-sm text-primary">Kl</th>
-                  <th className="text-sm text-primary">PostNr.</th>
-                  <th className="text-sm text-primary">Antall</th>
-                  <th className="text-sm text-primary">M3</th>
-                  <th className="text-sm text-primary">Status</th>
-                  <th className="text-sm text-primary">Uttak</th>
-                  <th className="text-sm text-primary">X-log</th>
-                  <th className="text-sm text-primary">%</th>
-                  <th className="text-sm text-primary">Anm</th>
-                  <th className="text-sm text-primary">VS66</th>
-                  <th className="text-sm text-primary">Bredde VS66</th>
-                  <th className="text-sm text-primary">MKV</th>
-                  <th className="text-sm text-primary">Bredde MKV</th>
-                  <th className="text-sm text-primary">Blad</th>
-                </tr>
-              </thead>
-              <tbody>
+              <div>
+                <div className="flex border border-l-base-100 border-r-base-100 border-t-base-100 bg-neutral text-left">
+                  <div className="w-28 text-sm text-primary">Treslag</div>
+                  <div className="w-20 text-sm text-primary">Kl</div>
+                  <div className="w-20 text-sm text-primary">Antall</div>
+                  <div className="w-20 text-sm text-primary">M3</div>
+                  <div className="w-20 text-sm text-primary">Status</div>
+                  <div className="w-28 text-sm text-primary">Uttak</div>
+                  <div className="w-20 text-sm text-primary">X-log</div>
+                  <div className="w-20 text-sm text-primary">%</div>
+                  <div className="w-20 text-sm text-primary">Anm</div>
+                  <div className="w-20 text-sm text-primary">VS66</div>
+                  <div className="w-36 text-sm text-primary">Bredde VS66</div>
+                  <div className="w-20 text-sm text-primary">MKV</div>
+                  <div className="w-36 text-sm text-primary">Bredde MKV</div>
+                  <div className="w-20 text-sm text-primary">Blad</div>
+                </div>
+              </div>
+              <div>
                 {localList?.map((item, index) => {
                   const getProgressClass = (progress) => {
                     switch (progress) {
@@ -118,103 +116,68 @@ const ReorderComponent: React.FC<ReorderComponentProps> = ({
                       index={index}
                     >
                       {(provided, snapshot) => (
-                        <tr
+                        <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className={`border border-gray-700 border-l-transparent border-r-transparent py-2 hover:cursor-pointer hover:bg-neutral ${getProgressClass(item.progress)} ${snapshot.isDragging ? "" : ""}`} // Change background color when dragging
+                          className={`flex border border-gray-700 border-l-transparent border-r-transparent py-2 hover:cursor-pointer hover:bg-neutral ${getProgressClass(item.progress)} ${snapshot.isDragging ? "" : ""}`}
                         >
-                          <td
-                            className={`py-6 font-bold ${item.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
+                          <div
+                            className={`w-28 py-6 font-bold ${item.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                           >
                             {item.treslag}
-                            <div className="text-xs font-normal italic text-primary"></div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.klGrense}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.klasse}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.postNr}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.antall}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.m3}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div
-                              className={`text-xs text-primary ${item.status === "stopp" ? "text-red-500" : "text-green-500"}`}
-                            >
-                              {item.status}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs font-bold text-primary">
-                              {item.post}x{item.bredde}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.xLog}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.prosent}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-blue-500">
-                              {item.anm}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.vs66}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.vs66Br}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.mkvBord}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.mkvBordBr}
-                            </div>
-                          </td>
-                          <td className="py-6">
-                            <div className="text-xs text-primary">
-                              {item.blad.toFixed(1)}
-                            </div>
-                          </td>
-                        </tr>
+                          </div>
+
+                          <div className="w-20 py-6 text-xs text-primary">
+                            {item.klasse}
+                          </div>
+
+                          <div className="w-20 py-6 text-xs text-primary">
+                            {item.antall}
+                          </div>
+                          <div className="w-20 py-6 text-xs text-primary">
+                            {item.m3}
+                          </div>
+                          <div
+                            className={`w-20 py-6 text-xs text-primary ${item.status === "stopp" ? "text-red-500" : "text-green-500"}`}
+                          >
+                            {item.status}
+                          </div>
+                          <div className="w-28 py-6 text-xs font-bold text-primary">
+                            {item.post}x{item.bredde}
+                          </div>
+                          <div className="w-20 py-6 text-xs text-primary">
+                            {item.xLog}
+                          </div>
+                          <div className="w-20 py-6 text-xs text-primary">
+                            {item.prosent}
+                          </div>
+                          <div className="w-20 py-6 text-xs text-blue-500">
+                            {item.anm}
+                          </div>
+                          <div className="w-20 py-6 text-xs text-primary">
+                            {item.vs66}
+                          </div>
+                          <div className="w-36 py-6 text-xs text-primary">
+                            {item.vs66Br}
+                          </div>
+                          <div className="w-20 py-6 text-xs text-primary">
+                            {item.mkvBord}
+                          </div>
+                          <div className="w-36 py-6 text-xs text-primary">
+                            {item.mkvBordBr}
+                          </div>
+                          <div className="w-20 py-6 text-xs text-primary">
+                            {item.blad.toFixed(1)}
+                          </div>
+                        </div>
                       )}
                     </Draggable>
                   );
                 })}
                 {provided.placeholder}
-              </tbody>
-            </table>
+              </div>
+            </div>
           )}
         </StrictModeDroppable>
       </DragDropContext>
