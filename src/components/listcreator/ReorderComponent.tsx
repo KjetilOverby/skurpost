@@ -72,26 +72,30 @@ const ReorderComponent: React.FC<ReorderComponentProps> = ({
         <StrictModeDroppable droppableId="droppable">
           {(provided) => (
             <div
-              className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-base-100"
+              className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-accent bg-base-100 "
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
               <div>
-                <div className="flex border border-l-base-100 border-r-base-100 border-t-base-100 bg-neutral text-left">
-                  <div className="w-28 text-sm text-primary">Treslag</div>
-                  <div className="w-20 text-sm text-primary">Kl</div>
-                  <div className="w-20 text-sm text-primary">Antall</div>
-                  <div className="w-20 text-sm text-primary">M3</div>
-                  <div className="w-20 text-sm text-primary">Status</div>
-                  <div className="w-28 text-sm text-primary">Uttak</div>
-                  <div className="w-20 text-sm text-primary">X-log</div>
-                  <div className="w-20 text-sm text-primary">%</div>
-                  <div className="w-20 text-sm text-primary">Anm</div>
-                  <div className="w-20 text-sm text-primary">VS66</div>
-                  <div className="w-36 text-sm text-primary">Bredde VS66</div>
-                  <div className="w-20 text-sm text-primary">MKV</div>
-                  <div className="w-36 text-sm text-primary">Bredde MKV</div>
-                  <div className="w-20 text-sm text-primary">Blad</div>
+                <div className="flex border border-l-base-100 border-r-base-100 border-t-base-100 bg-neutral pl-[10rem] text-left">
+                  <div className="min-w-28 text-sm text-primary">Treslag</div>
+                  <div className="min-w-20 text-sm text-primary">Kl</div>
+                  <div className="min-w-20 text-sm text-primary">Antall</div>
+                  <div className="min-w-20 text-sm text-primary">M3</div>
+                  <div className="min-w-20 text-sm text-primary">Status</div>
+                  <div className="min-w-28 text-sm text-primary">Uttak</div>
+                  <div className="min-w-20 text-sm text-primary">X-log</div>
+                  <div className="min-w-20 text-sm text-primary">%</div>
+                  <div className="min-w-20 text-sm text-primary">Anm</div>
+                  <div className="min-w-20 text-sm text-primary">VS66</div>
+                  <div className="min-w-36 text-sm text-primary">
+                    Bredde VS66
+                  </div>
+                  <div className="min-w-20 text-sm text-primary">MKV</div>
+                  <div className="min-w-36 text-sm text-primary">
+                    Bredde MKV
+                  </div>
+                  <div className="min-w-20 text-sm text-primary">Blad</div>
                 </div>
               </div>
               <div>
@@ -120,54 +124,54 @@ const ReorderComponent: React.FC<ReorderComponentProps> = ({
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className={`flex border border-gray-700 border-l-transparent border-r-transparent py-2 hover:cursor-pointer hover:bg-neutral ${getProgressClass(item.progress)} ${snapshot.isDragging ? "" : ""}`}
+                          className={`flex border border-gray-700 border-l-transparent border-r-transparent py-2 pl-[10rem] hover:cursor-pointer ${getProgressClass(item.progress)} ${snapshot.isDragging ? "" : ""}`}
                         >
                           <div
-                            className={`w-28 py-6 font-bold ${item.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
+                            className={`min-w-28 py-6 font-bold ${item.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
                           >
                             {item.treslag}
                           </div>
 
-                          <div className="w-20 py-6 text-xs text-primary">
+                          <div className="min-w-20 py-6 text-xs text-primary">
                             {item.klasse}
                           </div>
 
-                          <div className="w-20 py-6 text-xs text-primary">
+                          <div className="min-w-20 py-6 text-xs text-primary">
                             {item.antall}
                           </div>
-                          <div className="w-20 py-6 text-xs text-primary">
+                          <div className="min-w-20 py-6 text-xs text-primary">
                             {item.m3}
                           </div>
                           <div
-                            className={`w-20 py-6 text-xs text-primary ${item.status === "stopp" ? "text-red-500" : "text-green-500"}`}
+                            className={`min-w-20 py-6 text-xs text-primary ${item.status === "stopp" ? "text-red-500" : "text-green-500"}`}
                           >
                             {item.status}
                           </div>
-                          <div className="w-28 py-6 text-xs font-bold text-primary">
+                          <div className="min-w-28 py-6 text-xs font-bold text-primary">
                             {item.post}x{item.bredde}
                           </div>
-                          <div className="w-20 py-6 text-xs text-primary">
+                          <div className="min-w-20 py-6 text-xs text-primary">
                             {item.xLog}
                           </div>
-                          <div className="w-20 py-6 text-xs text-primary">
+                          <div className="min-w-20 py-6 text-xs text-primary">
                             {item.prosent}
                           </div>
-                          <div className="w-20 py-6 text-xs text-blue-500">
+                          <div className="min-w-20 py-6 text-xs text-blue-500">
                             {item.anm}
                           </div>
-                          <div className="w-20 py-6 text-xs text-primary">
+                          <div className="min-w-20 py-6 text-xs text-primary">
                             {item.vs66}
                           </div>
-                          <div className="w-36 py-6 text-xs text-primary">
+                          <div className="min-w-36 py-6 text-xs text-primary">
                             {item.vs66Br}
                           </div>
-                          <div className="w-20 py-6 text-xs text-primary">
+                          <div className="min-w-20 py-6 text-xs text-primary">
                             {item.mkvBord}
                           </div>
-                          <div className="w-36 py-6 text-xs text-primary">
+                          <div className="min-w-36 py-6 text-xs text-primary">
                             {item.mkvBordBr}
                           </div>
-                          <div className="w-20 py-6 text-xs text-primary">
+                          <div className="min-w-20 py-6 text-xs text-primary">
                             {item.blad.toFixed(1)}
                           </div>
                         </div>

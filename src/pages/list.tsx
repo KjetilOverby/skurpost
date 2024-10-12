@@ -102,6 +102,10 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
     setOpenManualSearch(!openManualSearch);
   };
 
+  const { data: count } = api.skurliste.countBuffer.useQuery({
+    kunde: kundeID,
+  });
+
   return (
     <div>
       <HeaderComponent colorMode={colorMode} />
@@ -125,7 +129,7 @@ const List: React.FC<ListProps> = ({ setPostId, colorMode }) => {
           >
             {`${openManualSearch ? "Lukk søk" : "Søk"}`}
           </button>
-          <p>Antall poster: {numberOfPosts?.postCount}</p>
+          <p>Antall poster: {count?.false}</p>
         </div>
         {openManualSearch && (
           <div>
