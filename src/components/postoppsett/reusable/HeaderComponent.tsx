@@ -96,7 +96,7 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
                 </div>
                 {submenuVisibility.skurliste && (
                   <ul className="absolute left-0 mt-2 w-48 bg-accent shadow-lg">
-                    <li className="px-4 py-2 hover:bg-secondary">
+                    <li className="px-4 py-2 text-primary hover:bg-neutral ">
                       <Link href="/list">
                         <div className="align-center flex  py-2 ">
                           <FaClipboardList className="mr-3 text-xl" />
@@ -104,7 +104,7 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
                         </div>
                       </Link>
                     </li>
-                    <li className="py-2 hover:bg-secondary">
+                    <li className="py-2 text-primary hover:bg-neutral ">
                       <Link href="/create/listcreator">
                         <div className="align-center flex px-4 py-2 ">
                           <FaRegEdit className="mr-3 text-xl" />
@@ -114,7 +114,7 @@ const HeaderComponent = ({ colorMode }: HeaderComponentProps) => {
                     </li>
                     <li
                       onClick={newPostHandler}
-                      className="px-4 py-2 hover:bg-secondary"
+                      className="px-4 py-2 text-primary hover:bg-neutral "
                     >
                       <Link href="/postoppsett">
                         <div className="align-center flex  py-2 ">

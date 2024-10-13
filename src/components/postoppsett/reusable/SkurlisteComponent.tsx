@@ -236,7 +236,7 @@ const SkurlisteComponent: React.FC<SkurlisteComponentProps> = ({
                 <>
                   <tr
                     onClick={!edit ? () => clickSearch(list) : undefined}
-                    className={`border border-gray-700 border-l-transparent border-r-transparent  hover:cursor-pointer hover:bg-neutral ${getProgressClass(list.progress)}`}
+                    className={`border border-gray-700 border-l-transparent border-r-transparent  hover:cursor-pointer hover:opacity-95  ${getProgressClass(list.progress)}`}
                   >
                     <td
                       className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}

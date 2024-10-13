@@ -10,7 +10,7 @@ import dateFormat from "dateformat";
 
 const SkurlisteComponentInput = ({ list }) => {
   return (
-    <div className="overflow-scroll">
+    <div className="mb-10 overflow-scroll">
       {" "}
       <table className="table table-xs w-full whitespace-nowrap border border-b-accent border-l-base-100 border-r-base-100 border-t-transparent bg-primary ">
         <thead>
@@ -36,7 +36,7 @@ const SkurlisteComponentInput = ({ list }) => {
         </thead>
         <tbody>
           <>
-            <tr className="border border-primary bg-base-100 hover:cursor-pointer hover:bg-primary">
+            <tr className="border border-primary bg-base-100 hover:cursor-pointer ">
               <td
                 className={`py-5 font-bold ${list.treslag === "Furu" ? "text-orange-500" : "text-green-500"}`}
               >

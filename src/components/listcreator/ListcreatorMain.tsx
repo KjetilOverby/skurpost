@@ -261,7 +261,7 @@ const ListcreatorMain: React.FC<ListcreatorMainProps> = ({
   return (
     <div className="bg-base-100 ">
       <div>
-        <h1 className="text-primary">Skurplan</h1>
+        <h1 className="text-primary">Forhåndsvisning post</h1>
         <SkurlisteComponentInput list={listProps} />
       </div>
       {settings?.visPakking && (

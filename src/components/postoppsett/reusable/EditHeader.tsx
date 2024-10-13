@@ -71,7 +71,7 @@ const EditHeader: React.FC<EditHeaderProps> = ({
     <nav className="bg-accent p-4">
       <div className="flex items-center justify-between">
         <div className="relative">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-white">
+          <button onClick={() => setIsOpen(!isOpen)} className="text-primary">
             Menu
           </button>
           {isOpen && (
@@ -80,14 +80,14 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                 <>
                   <div
                     onClick={editHandler}
-                    className="align-center flex cursor-pointer px-4 py-2 hover:bg-gray-600 hover:text-white"
+                    className="align-center flex cursor-pointer px-4 py-2 text-primary hover:bg-neutral"
                   >
                     <FaRegEdit className="mr-3 text-xl" />
-                    <p className="block  text-primary ">Rediger post</p>
+                    <p className="block">Rediger post</p>
                   </div>
                   <div
                     onClick={newPostHandler}
-                    className="align-center flex cursor-pointer px-4 py-2 hover:bg-gray-600 hover:text-white"
+                    className="align-center flex cursor-pointer px-4 py-2 text-primary hover:bg-neutral"
                   >
                     <MdOutlineCreateNewFolder className="mr-3 text-xl" />
                     <p className="block ">Lag ny post</p>
@@ -97,27 +97,27 @@ const EditHeader: React.FC<EditHeaderProps> = ({
               <EditMode editMode={editMode}>
                 <div
                   onClick={cancelBtn}
-                  className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white"
+                  className="align-center flex cursor-pointer px-4 py-2 text-primary hover:bg-neutral"
                 >
                   <CiLogout className="mr-3 text-xl" />
                   <p className="block cursor-pointer  text-primary ">Avbryt</p>
                 </div>
                 <div
                   onClick={resetPostHandler}
-                  className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white"
+                  className="align-center flex cursor-pointer px-4 py-2 text-primary hover:bg-neutral"
                 >
                   <BiReset className="mr-3 text-xl" />
                   <p className="block">Nullstill post</p>
                 </div>
                 <div
                   onClick={resetUtfyllingHandler}
-                  className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white"
+                  className="align-center flex cursor-pointer px-4 py-2 text-primary hover:bg-neutral"
                 >
                   <RiDeleteBin3Line className="mr-3 text-xl" />
                   <p className="block">Nullstill utfylling</p>
                 </div>
                 {!updateDisabled && postId != "" && (
-                  <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <div className="align-center flex px-4 py-2 text-primary hover:bg-neutral">
                     <VscSaveAs className="mr-3 text-xl" />
                     <Modal
                       id="update"
@@ -131,12 +131,12 @@ const EditHeader: React.FC<EditHeaderProps> = ({
                   </div>
                 )}
                 {saveDiasabled && (
-                  <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                  <div className="align-center flex px-4 py-2 text-primary hover:bg-neutral">
                     <FaSave className="mr-3 text-xl" />
                     <a
                       onClick={createData}
                       href="#"
-                      className="block cursor-pointer text-primary hover:bg-gray-600 hover:text-white"
+                      className="block cursor-pointer "
                     >
                       Lagre som ny post
                     </a>
@@ -145,7 +145,7 @@ const EditHeader: React.FC<EditHeaderProps> = ({
 
                 {postId && (
                   <>
-                    <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                    <div className="align-center flex px-4 py-2 text-primary hover:bg-neutral">
                       <RiDeleteBin6Line className="mr-3 text-xl" />
                       <Modal
                         id="delete"
@@ -162,25 +162,25 @@ const EditHeader: React.FC<EditHeaderProps> = ({
               </EditMode>
               <hr className="mx-5 my-2 border-primary" />
               <Link href="/">
-                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                <div className="align-center flex px-4 py-2 text-primary hover:bg-neutral">
                   <IoHomeOutline className="mr-3 text-xl" />
                   <p className="block">Hjem</p>
                 </div>
               </Link>
               <Link href="/list">
-                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                <div className="align-center flex px-4 py-2 text-primary hover:bg-neutral">
                   <FaClipboardList className="mr-3 text-xl" />
                   <p className="block">Skurliste</p>
                 </div>
               </Link>
               <Link href="/create/listcreator">
-                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                <div className="align-center flex px-4 py-2 text-primary hover:bg-neutral">
                   <FaRegEdit className="mr-3 text-xl" />
                   <p className="block">Rediger skurliste</p>
                 </div>
               </Link>
               <Link href="/innstillinger">
-                <div className="align-center flex px-4 py-2 hover:bg-gray-600 hover:text-white">
+                <div className="align-center flex px-4 py-2 text-primary hover:bg-neutral">
                   <IoSettingsOutline className="mr-3 text-xl" />
                   <p className="block ">Innstillinger</p>
                 </div>
@@ -188,7 +188,7 @@ const EditHeader: React.FC<EditHeaderProps> = ({
             </div>
           )}
         </div>
-        <h1 className="text-white">Postoppsett</h1>
+        <h1 className="text-primary">Postoppsett</h1>
       </div>
     </nav>
   );

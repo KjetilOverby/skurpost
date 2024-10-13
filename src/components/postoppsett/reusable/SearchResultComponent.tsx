@@ -107,7 +107,7 @@ export const SearchResultComponent: React.FC<SearchResultComponentProps> = ({
                           key={ring.value}
                           className={`${ringStyle} relative border border-primary bg-gradient-to-b from-neutral via-primary to-neutral text-accent`}
                         >
-                          <p className="absolute bottom-20 text-xs text-gray-200">
+                          <p className="absolute bottom-20 text-xs text-primary">
                             {ring.value}
                           </p>
                           <p className="text-xs">
