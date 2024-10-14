@@ -1,6 +1,9 @@
 legg til et blad som standard når nye poster skal lages
 Gjøre så at begge alt ikke kan lages feil
 ta bort lagre knappen ved redigering av en post i skurliste
+Sette tilbake alt false når man går ut av postoppsett
+sette tilbake alt i lag/rediger ny post når man går ut av redigering
+når man velger post fra skurliste skal det ikke være mulig å kommer rett inn i editMode
 
 
 

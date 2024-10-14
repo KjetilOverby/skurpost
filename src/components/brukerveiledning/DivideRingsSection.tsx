@@ -39,10 +39,10 @@ const DivideRingsSection = () => {
       </p>
 
       <div>
-        <p className="text-3xl text-secondary">X-verdi: 53.6</p>
-        <p className="text-2xl">Ring: 53.1</p>
-        <p className="text-2xl">shims: 0</p>
-        <p className="text-2xl">Shims2: 0.5</p>
+        <p className="text-3xl text-neutral">X-verdi: 53.6</p>
+        <p className="text-2xl text-neutral">Ring: 53.1</p>
+        <p className="text-2xl text-neutral">shims: 0</p>
+        <p className="text-2xl text-neutral">Shims2: 0.5</p>
       </div>
       <p className="mb-10 mt-10 text-lg text-gray-500">
         her ser man at ringen man valgte kommer på Ring og da regner programmet
@@ -51,10 +51,10 @@ const DivideRingsSection = () => {
         kanppen og resultatet blir slik:
       </p>
       <div>
-        <p className="text-3xl text-secondary">X-verdi: 53.6</p>
-        <p className="text-2xl">Ring: 53.1</p>
-        <p className="text-2xl">shims: 0.5</p>
-        <p className="text-2xl">Shims2: 0</p>
+        <p className="text-3xl text-neutral">X-verdi: 53.6</p>
+        <p className="text-2xl text-neutral">Ring: 53.1</p>
+        <p className="text-2xl text-neutral">shims: 0.5</p>
+        <p className="text-2xl text-neutral">Shims2: 0</p>
       </div>
       <p className="mb-10 mt-10 text-lg text-gray-500">
         Da flytter 0.5 opp til Shims og skrives under ringen.
@@ -78,20 +78,20 @@ const DivideRingsSection = () => {
         slik:
       </p>
       <div>
-        <p className="text-3xl text-secondary">X-verdi: 53.9</p>
-        <p className="text-2xl">Ring: 53.1</p>
-        <p className="text-2xl">shims: 0</p>
-        <p className="text-2xl">Shims2: 0.8</p>
+        <p className="text-3xl text-neutral">X-verdi: 53.9</p>
+        <p className="text-2xl text-neutral">Ring: 53.1</p>
+        <p className="text-2xl text-neutral">shims: 0</p>
+        <p className="text-2xl text-neutral">Shims2: 0.8</p>
       </div>
       <p className="mb-10 mt-10 text-lg text-gray-500">
         Vi får igjen 0,8 og det er en verdi vi ikke har så vi må dele opp den en
         gang til. Vi har 0,3 skims og prøver den, klikk så på Skims Knappen.
       </p>
       <div>
-        <p className="text-3xl text-secondary">X-verdi: 53.9</p>
-        <p className="text-2xl">Ring: 53.1</p>
-        <p className="text-2xl">shims: 0.3</p>
-        <p className="text-2xl">Shims2: 0.5</p>
+        <p className="text-3xl text-neutral">X-verdi: 53.9</p>
+        <p className="text-2xl text-neutral">Ring: 53.1</p>
+        <p className="text-2xl text-neutral">shims: 0.3</p>
+        <p className="text-2xl text-neutral">Shims2: 0.5</p>
       </div>
       <div className="w-96 ">
         <Image
