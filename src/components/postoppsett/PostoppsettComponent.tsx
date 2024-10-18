@@ -1091,7 +1091,7 @@ const PostoppsettComponent = ({
       (parseFloat(differenceStart) >= 0.05 ||
         parseFloat(differenceStart) <= -0.05)
     ) {
-      alert("Ufylling foran er ikke korrekt");
+      toast.error("Ufylling foran er ikke korrekt");
     } else {
       setstartRingsAltShow(!startRingsAltShow);
     }
@@ -1105,7 +1105,7 @@ const PostoppsettComponent = ({
       differenceEnd !== null &&
       (parseFloat(differenceEnd) >= 0.05 || parseFloat(differenceEnd) <= -0.05)
     ) {
-      alert("Ufylling bak er ikke korrekt");
+      toast.error("Ufylling bak er ikke korrekt");
     } else {
       setEndRingsAltShow(!endRingsAltShow);
     }
