@@ -1081,6 +1081,36 @@ const PostoppsettComponent = ({
     setstartRingsAltShow(!startRingsAltShow);
   };
 
+  const editUtfyllingSwap = () => {
+    if (localData?.startRingsAlt.length === 0 && startRingsAltShow) {
+      setstartRingsAltShow(!startRingsAltShow);
+    } else if (localData?.startRings.length === 0 && startRingsAltShow) {
+      setstartRingsAltShow(!startRingsAltShow);
+    } else if (
+      differenceStart !== null &&
+      (parseFloat(differenceStart) >= 0.05 ||
+        parseFloat(differenceStart) <= -0.05)
+    ) {
+      alert("Ufylling foran er ikke korrekt");
+    } else {
+      setstartRingsAltShow(!startRingsAltShow);
+    }
+  };
+  const editUtfyllingSwapEnd = () => {
+    if (localData?.endRingsAlt.length === 0 && endRingsAltShow) {
+      setEndRingsAltShow(!endRingsAltShow);
+    } else if (localData?.endRings.length === 0 && endRingsAltShow) {
+      setEndRingsAltShow(!endRingsAltShow);
+    } else if (
+      differenceEnd !== null &&
+      (parseFloat(differenceEnd) >= 0.05 || parseFloat(differenceEnd) <= -0.05)
+    ) {
+      alert("Ufylling bak er ikke korrekt");
+    } else {
+      setEndRingsAltShow(!endRingsAltShow);
+    }
+  };
+
   return (
     <>
       <div>
@@ -1351,9 +1381,7 @@ const PostoppsettComponent = ({
                           Differanse: {differenceStart}
                         </p>
                         <button
-                          onClick={() =>
-                            setstartRingsAltShow(!startRingsAltShow)
-                          }
+                          onClick={editUtfyllingSwap}
                           className="btn btn-xs bg-accent text-primary hover:bg-neutral"
                         >
                           {startRingsAltShow
@@ -1527,7 +1555,7 @@ const PostoppsettComponent = ({
                         Differanse: {differenceEnd}
                       </p>
                       <button
-                        onClick={() => setEndRingsAltShow(!endRingsAltShow)}
+                        onClick={editUtfyllingSwapEnd}
                         className="btn btn-xs bg-accent text-primary hover:bg-neutral"
                       >
                         {endRingsAltShow ? "Vis standard" : "Vis alternativ"}

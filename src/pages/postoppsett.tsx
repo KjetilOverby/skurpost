@@ -30,14 +30,6 @@ const Postoppsett = ({ postId, setPostId, colorMode }: PostoppsettProps) => {
     }
   }, [sessionData, setGetUserInfo]);
 
-  /*   if (sessionStatus === "loading" || isLoadingPostoppsett) {
-    return (
-      <div className="grid min-h-screen items-center justify-center bg-gray-900">
-        <div className="text-primary">Loading...</div>
-      </div>
-    );
-  } */
-
   return (
     <div data-theme={colorMode}>
       <PostoppsettComponent
